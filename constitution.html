@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="The INT.LIFE Constitution — Built on Absolute Integrity.">
+<title>The Constitution — INT.LIFE</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{--navy:#1A1648;--deep:#0E0C2E;--coral:#FF6040;--purple:#534AB7;--lavender:#AFA9EC;}
+html{scroll-behavior:smooth;}
+body{background:var(--deep);color:#fff;font-family:'Jost',sans-serif;overflow-x:hidden;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(14,12,46,.92),transparent);backdrop-filter:blur(8px);}
+.nav-logo{display:flex;align-items:center;gap:4px;text-decoration:none;}
+.nav-int{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:white;}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:var(--coral);margin-bottom:2px;}
+.nav-life{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;letter-spacing:3px;color:#D4D0FF;}
+.nav-back{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s;}
+.nav-back::before{content:'← ';}
+.nav-back:hover{color:var(--coral);}
+
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6rem 2rem 4rem;text-align:center;position:relative;overflow:hidden;}
+.hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 35%,rgba(255,96,64,.07) 0%,transparent 60%);pointer-events:none;}
+.seal{width:72px;height:72px;border:1px solid rgba(255,96,64,.35);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 2.5rem;opacity:0;animation:fadeup 1s ease forwards;}
+.seal-inner{width:52px;height:52px;border:1px solid rgba(255,96,64,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.seal-dot{width:9px;height:9px;border-radius:50%;background:var(--coral);}
+.hero-eyebrow{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--coral);opacity:.8;margin-bottom:1.75rem;opacity:0;animation:fadeup 1s ease .15s forwards;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(46px,9vw,100px);font-weight:300;color:white;line-height:1.05;letter-spacing:-2px;opacity:0;animation:fadeup 1s ease .3s forwards;}
+.hero-title em{font-style:italic;color:#D4D0FF;font-weight:300;}
+.hero-rule{width:44px;height:1px;background:rgba(255,96,64,.45);margin:2rem auto;opacity:0;animation:fadeup 1s ease .45s forwards;}
+.hero-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(14px,1.8vw,19px);font-style:italic;color:rgba(255,255,255,.48);letter-spacing:.5px;opacity:0;animation:fadeup 1s ease .6s forwards;}
+@keyframes fadeup{to{opacity:1;transform:translateY(0);}from{opacity:0;transform:translateY(20px);}}
+
+.integrity-section{background:var(--navy);padding:7rem 2rem;text-align:center;}
+.sec-label{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--coral);margin-bottom:1rem;text-align:center;}
+.int-jp{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,5vw,52px);font-weight:300;color:rgba(255,255,255,.22);letter-spacing:4px;margin-bottom:.5rem;}
+.int-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,6vw,64px);font-weight:700;color:white;letter-spacing:-1.5px;margin-bottom:2.5rem;}
+.int-def{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.5vw,26px);font-style:italic;color:rgba(255,255,255,.72);max-width:620px;margin:0 auto;line-height:1.8;}
+
+.values-section{background:var(--deep);padding:7rem 2rem;}
+.values-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.5vw,38px);font-weight:300;color:white;text-align:center;margin-bottom:4rem;letter-spacing:-.5px;}
+.values-list{max-width:760px;margin:0 auto;}
+.value-item{display:grid;grid-template-columns:64px 1fr;gap:0 2rem;padding:2rem 0;border-bottom:1px solid rgba(255,255,255,.06);align-items:start;}
+.value-item:first-child{border-top:1px solid rgba(255,255,255,.06);}
+.value-num{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,52px);font-weight:300;color:rgba(255,96,64,.25);line-height:1;padding-top:4px;}
+.value-body{}
+.value-name{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,2.8vw,30px);font-weight:600;color:white;letter-spacing:-.3px;margin-bottom:.5rem;}
+.value-desc{font-size:12px;color:rgba(255,255,255,.38);line-height:1.75;}
+
+.covenant-section{background:var(--navy);padding:7rem 2rem;text-align:center;}
+.cov-title{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,4vw,44px);font-weight:300;color:white;margin:1.5rem auto 3rem;letter-spacing:-.5px;max-width:560px;line-height:1.3;}
+.cov-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;max-width:680px;margin:0 auto;border:1px solid rgba(255,96,64,.12);}
+.cov-item{padding:1.75rem 1.5rem;border-right:1px solid rgba(255,96,64,.12);border-bottom:1px solid rgba(255,96,64,.12);text-align:left;}
+.cov-mark{font-size:18px;color:rgba(255,96,64,.4);margin-bottom:.625rem;line-height:1;}
+.cov-name{font-family:'Cormorant Garamond',serif;font-size:clamp(16px,2vw,20px);font-weight:600;color:rgba(255,255,255,.75);letter-spacing:-.2px;}
+
+.closing-section{background:var(--deep);padding:7rem 2rem;text-align:center;border-top:1px solid rgba(255,255,255,.05);}
+.closing-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,3vw,34px);font-weight:600;color:white;max-width:640px;margin:1.5rem auto 2rem;line-height:1.5;letter-spacing:-.3px;}
+.closing-body{font-size:13px;color:rgba(255,255,255,.4);max-width:480px;margin:0 auto 3rem;line-height:1.9;}
+.btn-s{background:transparent;color:var(--lavender);border:1px solid rgba(175,169,236,.4);padding:13px 34px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block;}
+.btn-s:hover{border-color:var(--lavender);color:white;transform:translateY(-2px);}
+
+footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding:2.5rem 2rem;text-align:center;}
+.f-logo{display:flex;align-items:center;justify-content:center;gap:4px;margin-bottom:1rem;}
+.f-int{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:white;}
+.f-dot{width:7px;height:7px;border-radius:50%;background:var(--coral);margin-bottom:3px;}
+.f-life{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;letter-spacing:3px;color:#D4D0FF;}
+.f-links{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.25rem;}
+.f-links a{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.28);text-decoration:none;transition:color .2s;}
+.f-links a:hover{color:rgba(255,255,255,.7);}
+.f-copy{font-size:11px;color:rgba(255,255,255,.18);}
+
+@media(max-width:600px){
+  .value-item{grid-template-columns:48px 1fr;gap:0 1rem;}
+  .cov-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="nav-int">INT</span><div class="nav-dot"></div><span class="nav-life">LIFE</span>
+  </a>
+  <a href="index.html" class="nav-back">Home</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="seal"><div class="seal-inner"><div class="seal-dot"></div></div></div>
+  <p class="hero-eyebrow">INT.LIFE</p>
+  <h1 class="hero-title">The<br><em>Constitution</em></h1>
+  <div class="hero-rule"></div>
+  <p class="hero-sub">Built on Absolute Integrity</p>
+</section>
+
+<section class="integrity-section">
+  <p class="sec-label">Core Principle</p>
+  <p class="int-jp">透徹した誠実さ</p>
+  <h2 class="int-title">Absolute Integrity</h2>
+  <p class="int-def">Absolute Integrity means a transparency so complete, and a sincerity so deep, that nothing is hidden — not from others, not from oneself.</p>
+</section>
+
+<section class="values-section">
+  <p class="sec-label">Founding Values</p>
+  <h2 class="values-title">Seven principles we will not compromise.</h2>
+  <div class="values-list">
+
+    <div class="value-item">
+      <span class="value-num">01</span>
+      <div class="value-body">
+        <p class="value-name">Truth before comfort</p>
+        <p class="value-desc">We say what is true, even when it is difficult to hear. Comfort that requires dishonesty is not kindness — it is delay.</p>
+      </div>
+    </div>
+
+    <div class="value-item">
+      <span class="value-num">02</span>
+      <div class="value-body">
+        <p class="value-name">Depth over surface</p>
+        <p class="value-desc">We go beneath the obvious, toward what actually matters. Attention is precious. We refuse to waste it.</p>
+      </div>
+    </div>
+
+    <div class="value-item">
+      <span class="value-num">03</span>
+      <div class="value-body">
+        <p class="value-name">Human flourishing above profit</p>
+        <p class="value-desc">The measure of our success is lives transformed — not revenue generated. These two must never be confused.</p>
+      </div>
+    </div>
+
+    <div class="value-item">
+      <span class="value-num">04</span>
+      <div class="value-body">
+        <p class="value-name">Every voice matters</p>
+        <p class="value-desc">Wisdom arrives from unexpected places. The quietest voice in the room may carry what we most need to hear.</p>
+      </div>
+    </div>
+
+    <div class="value-item">
+      <span class="value-num">05</span>
+      <div class="value-body">
+        <p class="value-name">No ego, only contribution</p>
+        <p class="value-desc">What you build matters more than who you are seen to be. Credit follows contribution, never the other way around.</p>
+      </div>
+    </div>
+
+    <div class="value-item">
+      <span class="value-num">06</span>
+      <div class="value-body">
+        <p class="value-name">Wisdom from all cultures</p>
+        <p class="value-desc">No single civilization holds the whole truth. We draw from every tradition, every lineage, every corner of human experience.</p>
+      </div>
+    </div>
+
+    <div class="value-item">
+      <span class="value-num">07</span>
+      <div class="value-body">
+        <p class="value-name">Built to outlast its founders</p>
+        <p class="value-desc">INT.LIFE belongs to no one. It belongs to everyone. We build so that those who come after us inherit something worth keeping.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="covenant-section">
+  <p class="sec-label">Community Covenant</p>
+  <h2 class="cov-title">What has no place here.</h2>
+  <div class="cov-grid">
+    <div class="cov-item">
+      <p class="cov-mark">—</p>
+      <p class="cov-name">Content that harms</p>
+    </div>
+    <div class="cov-item">
+      <p class="cov-mark">—</p>
+      <p class="cov-name">Misinformation</p>
+    </div>
+    <div class="cov-item">
+      <p class="cov-mark">—</p>
+      <p class="cov-name">Self-promotion without contribution</p>
+    </div>
+    <div class="cov-item">
+      <p class="cov-mark">—</p>
+      <p class="cov-name">Disrespect for any human being</p>
+    </div>
+  </div>
+</section>
+
+<section class="closing-section">
+  <p class="sec-label">Our Commitment</p>
+  <h2 class="closing-quote">"This is not a rulebook.<br>It is a declaration of what we believe — and a commitment to live it."</h2>
+  <p class="closing-body">INT.LIFE was not built to be another platform. It was built to be proof that something different is possible — a space where integrity is not a policy, but a practice. We hold ourselves to this constitution first.</p>
+  <a href="index.html" class="btn-s">← Back to Home</a>
+</section>
+
+<footer>
+  <div class="f-logo">
+    <span class="f-int">INT</span><div class="f-dot"></div><span class="f-life">LIFE</span>
+  </div>
+  <div class="f-links">
+    <a href="https://github.com/SakataMasahiro/intlife" target="_blank">GitHub</a>
+    <a href="index.html#declaration">Declaration</a>
+    <a href="index.html#builder">Join as Builder</a>
+    <a href="mailto:contact@int.life">contact@int.life</a>
+  </div>
+  <p class="f-copy">Built on Absolute Integrity · No Ads · No Compromise · Open to Everyone</p>
+</footer>
+
+</body>
+</html>
