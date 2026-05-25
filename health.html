@@ -46,6 +46,23 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.25rem 2rem;display
 .phil-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3.5vw,38px);font-weight:600;color:white;max-width:660px;margin:1.5rem auto;line-height:1.45;letter-spacing:-.5px;}
 .phil-sub{font-size:13px;color:rgba(255,255,255,.42);max-width:480px;margin:0 auto;line-height:1.85;}
 
+.founders{background:var(--deep);padding:6rem 2rem;}
+.founders-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.5vw,38px);font-weight:300;color:white;text-align:center;margin-bottom:3.5rem;letter-spacing:-.5px;}
+.founder-profile{display:flex;gap:0;max-width:760px;margin:0 auto 4rem;border-left:2px solid var(--health);padding-left:2rem;}
+.founder-name{font-family:'Jost',sans-serif;font-size:13px;font-weight:500;color:white;letter-spacing:1px;margin-bottom:4px;}
+.founder-role{font-size:11px;color:var(--health);letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem;}
+.founder-desc{font-size:13px;color:rgba(255,255,255,.52);line-height:1.9;}
+.science-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;max-width:860px;margin:0 auto 4rem;border:1px solid rgba(45,212,170,.1);}
+.science-card{padding:2.5rem 2rem;border-right:1px solid rgba(45,212,170,.1);}
+.science-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--health);margin-bottom:.75rem;}
+.science-title{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.3vw,24px);font-weight:600;color:white;margin-bottom:1rem;line-height:1.35;letter-spacing:-.3px;}
+.science-desc{font-size:12px;color:rgba(255,255,255,.45);line-height:1.85;}
+.metax-block{max-width:680px;margin:0 auto;text-align:center;padding:3rem 2rem;border:1px solid rgba(45,212,170,.15);border-radius:2px;background:rgba(45,212,170,.03);}
+.metax-eyebrow{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--health);margin-bottom:1.5rem;}
+.metax-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2.3vw,23px);font-style:italic;color:rgba(255,255,255,.82);line-height:1.8;margin-bottom:1.75rem;}
+.metax-body{font-size:12px;color:rgba(255,255,255,.42);line-height:1.95;}
+@media(max-width:640px){.science-grid{grid-template-columns:1fr;}}
+
 .cta-section{background:var(--deep);padding:6rem 2rem;text-align:center;border-top:1px solid rgba(255,255,255,.06);}
 .cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.5vw,40px);color:white;margin-bottom:.75rem;font-weight:400;}
 .cta-sub{font-size:12px;color:rgba(255,255,255,.38);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:2.5rem;}
@@ -125,6 +142,38 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
   <p class="sec-label">Our Approach</p>
   <h2 class="phil-quote">"No algorithm can tell you how you feel.<br>Health begins with listening."</h2>
   <p class="phil-sub">INT.LIFE will never reduce your health to a score. We build tools that help you listen — to your body, your rhythms, and the life you are living.</p>
+</section>
+
+<section class="founders">
+  <p class="sec-label">Founder's Practice</p>
+  <h2 class="founders-title">Health as lived experience.</h2>
+
+  <div class="founder-profile">
+    <div>
+      <p class="founder-name">Masahiro Sakata</p>
+      <p class="founder-role">Founder, INT.LIFE</p>
+      <p class="founder-desc">Masahiro is a practitioner of Vipassana meditation — one of the oldest and most demanding forms of mindfulness in existence. Through 10-day silent retreats and sustained daily practice, he has experienced firsthand what neuroscience is now confirming: the mind can be trained, the brain can be changed, and suffering can be met at its root — not managed from a distance, but transformed from within.</p>
+    </div>
+  </div>
+
+  <div class="science-grid">
+    <div class="science-card">
+      <p class="science-label">Neuroplasticity</p>
+      <h3 class="science-title">Meditation changes the brain.</h3>
+      <p class="science-desc">Decades of research show that consistent meditation practice increases grey matter density in the prefrontal cortex — the seat of attention, decision-making, and self-awareness. The amygdala, which governs fear and reactivity, measurably shrinks with sustained practice. What was once considered fixed becomes fluid. The brain you have today is not the brain you must keep.</p>
+    </div>
+    <div class="science-card">
+      <p class="science-label">Stress Reduction</p>
+      <h3 class="science-title">Stillness as medicine.</h3>
+      <p class="science-desc">Vipassana has been shown to significantly reduce cortisol levels, lower blood pressure, and improve heart rate variability — markers of deep physiological resilience. More than symptom management, it addresses the source: the habitual patterns of mind that generate suffering in the first place. Stress is not an event. It is a response. And responses can be changed.</p>
+    </div>
+  </div>
+
+  <div class="metax-block">
+    <p class="metax-eyebrow">META-X Philosophy</p>
+    <p class="metax-quote">"META-X is the practice of going beyond the patterns that define you — not by force, but by seeing them clearly. When you observe the mind without judgment, you step outside the story. That is where transformation lives."</p>
+    <p class="metax-body">META-X is the philosophical framework at the heart of INT.LIFE's approach to health. It holds that true wellbeing is not achieved by adding more — more discipline, more optimization, more effort — but by dissolving the invisible structures that keep us contracted. Through practices like Vipassana, we learn to observe our own conditioning without being ruled by it. In that gap between stimulus and response, we find the freedom to choose who we become.</p>
+  </div>
 </section>
 
 <section class="cta-section">
