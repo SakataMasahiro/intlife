@@ -66,6 +66,8 @@ body{background:var(--deep);color:#fff;font-family:'Jost',sans-serif;overflow-x:
 .dims-grid-bottom{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;max-width:960px;margin:1px auto 0;border:1px solid rgba(255,255,255,.06);border-top:none;}
 .dim-card{padding:1.875rem 1.5rem;border-right:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);transition:background .3s;}
 .dim-card:hover{background:rgba(255,255,255,.04);}
+a.dim-card{text-decoration:none;color:inherit;display:block;}
+a.dim-card:hover{background:rgba(255,255,255,.08);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.3);transition:all .3s;}
 .dim-color{width:3px;height:26px;border-radius:2px;margin-bottom:.875rem;}
 .dim-name{font-family:'Jost',sans-serif;font-size:12px;font-weight:500;color:white;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;}
 .dim-desc{font-size:12px;color:rgba(255,255,255,.42);line-height:1.65;}
@@ -270,7 +272,7 @@ words.forEach((w,i)=>{
 const dims=[
   {n:'Time',d:'Design your time around what matters most',c:'#7F77DD'},
   {n:'Knowledge',d:'Curate only the information that truly serves you',c:'#5BB4FF'},
-  {n:'Health',d:'Integrate body and mind into one living whole',c:'#2DD4AA'},
+  {n:'Health',d:'Integrate body and mind into one living whole',c:'#2DD4AA',url:'health.html'},
   {n:'Integrity',d:'Live in alignment with your deepest values',c:'#FF6040'},
   {n:'Motivation',d:'Sustain the inner fire that drives consistent action',c:'#FFB830'},
   {n:'Skills',d:'Evolve your expertise in a rapidly changing world',c:'#80D830'},
@@ -279,8 +281,9 @@ const dims=[
 const dgTop=document.getElementById('dims-grid-top');
 const dgBot=document.getElementById('dims-grid-bottom');
 dims.forEach((d,i)=>{
-  const c=document.createElement('div');
+  const c=d.url?document.createElement('a'):document.createElement('div');
   c.className='dim-card';
+  if(d.url)c.href=d.url;
   c.innerHTML=`<div class="dim-color" style="background:${d.c}"></div><p class="dim-name">${d.n}</p><p class="dim-desc">${d.d}</p>`;
   if(i<3){dgTop.appendChild(c);}else{dgBot.appendChild(c);}
 });
