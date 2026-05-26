@@ -77,8 +77,8 @@ a.dim-card:hover{background:rgba(255,255,255,.08);transform:translateY(-3px);box
 .signup-section{background:var(--deep);padding:6rem 2rem;text-align:center;}
 .signup-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.5vw,40px);color:white;margin-bottom:.75rem;font-weight:400;}
 .signup-sub{font-size:12px;color:rgba(255,255,255,.4);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:2.5rem;}
-.signup-form{display:flex;gap:10px;max-width:460px;margin:0 auto;flex-wrap:wrap;justify-content:center;}
-.signup-input{flex:1;min-width:220px;padding:14px 18px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:3px;color:white;font-family:'Jost',sans-serif;font-size:13px;outline:none;transition:border-color .3s;}
+.signup-form{display:flex;flex-direction:column;gap:10px;max-width:400px;margin:0 auto;}
+.signup-input{width:100%;padding:14px 18px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:3px;color:white;font-family:'Jost',sans-serif;font-size:13px;outline:none;transition:border-color .3s;box-sizing:border-box;}
 .signup-input::placeholder{color:rgba(255,255,255,.28);}
 .signup-input:focus{border-color:var(--coral);}
 .signup-note{font-size:11px;color:rgba(255,255,255,.25);margin-top:1rem;}
@@ -179,8 +179,9 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
   <h2 class="signup-title">Be among the first.</h2>
   <p class="signup-sub">INT.LIFE is being built now. Join the waiting list.</p>
   <div class="signup-form" id="signup-form">
+    <input type="text" class="signup-input" placeholder="Your name" id="name-input">
     <input type="email" class="signup-input" placeholder="your@email.com" id="email-input">
-    <button class="btn-p" onclick="handleSignup()">Join</button>
+    <button class="btn-p" onclick="handleSignup()" style="width:100%;padding:14px;">Join the Waiting List</button>
   </div>
   <p class="signup-note">No spam. No pressure. Only when INT.LIFE is ready for you.</p>
 </section>
@@ -289,10 +290,40 @@ dims.forEach((d,i)=>{
   if(i<3){dgTop.appendChild(c);}else{dgBot.appendChild(c);}
 });
 
-function handleSignup(){
-  const email=document.getElementById('email-input').value.trim();
-  if(!email||!email.includes('@')){document.getElementById('email-input').style.borderColor='#FF6040';return;}
-  document.getElementById('signup-form').innerHTML=`<p style="font-family:'Cormorant Garamond',serif;font-size:22px;color:white;font-style:italic;line-height:1.6;">Thank you.<br>We will find you when INT.LIFE is ready. 🌟</p>`;
+const SUPABASE_URL='https://lzlxqxalwtkneclpgexh.supabase.co';
+const SUPABASE_KEY='sb_publishable_a1Q20LH5Y40jfZbq6CY4vw_uc-gooc_';
+
+async function handleSignup(){
+  const nameEl=document.getElementById('name-input');
+  const emailEl=document.getElementById('email-input');
+  const name=nameEl.value.trim();
+  const email=emailEl.value.trim();
+  let valid=true;
+  if(!name){nameEl.style.borderColor='#FF6040';valid=false;}else{nameEl.style.borderColor='';}
+  if(!email||!email.includes('@')){emailEl.style.borderColor='#FF6040';valid=false;}else{emailEl.style.borderColor='';}
+  if(!valid)return;
+  const btn=document.querySelector('#signup-form .btn-p');
+  btn.textContent='...';btn.disabled=true;
+  try{
+    const res=await fetch(`${SUPABASE_URL}/rest/v1/waiting_list`,{
+      method:'POST',
+      headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`,'Content-Type':'application/json','Prefer':'return=minimal'},
+      body:JSON.stringify({name,email})
+    });
+    if(res.ok||res.status===201){
+      document.getElementById('signup-form').innerHTML=`<p style="font-family:'Cormorant Garamond',serif;font-size:22px;color:white;font-style:italic;line-height:1.8;">Thank you, ${name}.<br>We will find you when INT.LIFE is ready.</p>`;
+    }else{
+      const err=await res.json().catch(()=>({}));
+      if(err.code==='23505'){
+        document.getElementById('signup-form').innerHTML=`<p style="font-family:'Cormorant Garamond',serif;font-size:20px;color:white;font-style:italic;line-height:1.8;">You're already on the list.<br><span style="font-size:15px;color:rgba(255,255,255,.5);">We will find you when INT.LIFE is ready.</span></p>`;
+      }else{
+        btn.textContent='Join the Waiting List';btn.disabled=false;
+        emailEl.style.borderColor='#FF6040';
+      }
+    }
+  }catch(e){
+    btn.textContent='Join the Waiting List';btn.disabled=false;
+  }
 }
 
 function toggleRole(el){
