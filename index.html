@@ -311,7 +311,7 @@ async function handleSignup(){
       body:JSON.stringify({name,email})
     });
     if(res.ok||res.status===201){
-      document.getElementById('signup-form').innerHTML=`<p style="font-family:'Cormorant Garamond',serif;font-size:22px;color:white;font-style:italic;line-height:1.8;">Thank you, ${name}.<br>We will find you when INT.LIFE is ready.</p>`;
+      document.getElementById('signup-form').innerHTML=`<p style="font-family:'Cormorant Garamond',serif;font-size:22px;color:white;font-style:italic;line-height:1.8;">Thank you, ${name}.<br>You are now part of the INT.LIFE community.</p>`;
     }else{
       const err=await res.json().catch(()=>({}));
       if(err.code==='23505'){
