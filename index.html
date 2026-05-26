@@ -183,7 +183,7 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
     <input type="email" class="signup-input" placeholder="your@email.com" id="email-input">
     <button class="btn-p" onclick="handleSignup()" style="width:100%;padding:14px;">Join the Waiting List</button>
   </div>
-  <p class="signup-note">No spam. No pressure. Only when INT.LIFE is ready for you.</p>
+  <p class="signup-note">No spam. No pressure. Always free.</p>
 </section>
 
 <section class="builder-section" id="builder">
@@ -315,7 +315,7 @@ async function handleSignup(){
     }else{
       const err=await res.json().catch(()=>({}));
       if(err.code==='23505'){
-        document.getElementById('signup-form').innerHTML=`<p style="font-family:'Cormorant Garamond',serif;font-size:20px;color:white;font-style:italic;line-height:1.8;">You're already on the list.<br><span style="font-size:15px;color:rgba(255,255,255,.5);">We will find you when INT.LIFE is ready.</span></p>`;
+        document.getElementById('signup-form').innerHTML=`<p style="font-family:'Cormorant Garamond',serif;font-size:20px;color:white;font-style:italic;line-height:1.8;">You're already part of the INT.LIFE community.</p>`;
       }else{
         btn.textContent='Join the Waiting List';btn.disabled=false;
         emailEl.style.borderColor='#FF6040';
