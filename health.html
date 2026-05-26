@@ -83,6 +83,27 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
 
 @media(max-width:640px){.pillars-grid{grid-template-columns:1fr;}}
 @media(min-width:641px) and (max-width:900px){.pillars-grid{grid-template-columns:repeat(2,1fr);}}
+
+.vipassana-section{background:var(--navy);padding:6rem 2rem;}
+.vipassana-intro{font-size:13px;color:rgba(255,255,255,.42);max-width:560px;margin:0 auto 3.5rem;text-align:center;line-height:1.85;}
+.concept-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;max-width:860px;margin:0 auto 3rem;border:1px solid rgba(45,212,170,.1);}
+.concept-card{padding:2.5rem 2rem;border-right:1px solid rgba(45,212,170,.1);border-bottom:1px solid rgba(45,212,170,.1);transition:background .3s;}
+.concept-card:hover{background:rgba(45,212,170,.05);}
+.concept-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--health);margin-bottom:.75rem;}
+.concept-title{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.3vw,22px);font-weight:600;color:white;margin-bottom:.75rem;line-height:1.3;letter-spacing:-.3px;}
+.concept-desc{font-size:12px;color:rgba(255,255,255,.45);line-height:1.85;}
+.author-note{max-width:640px;margin:0 auto;text-align:center;padding:2.5rem 2rem;border:1px solid rgba(45,212,170,.15);border-radius:2px;background:rgba(45,212,170,.03);}
+.author-note-text{font-family:'Cormorant Garamond',serif;font-size:clamp(15px,2vw,19px);font-style:italic;color:rgba(255,255,255,.7);line-height:1.8;margin-bottom:1rem;}
+.author-note-credit{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--health);}
+
+.stress-section{background:var(--deep);padding:6rem 2rem;}
+.evidence-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;max-width:860px;margin:0 auto;border:1px solid rgba(45,212,170,.1);}
+.evidence-card{padding:2.5rem 2rem;border-right:1px solid rgba(45,212,170,.1);border-bottom:1px solid rgba(45,212,170,.1);transition:background .3s;}
+.evidence-card:hover{background:rgba(45,212,170,.04);}
+.evidence-stat{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,4vw,48px);font-weight:600;color:var(--health);margin-bottom:.5rem;line-height:1;}
+.evidence-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:1rem;}
+.evidence-desc{font-size:12px;color:rgba(255,255,255,.45);line-height:1.85;}
+@media(max-width:640px){.concept-grid{grid-template-columns:1fr;}.evidence-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -173,6 +194,65 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
     <p class="metax-eyebrow">META-X Philosophy</p>
     <p class="metax-quote">"META-X is the practice of going beyond the patterns that define you — not by force, but by seeing them clearly. When you observe the mind without judgment, you step outside the story. That is where transformation lives."</p>
     <p class="metax-body">META-X is the philosophical framework at the heart of INT.LIFE's approach to health. It holds that true wellbeing is not achieved by adding more — more discipline, more optimization, more effort — but by dissolving the invisible structures that keep us contracted. Through practices like Vipassana, we learn to observe our own conditioning without being ruled by it. In that gap between stimulus and response, we find the freedom to choose who we become.</p>
+  </div>
+</section>
+
+<section class="vipassana-section">
+  <p class="sec-label">Masahiro Sakata · Vipassana</p>
+  <h2 class="founders-title">The Nature of Awareness in Vipassana</h2>
+  <p class="vipassana-intro">After 1,000 hours of practice in the Vipassana tradition, these four principles have become the foundation of how Masahiro understands the mind, suffering, and freedom.</p>
+  <div class="concept-grid">
+    <div class="concept-card">
+      <p class="concept-label">Sati</p>
+      <h3 class="concept-title">Pure Awareness</h3>
+      <p class="concept-desc">Sati — often translated as "mindfulness" — is more precisely the capacity to observe what is arising without adding anything to it. Not interpretation, not judgment, not the next thought. Just this sensation, this breath, this moment, exactly as it is.</p>
+    </div>
+    <div class="concept-card">
+      <p class="concept-label">The 10-Second Pause</p>
+      <h3 class="concept-title">Space Before Response</h3>
+      <p class="concept-desc">Between a stimulus and a reaction lives a gap. Vipassana trains the practitioner to feel into that gap — to catch the craving or aversion before it becomes behavior. Ten seconds of awareness can change a lifetime of automatic response.</p>
+    </div>
+    <div class="concept-card">
+      <p class="concept-label">Impermanence</p>
+      <h3 class="concept-title">Anicca — Everything Passes</h3>
+      <p class="concept-desc">Every sensation — pleasant or painful — arises and passes. Vipassana teaches this not as philosophy but as direct bodily experience. When you feel impermanence at the cellular level, you stop fighting what cannot be held and stop fearing what cannot stay.</p>
+    </div>
+    <div class="concept-card">
+      <p class="concept-label">Equanimity</p>
+      <h3 class="concept-title">Upekkha — The Stable Ground</h3>
+      <p class="concept-desc">Equanimity is not detachment or indifference. It is the capacity to be fully present with what is — joy, grief, difficulty, beauty — without being thrown by any of it. It is the ground from which everything can be met.</p>
+    </div>
+  </div>
+  <div class="author-note">
+    <p class="author-note-text">"These are not concepts I have read. They are things I have sat with, in silence, for hundreds of hours — until they stopped being ideas and became lived reality."</p>
+    <p class="author-note-credit">From 1,000 hours of Vipassana practice — Masahiro Sakata</p>
+  </div>
+</section>
+
+<section class="stress-section">
+  <p class="sec-label">The Science</p>
+  <h2 class="founders-title">Meditation and Stress Reduction</h2>
+  <div class="evidence-grid">
+    <div class="evidence-card">
+      <p class="evidence-stat">4 Days</p>
+      <p class="evidence-label">Cortisol Reduction</p>
+      <p class="evidence-desc">A landmark study published in <em>Psychoneuroendocrinology</em> found measurable reductions in cortisol — the primary stress hormone — after just four days of mindfulness meditation practice. The nervous system responds faster than most believe possible.</p>
+    </div>
+    <div class="evidence-card">
+      <p class="evidence-stat">Harvard</p>
+      <p class="evidence-label">Brain Study · Sara Lazar Lab</p>
+      <p class="evidence-desc">Harvard neuroscientist Sara Lazar found that long-term meditators had increased cortical thickness in regions associated with attention, interoception, and sensory processing — changes directly correlated with years of practice, not age.</p>
+    </div>
+    <div class="evidence-card">
+      <p class="evidence-stat">5 min</p>
+      <p class="evidence-label">Frequency Beats Duration</p>
+      <p class="evidence-desc">Research consistently shows that five minutes of daily meditation produces greater long-term neurological benefit than a single 60-minute weekly session. The brain consolidates learning through repetition, not volume. Consistency is the practice.</p>
+    </div>
+    <div class="evidence-card">
+      <p class="evidence-stat">Science</p>
+      <p class="evidence-label">Evidence-Based Wellbeing</p>
+      <p class="evidence-desc">Meta-analyses across hundreds of studies confirm that mindfulness-based interventions reliably reduce symptoms of anxiety, depression, and chronic pain — with effect sizes comparable to pharmaceutical interventions, and without side effects.</p>
+    </div>
   </div>
 </section>
 
