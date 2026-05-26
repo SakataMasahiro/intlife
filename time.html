@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="INT.LIFE — Time: Design your time around what matters most.">
+<title>Time — INT.LIFE</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{--navy:#1A1648;--deep:#0E0C2E;--coral:#FF6040;--purple:#534AB7;--lavender:#AFA9EC;--time:#7F77DD;}
+html{scroll-behavior:smooth;}
+body{background:var(--deep);color:#fff;font-family:'Jost',sans-serif;overflow-x:hidden;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(14,12,46,.92),transparent);backdrop-filter:blur(8px);}
+.nav-logo{display:flex;align-items:center;gap:4px;text-decoration:none;}
+.nav-int{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:white;}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:var(--coral);margin-bottom:2px;}
+.nav-life{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;letter-spacing:3px;color:#D4D0FF;}
+.nav-back{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s;}
+.nav-back::before{content:'← ';}
+.nav-back:hover{color:var(--time);}
+
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6rem 2rem 4rem;text-align:center;position:relative;overflow:hidden;}
+.hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(127,119,221,.09) 0%,transparent 65%);pointer-events:none;}
+.dim-number{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--time);margin-bottom:1.5rem;opacity:0;animation:fadeup 1s ease forwards;}
+.dim-title{font-family:'Cormorant Garamond',serif;font-size:clamp(72px,14vw,130px);font-weight:300;color:white;line-height:1;letter-spacing:-4px;opacity:0;animation:fadeup 1s ease .2s forwards;}
+.dim-line{width:56px;height:2px;background:var(--time);margin:2rem auto;opacity:0;animation:fadeup 1s ease .35s forwards;}
+.dim-tagline{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2.4vw,26px);font-style:italic;color:rgba(255,255,255,.68);max-width:500px;line-height:1.75;opacity:0;animation:fadeup 1s ease .5s forwards;}
+@keyframes fadeup{to{opacity:1;transform:translateY(0);}from{opacity:0;transform:translateY(20px);}}
+
+.intro{background:var(--navy);padding:6rem 2rem;text-align:center;}
+.intro-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,3vw,34px);font-weight:600;color:white;max-width:640px;margin:0 auto 2rem;line-height:1.5;letter-spacing:-.3px;}
+.intro-body{font-size:13px;color:rgba(255,255,255,.48);max-width:520px;margin:0 auto;line-height:1.95;}
+
+.pillars{background:var(--deep);padding:6rem 2rem;}
+.sec-label{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--time);margin-bottom:1rem;text-align:center;}
+.pillars-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.5vw,38px);font-weight:300;color:white;text-align:center;margin-bottom:3.5rem;letter-spacing:-.5px;}
+.pillars-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;max-width:860px;margin:0 auto;border:1px solid rgba(127,119,221,.1);}
+.pillar-card{padding:2rem 1.5rem;border-right:1px solid rgba(127,119,221,.1);border-bottom:1px solid rgba(127,119,221,.1);transition:background .3s;}
+.pillar-card:hover{background:rgba(127,119,221,.05);}
+.pillar-name{font-family:'Jost',sans-serif;font-size:12px;font-weight:500;color:var(--time);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;}
+.pillar-desc{font-size:12px;color:rgba(255,255,255,.42);line-height:1.7;}
+
+.philosophy{background:var(--navy);padding:6rem 2rem;text-align:center;}
+.phil-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3.5vw,38px);font-weight:600;color:white;max-width:660px;margin:1.5rem auto;line-height:1.45;letter-spacing:-.5px;}
+.phil-sub{font-size:13px;color:rgba(255,255,255,.42);max-width:480px;margin:0 auto;line-height:1.85;}
+
+.founders{background:var(--deep);padding:6rem 2rem;}
+.founders-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.5vw,38px);font-weight:300;color:white;text-align:center;margin-bottom:3.5rem;letter-spacing:-.5px;}
+.founder-profile{display:flex;gap:0;max-width:760px;margin:0 auto 4rem;border-left:2px solid var(--time);padding-left:2rem;}
+.founder-name{font-family:'Jost',sans-serif;font-size:13px;font-weight:500;color:white;letter-spacing:1px;margin-bottom:4px;}
+.founder-role{font-size:11px;color:var(--time);letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem;}
+.founder-desc{font-size:13px;color:rgba(255,255,255,.52);line-height:1.9;}
+.science-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;max-width:860px;margin:0 auto 4rem;border:1px solid rgba(127,119,221,.1);}
+.science-card{padding:2.5rem 2rem;border-right:1px solid rgba(127,119,221,.1);}
+.science-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--time);margin-bottom:.75rem;}
+.science-title{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.3vw,24px);font-weight:600;color:white;margin-bottom:1rem;line-height:1.35;letter-spacing:-.3px;}
+.science-desc{font-size:12px;color:rgba(255,255,255,.45);line-height:1.85;}
+.metax-block{max-width:680px;margin:0 auto;text-align:center;padding:3rem 2rem;border:1px solid rgba(127,119,221,.15);border-radius:2px;background:rgba(127,119,221,.03);}
+.metax-eyebrow{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--time);margin-bottom:1.5rem;}
+.metax-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2.3vw,23px);font-style:italic;color:rgba(255,255,255,.82);line-height:1.8;margin-bottom:1.75rem;}
+.metax-body{font-size:12px;color:rgba(255,255,255,.42);line-height:1.95;}
+@media(max-width:640px){.science-grid{grid-template-columns:1fr;}}
+
+.cta-section{background:var(--deep);padding:6rem 2rem;text-align:center;border-top:1px solid rgba(255,255,255,.06);}
+.cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.5vw,40px);color:white;margin-bottom:.75rem;font-weight:400;}
+.cta-sub{font-size:12px;color:rgba(255,255,255,.38);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:2.5rem;}
+.btn-p{background:var(--coral);color:white;border:none;padding:13px 34px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block;}
+.btn-p:hover{background:#FF7555;transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,96,64,.35);}
+.btn-s{background:transparent;color:var(--lavender);border:1px solid rgba(175,169,236,.4);padding:13px 34px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block;}
+.btn-s:hover{border-color:var(--lavender);color:white;transform:translateY(-2px);}
+
+footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding:2.5rem 2rem;text-align:center;}
+.f-logo{display:flex;align-items:center;justify-content:center;gap:4px;margin-bottom:1rem;}
+.f-int{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:white;}
+.f-dot{width:7px;height:7px;border-radius:50%;background:var(--coral);margin-bottom:3px;}
+.f-life{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;letter-spacing:3px;color:#D4D0FF;}
+.f-links{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.25rem;}
+.f-links a{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.28);text-decoration:none;transition:color .2s;}
+.f-links a:hover{color:rgba(255,255,255,.7);}
+.f-copy{font-size:11px;color:rgba(255,255,255,.18);}
+
+@media(max-width:640px){.pillars-grid{grid-template-columns:1fr;}}
+@media(min-width:641px) and (max-width:900px){.pillars-grid{grid-template-columns:repeat(2,1fr);}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="nav-int">INT</span><div class="nav-dot"></div><span class="nav-life">LIFE</span>
+  </a>
+  <a href="index.html" class="nav-back">All Dimensions</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-glow"></div>
+  <p class="dim-number">Dimension 01</p>
+  <h1 class="dim-title">Time</h1>
+  <div class="dim-line"></div>
+  <p class="dim-tagline">Design your time around what matters most.</p>
+</section>
+
+<section class="intro">
+  <p class="intro-quote">"You do not manage time.<br>You choose what to give your life to."</p>
+  <p class="intro-body">INT.LIFE approaches time not as a resource to be optimized, but as the medium in which a life is lived. The question is never how to do more — it is how to give your full presence to what is truly worth doing.</p>
+</section>
+
+<section class="pillars">
+  <p class="sec-label">Six Pillars</p>
+  <h2 class="pillars-title">The foundations of a well-lived day.</h2>
+  <div class="pillars-grid">
+    <div class="pillar-card">
+      <p class="pillar-name">Clarity</p>
+      <p class="pillar-desc">Know what matters most before the day begins. Without clarity, urgency fills every hour.</p>
+    </div>
+    <div class="pillar-card">
+      <p class="pillar-name">Focus</p>
+      <p class="pillar-desc">Deep work is not a productivity hack — it is the condition for doing anything that truly matters.</p>
+    </div>
+    <div class="pillar-card">
+      <p class="pillar-name">Rhythm</p>
+      <p class="pillar-desc">Life has natural cadences. Design your days to move with them, not against them.</p>
+    </div>
+    <div class="pillar-card">
+      <p class="pillar-name">Boundaries</p>
+      <p class="pillar-desc">Saying no is not refusal — it is the act of protecting what you have said yes to.</p>
+    </div>
+    <div class="pillar-card">
+      <p class="pillar-name">Presence</p>
+      <p class="pillar-desc">Time spent distracted is not time spent. Presence is what turns hours into experience.</p>
+    </div>
+    <div class="pillar-card">
+      <p class="pillar-name">Reflection</p>
+      <p class="pillar-desc">Without review, patterns remain invisible. Reflection is what transforms days into a life.</p>
+    </div>
+  </div>
+</section>
+
+<section class="philosophy">
+  <p class="sec-label">Our Approach</p>
+  <h2 class="phil-quote">"A full calendar is not a full life.<br>A full life requires empty space."</h2>
+  <p class="phil-sub">INT.LIFE will never help you cram more into each hour. We build tools that help you see clearly — where your time is actually going, and whether it is going there by choice.</p>
+</section>
+
+<section class="founders">
+  <p class="sec-label">Founder's Practice</p>
+  <h2 class="founders-title">Time as a daily practice.</h2>
+
+  <div class="founder-profile">
+    <div>
+      <p class="founder-name">Masahiro Sakata</p>
+      <p class="founder-role">Founder, INT.LIFE</p>
+      <p class="founder-desc">Masahiro structures each day around a single most-important question: what, if done today, would make everything else easier or unnecessary? This practice — drawn from deep work philosophy and refined through years of building in high-intensity environments — forms the backbone of his approach to time. Not more hours, but more honest hours.</p>
+    </div>
+  </div>
+
+  <div class="science-grid">
+    <div class="science-card">
+      <p class="science-label">Cognitive Science</p>
+      <h3 class="science-title">The myth of multitasking.</h3>
+      <p class="science-desc">Research consistently shows that the human brain cannot truly multitask — it can only switch between tasks rapidly, at significant cognitive cost. Each switch incurs a "task-switching penalty" that accumulates over the day. Protecting long, uninterrupted blocks of focus is not a luxury. It is a neurological necessity for any work that requires depth.</p>
+    </div>
+    <div class="science-card">
+      <p class="science-label">Behavioral Design</p>
+      <h3 class="science-title">The architecture of attention.</h3>
+      <p class="science-desc">The environment shapes behavior more than willpower does. When notifications are silenced, phones are absent, and work is structured around natural energy peaks, output quality rises dramatically — not because of effort, but because of design. INT.LIFE is built on the insight that the best time management is largely environmental management.</p>
+    </div>
+  </div>
+
+  <div class="metax-block">
+    <p class="metax-eyebrow">META-X Philosophy</p>
+    <p class="metax-quote">"Most people are not lazy. They are unclear. And unclear people fill their time with motion rather than direction — always busy, rarely meaningful."</p>
+    <p class="metax-body">META-X applied to Time means dissolving the invisible pressure to be always-on, always-productive, always responding. It means stepping outside the cultural story that equates busyness with worth. When you can observe your relationship with time without judgment, you begin to see: some of your most urgent tasks are not important at all, and some of your most important work has been waiting quietly for the space you have never given it.</p>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2 class="cta-title">Be the first to experience it.</h2>
+  <p class="cta-sub">INT.LIFE is being built now.</p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+    <a href="index.html#signup" class="btn-p">Join the Waiting List</a>
+    <a href="index.html" class="btn-s">← Back to Home</a>
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo">
+    <span class="f-int">INT</span><div class="f-dot"></div><span class="f-life">LIFE</span>
+  </div>
+  <div class="f-links">
+    <a href="https://github.com/SakataMasahiro/intlife" target="_blank">GitHub</a>
+    <a href="index.html#declaration">Declaration</a>
+    <a href="index.html#builder">Join as Builder</a>
+    <a href="mailto:contact@int.life">contact@int.life</a>
+  </div>
+  <p class="f-copy">Built on Absolute Integrity · No Ads · No Compromise · Open to Everyone</p>
+</footer>
+
+</body>
+</html>

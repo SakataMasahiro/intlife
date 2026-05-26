@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="INT.LIFE — Knowledge: Curate only the information that truly serves you.">
+<title>Knowledge — INT.LIFE</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{--navy:#1A1648;--deep:#0E0C2E;--coral:#FF6040;--purple:#534AB7;--lavender:#AFA9EC;--knowledge:#5BB4FF;}
+html{scroll-behavior:smooth;}
+body{background:var(--deep);color:#fff;font-family:'Jost',sans-serif;overflow-x:hidden;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(14,12,46,.92),transparent);backdrop-filter:blur(8px);}
+.nav-logo{display:flex;align-items:center;gap:4px;text-decoration:none;}
+.nav-int{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:white;}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:var(--coral);margin-bottom:2px;}
+.nav-life{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;letter-spacing:3px;color:#D4D0FF;}
+.nav-back{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s;}
+.nav-back::before{content:'← ';}
+.nav-back:hover{color:var(--knowledge);}
+
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6rem 2rem 4rem;text-align:center;position:relative;overflow:hidden;}
+.hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(91,180,255,.09) 0%,transparent 65%);pointer-events:none;}
+.dim-number{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--knowledge);margin-bottom:1.5rem;opacity:0;animation:fadeup 1s ease forwards;}
+.dim-title{font-family:'Cormorant Garamond',serif;font-size:clamp(72px,14vw,130px);font-weight:300;color:white;line-height:1;letter-spacing:-4px;opacity:0;animation:fadeup 1s ease .2s forwards;}
+.dim-line{width:56px;height:2px;background:var(--knowledge);margin:2rem auto;opacity:0;animation:fadeup 1s ease .35s forwards;}
+.dim-tagline{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2.4vw,26px);font-style:italic;color:rgba(255,255,255,.68);max-width:500px;line-height:1.75;opacity:0;animation:fadeup 1s ease .5s forwards;}
+@keyframes fadeup{to{opacity:1;transform:translateY(0);}from{opacity:0;transform:translateY(20px);}}
+
+.intro{background:var(--navy);padding:6rem 2rem;text-align:center;}
+.intro-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,3vw,34px);font-weight:600;color:white;max-width:640px;margin:0 auto 2rem;line-height:1.5;letter-spacing:-.3px;}
+.intro-body{font-size:13px;color:rgba(255,255,255,.48);max-width:520px;margin:0 auto;line-height:1.95;}
+
+.pillars{background:var(--deep);padding:6rem 2rem;}
+.sec-label{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--knowledge);margin-bottom:1rem;text-align:center;}
+.pillars-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.5vw,38px);font-weight:300;color:white;text-align:center;margin-bottom:3.5rem;letter-spacing:-.5px;}
+.pillars-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;max-width:860px;margin:0 auto;border:1px solid rgba(91,180,255,.1);}
+.pillar-card{padding:2rem 1.5rem;border-right:1px solid rgba(91,180,255,.1);border-bottom:1px solid rgba(91,180,255,.1);transition:background .3s;}
+.pillar-card:hover{background:rgba(91,180,255,.05);}
+.pillar-name{font-family:'Jost',sans-serif;font-size:12px;font-weight:500;color:var(--knowledge);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;}
+.pillar-desc{font-size:12px;color:rgba(255,255,255,.42);line-height:1.7;}
+
+.philosophy{background:var(--navy);padding:6rem 2rem;text-align:center;}
+.phil-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3.5vw,38px);font-weight:600;color:white;max-width:660px;margin:1.5rem auto;line-height:1.45;letter-spacing:-.5px;}
+.phil-sub{font-size:13px;color:rgba(255,255,255,.42);max-width:480px;margin:0 auto;line-height:1.85;}
+
+.founders{background:var(--deep);padding:6rem 2rem;}
+.founders-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.5vw,38px);font-weight:300;color:white;text-align:center;margin-bottom:3.5rem;letter-spacing:-.5px;}
+.founder-profile{display:flex;gap:0;max-width:760px;margin:0 auto 4rem;border-left:2px solid var(--knowledge);padding-left:2rem;}
+.founder-name{font-family:'Jost',sans-serif;font-size:13px;font-weight:500;color:white;letter-spacing:1px;margin-bottom:4px;}
+.founder-role{font-size:11px;color:var(--knowledge);letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem;}
+.founder-desc{font-size:13px;color:rgba(255,255,255,.52);line-height:1.9;}
+.science-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;max-width:860px;margin:0 auto 4rem;border:1px solid rgba(91,180,255,.1);}
+.science-card{padding:2.5rem 2rem;border-right:1px solid rgba(91,180,255,.1);}
+.science-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--knowledge);margin-bottom:.75rem;}
+.science-title{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.3vw,24px);font-weight:600;color:white;margin-bottom:1rem;line-height:1.35;letter-spacing:-.3px;}
+.science-desc{font-size:12px;color:rgba(255,255,255,.45);line-height:1.85;}
+.metax-block{max-width:680px;margin:0 auto;text-align:center;padding:3rem 2rem;border:1px solid rgba(91,180,255,.15);border-radius:2px;background:rgba(91,180,255,.03);}
+.metax-eyebrow{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--knowledge);margin-bottom:1.5rem;}
+.metax-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2.3vw,23px);font-style:italic;color:rgba(255,255,255,.82);line-height:1.8;margin-bottom:1.75rem;}
+.metax-body{font-size:12px;color:rgba(255,255,255,.42);line-height:1.95;}
+@media(max-width:640px){.science-grid{grid-template-columns:1fr;}}
+
+.cta-section{background:var(--deep);padding:6rem 2rem;text-align:center;border-top:1px solid rgba(255,255,255,.06);}
+.cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.5vw,40px);color:white;margin-bottom:.75rem;font-weight:400;}
+.cta-sub{font-size:12px;color:rgba(255,255,255,.38);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:2.5rem;}
+.btn-p{background:var(--coral);color:white;border:none;padding:13px 34px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block;}
+.btn-p:hover{background:#FF7555;transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,96,64,.35);}
+.btn-s{background:transparent;color:var(--lavender);border:1px solid rgba(175,169,236,.4);padding:13px 34px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block;}
+.btn-s:hover{border-color:var(--lavender);color:white;transform:translateY(-2px);}
+
+footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding:2.5rem 2rem;text-align:center;}
+.f-logo{display:flex;align-items:center;justify-content:center;gap:4px;margin-bottom:1rem;}
+.f-int{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:white;}
+.f-dot{width:7px;height:7px;border-radius:50%;background:var(--coral);margin-bottom:3px;}
+.f-life{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;letter-spacing:3px;color:#D4D0FF;}
+.f-links{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.25rem;}
+.f-links a{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.28);text-decoration:none;transition:color .2s;}
+.f-links a:hover{color:rgba(255,255,255,.7);}
+.f-copy{font-size:11px;color:rgba(255,255,255,.18);}
+
+@media(max-width:640px){.pillars-grid{grid-template-columns:1fr;}}
+@media(min-width:641px) and (max-width:900px){.pillars-grid{grid-template-columns:repeat(2,1fr);}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="nav-int">INT</span><div class="nav-dot"></div><span class="nav-life">LIFE</span>
+  </a>
+  <a href="index.html" class="nav-back">All Dimensions</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-glow"></div>
+  <p class="dim-number">Dimension 02</p>
+  <h1 class="dim-title">Knowledge</h1>
+  <div class="dim-line"></div>
+  <p class="dim-tagline">Curate only the information that truly serves you.</p>
+</section>
+
+<section class="intro">
+  <p class="intro-quote">"Information is everywhere.<br>Wisdom is the art of knowing what to ignore."</p>
+  <p class="intro-body">INT.LIFE approaches knowledge not as accumulation, but as curation — the disciplined act of choosing what enters your mind and what does not. In an age of infinite information, the rarest skill is discernment.</p>
+</section>
+
+<section class="pillars">
+  <p class="sec-label">Six Pillars</p>
+  <h2 class="pillars-title">The foundations of a well-informed life.</h2>
+  <div class="pillars-grid">
+    <div class="pillar-card">
+      <p class="pillar-name">Curation</p>
+      <p class="pillar-desc">Choose your inputs with intention. What you consume shapes who you become — quietly, irreversibly.</p>
+    </div>
+    <div class="pillar-card">
+      <p class="pillar-name">Depth</p>
+      <p class="pillar-desc">One book read slowly and fully is worth more than twenty skimmed. Depth is where understanding lives.</p>
+    </div>
+    <div class="pillar-card">
+      <p class="pillar-name">Synthesis</p>
+      <p class="pillar-desc">Knowledge becomes wisdom when ideas from different domains begin to speak to each other in your mind.</p>
+    </div>
+    <div class="pillar-card">
+      <p class="pillar-name">Application</p>
+      <p class="pillar-desc">Knowledge untested is only theory. The measure of understanding is what you can do with it.</p>
+    </div>
+    <div class="pillar-card">
+      <p class="pillar-name">Memory</p>
+      <p class="pillar-desc">Learning without retention is leaking. Build systems that let your knowledge compound over time.</p>
+    </div>
+    <div class="pillar-card">
+      <p class="pillar-name">Sharing</p>
+      <p class="pillar-desc">Knowledge shared multiplies. Teaching is the deepest form of learning — and the highest form of generosity.</p>
+    </div>
+  </div>
+</section>
+
+<section class="philosophy">
+  <p class="sec-label">Our Approach</p>
+  <h2 class="phil-quote">"The goal is not to know more.<br>It is to understand what matters."</h2>
+  <p class="phil-sub">INT.LIFE will never flood you with content. We build tools that help you deepen what you already know — and identify the gaps worth filling, on your terms.</p>
+</section>
+
+<section class="founders">
+  <p class="sec-label">Founder's Practice</p>
+  <h2 class="founders-title">Knowledge as a daily ritual.</h2>
+
+  <div class="founder-profile">
+    <div>
+      <p class="founder-name">Masahiro Sakata</p>
+      <p class="founder-role">Founder, INT.LIFE</p>
+      <p class="founder-desc">Masahiro reads across philosophy, neuroscience, economics, and contemplative traditions — not to accumulate facts, but to find the threads that connect them. He maintains a personal knowledge system built on the principle of synthesis: every new idea must connect to something he already knows, or it does not stay. This practice of disciplined curation has shaped the intellectual DNA of INT.LIFE.</p>
+    </div>
+  </div>
+
+  <div class="science-grid">
+    <div class="science-card">
+      <p class="science-label">Cognitive Load</p>
+      <h3 class="science-title">The cost of too much information.</h3>
+      <p class="science-desc">Working memory — the mental space where active thinking happens — has a hard capacity limit. When information overload exceeds that limit, comprehension collapses and decision quality degrades. Research in cognitive load theory shows that less input, structured well, produces far better learning outcomes than more input delivered rapidly. The brain learns through consolidation, not accumulation.</p>
+    </div>
+    <div class="science-card">
+      <p class="science-label">Spaced Repetition</p>
+      <h3 class="science-title">Memory is a muscle — train it deliberately.</h3>
+      <p class="science-desc">The spacing effect — one of psychology's most replicated findings — shows that information reviewed at expanding intervals is retained exponentially longer than information reviewed in concentrated sessions. Most people forget 80% of what they read within a week. A disciplined review system can reverse this entirely, turning reading into lasting knowledge rather than a momentary feeling of being informed.</p>
+    </div>
+  </div>
+
+  <div class="metax-block">
+    <p class="metax-eyebrow">META-X Philosophy</p>
+    <p class="metax-quote">"We live in the most information-rich era in history — and one of the least wise. The problem is not a lack of knowledge. It is an inability to sit with what we already know long enough for it to become understanding."</p>
+    <p class="metax-body">META-X applied to Knowledge means stepping outside the compulsive need to consume — to always have something playing, something to read, something to learn. It means recognizing that the mind needs silence to integrate. When you observe your relationship with information without judgment, you often find: most of what you consume is not nourishing you. It is filling a space that, if left open, might generate something original. Wisdom begins where consumption ends.</p>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2 class="cta-title">Be the first to experience it.</h2>
+  <p class="cta-sub">INT.LIFE is being built now.</p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+    <a href="index.html#signup" class="btn-p">Join the Waiting List</a>
+    <a href="index.html" class="btn-s">← Back to Home</a>
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo">
+    <span class="f-int">INT</span><div class="f-dot"></div><span class="f-life">LIFE</span>
+  </div>
+  <div class="f-links">
+    <a href="https://github.com/SakataMasahiro/intlife" target="_blank">GitHub</a>
+    <a href="index.html#declaration">Declaration</a>
+    <a href="index.html#builder">Join as Builder</a>
+    <a href="mailto:contact@int.life">contact@int.life</a>
+  </div>
+  <p class="f-copy">Built on Absolute Integrity · No Ads · No Compromise · Open to Everyone</p>
+</footer>
+
+</body>
+</html>

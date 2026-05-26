@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="INT.LIFE — Flourishing: The outcome when all seven dimensions align.">
+<title>Flourishing — INT.LIFE</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{--navy:#1A1648;--deep:#0E0C2E;--coral:#FF6040;--purple:#534AB7;--lavender:#AFA9EC;--flourishing:#C4B4FF;}
+html{scroll-behavior:smooth;}
+body{background:var(--deep);color:#fff;font-family:'Jost',sans-serif;overflow-x:hidden;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(14,12,46,.92),transparent);backdrop-filter:blur(8px);}
+.nav-logo{display:flex;align-items:center;gap:4px;text-decoration:none;}
+.nav-int{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:white;}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:var(--coral);margin-bottom:2px;}
+.nav-life{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;letter-spacing:3px;color:#D4D0FF;}
+.nav-back{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s;}
+.nav-back::before{content:'← ';}
+.nav-back:hover{color:var(--flourishing);}
+
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6rem 2rem 4rem;text-align:center;position:relative;overflow:hidden;}
+.hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(196,180,255,.09) 0%,transparent 65%);pointer-events:none;}
+.dim-number{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--flourishing);margin-bottom:1.5rem;opacity:0;animation:fadeup 1s ease forwards;}
+.dim-title{font-family:'Cormorant Garamond',serif;font-size:clamp(52px,10vw,110px);font-weight:300;color:white;line-height:1;letter-spacing:-3px;opacity:0;animation:fadeup 1s ease .2s forwards;}
+.dim-line{width:56px;height:2px;background:var(--flourishing);margin:2rem auto;opacity:0;animation:fadeup 1s ease .35s forwards;}
+.dim-tagline{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2.4vw,26px);font-style:italic;color:rgba(255,255,255,.68);max-width:500px;line-height:1.75;opacity:0;animation:fadeup 1s ease .5s forwards;}
+@keyframes fadeup{to{opacity:1;transform:translateY(0);}from{opacity:0;transform:translateY(20px);}}
+
+.intro{background:var(--navy);padding:6rem 2rem;text-align:center;}
+.intro-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,3vw,34px);font-weight:600;color:white;max-width:640px;margin:0 auto 2rem;line-height:1.5;letter-spacing:-.3px;}
+.intro-body{font-size:13px;color:rgba(255,255,255,.48);max-width:520px;margin:0 auto;line-height:1.95;}
+
+.pillars{background:var(--deep);padding:6rem 2rem;}
+.sec-label{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--flourishing);margin-bottom:1rem;text-align:center;}
+.pillars-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.5vw,38px);font-weight:300;color:white;text-align:center;margin-bottom:3.5rem;letter-spacing:-.5px;}
+.pillars-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;max-width:860px;margin:0 auto;border:1px solid rgba(196,180,255,.1);}
+.pillar-card{padding:2rem 1.5rem;border-right:1px solid rgba(196,180,255,.1);border-bottom:1px solid rgba(196,180,255,.1);transition:background .3s;}
+.pillar-card:hover{background:rgba(196,180,255,.05);}
+.pillar-name{font-family:'Jost',sans-serif;font-size:12px;font-weight:500;color:var(--flourishing);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;}
+.pillar-desc{font-size:12px;color:rgba(255,255,255,.42);line-height:1.7;}
+
+.philosophy{background:var(--navy);padding:6rem 2rem;text-align:center;}
+.phil-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3.5vw,38px);font-weight:600;color:white;max-width:660px;margin:1.5rem auto;line-height:1.45;letter-spacing:-.5px;}
+.phil-sub{font-size:13px;color:rgba(255,255,255,.42);max-width:480px;margin:0 auto;line-height:1.85;}
+
+.dims-section{background:var(--deep);padding:6rem 2rem;}
+.dims-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.5vw,38px);font-weight:300;color:white;text-align:center;margin-bottom:3.5rem;letter-spacing:-.5px;}
+.dims-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;max-width:860px;margin:0 auto;border:1px solid rgba(196,180,255,.1);}
+.dim-item{padding:1.75rem 1.5rem;border-right:1px solid rgba(196,180,255,.1);border-bottom:1px solid rgba(196,180,255,.1);text-decoration:none;color:inherit;display:block;transition:background .3s;}
+.dim-item:hover{background:rgba(196,180,255,.05);}
+.dim-bar{width:3px;height:20px;border-radius:2px;margin-bottom:.75rem;}
+.dim-num{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:4px;}
+.dim-name-small{font-family:'Jost',sans-serif;font-size:12px;font-weight:500;color:white;letter-spacing:1px;text-transform:uppercase;}
+
+.founders{background:var(--navy);padding:6rem 2rem;}
+.founders-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.5vw,38px);font-weight:300;color:white;text-align:center;margin-bottom:3.5rem;letter-spacing:-.5px;}
+.founder-profile{display:flex;gap:0;max-width:760px;margin:0 auto 4rem;border-left:2px solid var(--flourishing);padding-left:2rem;}
+.founder-name{font-family:'Jost',sans-serif;font-size:13px;font-weight:500;color:white;letter-spacing:1px;margin-bottom:4px;}
+.founder-role{font-size:11px;color:var(--flourishing);letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem;}
+.founder-desc{font-size:13px;color:rgba(255,255,255,.52);line-height:1.9;}
+.metax-block{max-width:680px;margin:0 auto;text-align:center;padding:3rem 2rem;border:1px solid rgba(196,180,255,.15);border-radius:2px;background:rgba(196,180,255,.03);}
+.metax-eyebrow{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--flourishing);margin-bottom:1.5rem;}
+.metax-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2.3vw,23px);font-style:italic;color:rgba(255,255,255,.82);line-height:1.8;margin-bottom:1.75rem;}
+.metax-body{font-size:12px;color:rgba(255,255,255,.42);line-height:1.95;}
+
+.cta-section{background:var(--deep);padding:6rem 2rem;text-align:center;border-top:1px solid rgba(255,255,255,.06);}
+.cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.5vw,40px);color:white;margin-bottom:.75rem;font-weight:400;}
+.cta-sub{font-size:12px;color:rgba(255,255,255,.38);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:2.5rem;}
+.btn-p{background:var(--coral);color:white;border:none;padding:13px 34px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block;}
+.btn-p:hover{background:#FF7555;transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,96,64,.35);}
+.btn-s{background:transparent;color:var(--lavender);border:1px solid rgba(175,169,236,.4);padding:13px 34px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block;}
+.btn-s:hover{border-color:var(--lavender);color:white;transform:translateY(-2px);}
+
+footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding:2.5rem 2rem;text-align:center;}
+.f-logo{display:flex;align-items:center;justify-content:center;gap:4px;margin-bottom:1rem;}
+.f-int{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:white;}
+.f-dot{width:7px;height:7px;border-radius:50%;background:var(--coral);margin-bottom:3px;}
+.f-life{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;letter-spacing:3px;color:#D4D0FF;}
+.f-links{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.25rem;}
+.f-links a{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.28);text-decoration:none;transition:color .2s;}
+.f-links a:hover{color:rgba(255,255,255,.7);}
+.f-copy{font-size:11px;color:rgba(255,255,255,.18);}
+
+@media(max-width:640px){.pillars-grid{grid-template-columns:1fr;}.dims-grid{grid-template-columns:1fr;}}
+@media(min-width:641px) and (max-width:900px){.pillars-grid{grid-template-columns:repeat(2,1fr);}.dims-grid{grid-template-columns:repeat(2,1fr);}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="nav-int">INT</span><div class="nav-dot"></div><span class="nav-life">LIFE</span>
+  </a>
+  <a href="index.html" class="nav-back">All Dimensions</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-glow"></div>
+  <p class="dim-number">Dimension 07</p>
+  <h1 class="dim-title">Flourishing</h1>
+  <div class="dim-line"></div>
+  <p class="dim-tagline">The outcome when all seven dimensions align.</p>
+</section>
+
+<section class="intro">
+  <p class="intro-quote">"Flourishing is not an achievement.<br>It is a way of moving through life."</p>
+  <p class="intro-body">INT.LIFE was built for this: the moment when time is intentional, knowledge is deep, health is whole, integrity is embodied, motivation is genuine, skills are sharp — and a human being is finally, fully alive. That is flourishing. And it is available to everyone.</p>
+</section>
+
+<section class="pillars">
+  <p class="sec-label">Six Dimensions of Flourishing</p>
+  <h2 class="pillars-title">What it looks and feels like.</h2>
+  <div class="pillars-grid">
+    <div class="pillar-card">
+      <p class="pillar-name">Integration</p>
+      <p class="pillar-desc">All dimensions are attended to, none abandoned. The life is not compartmentalized — it is whole.</p>
+    </div>
+    <div class="pillar-card">
+      <p class="pillar-name">Joy</p>
+      <p class="pillar-desc">Not the absence of difficulty, but a fundamental yes to the life you are living, exactly as it is.</p>
+    </div>
+    <div class="pillar-card">
+      <p class="pillar-name">Meaning</p>
+      <p class="pillar-desc">What you do connects to something larger than yourself — something worth the cost of your one life.</p>
+    </div>
+    <div class="pillar-card">
+      <p class="pillar-name">Contribution</p>
+      <p class="pillar-desc">Flourishing overflows. A life fully lived inevitably becomes a gift to others — not as duty, but as expression.</p>
+    </div>
+    <div class="pillar-card">
+      <p class="pillar-name">Growth</p>
+      <p class="pillar-desc">Still becoming. Comfortable with the distance still to travel. In love with the journey, not just the destination.</p>
+    </div>
+    <div class="pillar-card">
+      <p class="pillar-name">Peace</p>
+      <p class="pillar-desc">Not the absence of challenge, but the absence of war with yourself. At rest in who you are and where you are going.</p>
+    </div>
+  </div>
+</section>
+
+<section class="philosophy">
+  <p class="sec-label">Our Vision</p>
+  <h2 class="phil-quote">"This is not the final destination.<br>It is the natural result of the journey."</h2>
+  <p class="phil-sub">INT.LIFE does not promise flourishing. We build the conditions in which it can emerge — for every human being on earth, regardless of where they start.</p>
+</section>
+
+<section class="dims-section">
+  <p class="sec-label">The Path</p>
+  <h2 class="dims-title">The six dimensions that lead here.</h2>
+  <div class="dims-grid">
+    <a href="time.html" class="dim-item">
+      <div class="dim-bar" style="background:#7F77DD;"></div>
+      <p class="dim-num">01</p>
+      <p class="dim-name-small">Time</p>
+    </a>
+    <a href="knowledge.html" class="dim-item">
+      <div class="dim-bar" style="background:#5BB4FF;"></div>
+      <p class="dim-num">02</p>
+      <p class="dim-name-small">Knowledge</p>
+    </a>
+    <a href="health.html" class="dim-item">
+      <div class="dim-bar" style="background:#2DD4AA;"></div>
+      <p class="dim-num">03</p>
+      <p class="dim-name-small">Health</p>
+    </a>
+    <a href="integrity.html" class="dim-item">
+      <div class="dim-bar" style="background:#FF6040;"></div>
+      <p class="dim-num">04</p>
+      <p class="dim-name-small">Integrity</p>
+    </a>
+    <a href="motivation.html" class="dim-item">
+      <div class="dim-bar" style="background:#FFB830;"></div>
+      <p class="dim-num">05</p>
+      <p class="dim-name-small">Motivation</p>
+    </a>
+    <a href="skills.html" class="dim-item">
+      <div class="dim-bar" style="background:#80D830;"></div>
+      <p class="dim-num">06</p>
+      <p class="dim-name-small">Skills</p>
+    </a>
+  </div>
+</section>
+
+<section class="founders">
+  <p class="sec-label">Founder's Vision</p>
+  <h2 class="founders-title">What we are building toward.</h2>
+
+  <div class="founder-profile">
+    <div>
+      <p class="founder-name">Masahiro Sakata</p>
+      <p class="founder-role">Founder, INT.LIFE</p>
+      <p class="founder-desc">Masahiro built INT.LIFE from a single conviction: that every human being — regardless of where they were born, what resources they have, or what they have been through — deserves the tools to live their fullest life. Not a productive life. Not an optimized life. A fully human life. Flourishing is what that looks like when it arrives. And it is the reason this project exists.</p>
+    </div>
+  </div>
+
+  <div class="metax-block">
+    <p class="metax-eyebrow">META-X Philosophy</p>
+    <p class="metax-quote">"Flourishing is not the reward for getting everything right. It is the natural state of a human being who has stopped fighting against themselves — who has learned to act from clarity rather than fear, from love rather than lack, from choice rather than compulsion."</p>
+    <p class="metax-body">META-X is the philosophical framework that underlies all seven dimensions of INT.LIFE. Its core insight: most human suffering is not caused by external circumstances, but by invisible internal patterns — patterns of thinking, reacting, and relating that were formed in the past and now run on autopilot. Flourishing becomes possible not by adding more to your life, but by dissolving what is in the way. When those patterns are seen clearly — without judgment, without resistance — they begin to release. And in that release, the fullness of life becomes available, exactly as it always was.</p>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2 class="cta-title">Be the first to experience it.</h2>
+  <p class="cta-sub">INT.LIFE is being built now.</p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+    <a href="index.html#signup" class="btn-p">Join the Waiting List</a>
+    <a href="index.html" class="btn-s">← Back to Home</a>
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo">
+    <span class="f-int">INT</span><div class="f-dot"></div><span class="f-life">LIFE</span>
+  </div>
+  <div class="f-links">
+    <a href="https://github.com/SakataMasahiro/intlife" target="_blank">GitHub</a>
+    <a href="index.html#declaration">Declaration</a>
+    <a href="index.html#builder">Join as Builder</a>
+    <a href="mailto:contact@int.life">contact@int.life</a>
+  </div>
+  <p class="f-copy">Built on Absolute Integrity · No Ads · No Compromise · Open to Everyone</p>
+</footer>
+
+</body>
+</html>
