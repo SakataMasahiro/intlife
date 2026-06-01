@@ -104,6 +104,24 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
 .evidence-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:1rem;}
 .evidence-desc{font-size:12px;color:rgba(255,255,255,.45);line-height:1.85;}
 @media(max-width:640px){.concept-grid{grid-template-columns:1fr;}.evidence-grid{grid-template-columns:1fr;}}
+.practice-section{background:var(--navy);padding:6rem 2rem;text-align:center;}
+.practice-title{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.5vw,28px);font-weight:300;color:rgba(255,255,255,.5);text-align:center;margin-bottom:3rem;letter-spacing:-.3px;}
+.practice-card{max-width:580px;margin:0 auto;padding:3rem 2.5rem;border:1px solid rgba(45,212,170,.2);border-radius:3px;background:rgba(45,212,170,.04);}
+.practice-question{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.5vw,26px);font-style:italic;color:rgba(255,255,255,.85);line-height:1.72;margin-bottom:2.5rem;letter-spacing:-.2px;}
+.timer-wrap{margin:0 0 2.5rem;padding:2rem 1.5rem;border:1px solid rgba(45,212,170,.15);border-radius:3px;background:rgba(45,212,170,.03);}
+.timer-label-text{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:1rem;}
+.timer-display{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,8vw,76px);font-weight:300;color:var(--health);line-height:1;margin-bottom:1.25rem;}
+.timer-btn{background:transparent;color:var(--health);border:1px solid rgba(45,212,170,.35);padding:10px 26px;border-radius:3px;font-family:'Jost',sans-serif;font-size:11px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:all .3s;}
+.timer-btn:hover{background:rgba(45,212,170,.08);}
+.practice-streak{margin-bottom:2rem;}
+.streak-count{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,7vw,68px);font-weight:600;color:var(--health);line-height:1;display:block;}
+.streak-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.3);display:block;margin-top:6px;}
+.practice-actions{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:.5rem;}
+.practice-btn-done{background:var(--health);color:var(--deep);border:none;padding:12px 32px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s;}
+.practice-btn-done:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(45,212,170,.35);}
+.practice-btn-skip{background:transparent;color:rgba(255,255,255,.32);border:1px solid rgba(255,255,255,.12);padding:12px 32px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;font-weight:400;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s;}
+.practice-btn-skip:hover{color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.25);}
+.practice-status{font-family:'Cormorant Garamond',serif;font-size:clamp(15px,2vw,19px);font-style:italic;color:var(--health);margin-top:.5rem;line-height:1.6;}
 </style>
 </head>
 <body>
@@ -256,6 +274,28 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
   </div>
 </section>
 
+<section class="practice-section">
+  <p class="sec-label">Today's Practice</p>
+  <h2 class="practice-title">One question. One commitment. One day at a time.</h2>
+  <div class="practice-card">
+    <p class="practice-question">"Can you give your body five minutes of complete stillness today?"</p>
+    <div class="timer-wrap" id="timerWrap">
+      <p class="timer-label-text">5-minute meditation</p>
+      <div class="timer-display" id="timerDisplay">5:00</div>
+      <button class="timer-btn" id="timerBtn" onclick="timerToggle()">Begin</button>
+    </div>
+    <div class="practice-streak">
+      <span class="streak-count" id="streakCount">0</span>
+      <span class="streak-label">day streak</span>
+    </div>
+    <div id="practiceActions" class="practice-actions">
+      <button class="practice-btn-done" onclick="practiceMarkDone()">Done for Today</button>
+      <button class="practice-btn-skip" onclick="practiceMarkSkip()">Not today</button>
+    </div>
+    <p id="practiceStatus" class="practice-status" style="display:none;"></p>
+  </div>
+</section>
+
 <section class="cta-section">
   <h2 class="cta-title">Be the first to experience it.</h2>
   <p class="cta-sub">INT.LIFE is being built now.</p>
@@ -279,5 +319,54 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
   <p class="f-copy">Built on Absolute Integrity · No Ads · No Compromise · Open to Everyone</p>
 </footer>
 
+<script>
+(function(){
+  var KEY='intlife_practice_health';
+  var today=new Date().toISOString().slice(0,10);
+  function yd(){var d=new Date();d.setDate(d.getDate()-1);return d.toISOString().slice(0,10);}
+  function load(){try{return JSON.parse(localStorage.getItem(KEY))||{};}catch(e){return {};}}
+  function save(d){localStorage.setItem(KEY,JSON.stringify(d));}
+  function showStatus(msg){
+    document.getElementById('practiceActions').style.display='none';
+    var s=document.getElementById('practiceStatus');s.textContent=msg;s.style.display='block';
+  }
+  function init(){
+    var d=load();document.getElementById('streakCount').textContent=d.streak||0;
+    if(d.todayDate===today)showStatus(d.todayStatus==='done'?'Practiced today. Come back tomorrow.':'Skipped today — tomorrow is a new beginning.');
+  }
+  window.practiceMarkDone=function(){
+    var d=load();
+    d.streak=(d.lastDoneDate===yd())?((d.streak||0)+1):1;
+    d.lastDoneDate=today;d.todayDate=today;d.todayStatus='done';save(d);
+    document.getElementById('streakCount').textContent=d.streak;
+    showStatus('Practiced today. Come back tomorrow.');
+  };
+  window.practiceMarkSkip=function(){
+    var d=load();d.todayDate=today;d.todayStatus='skipped';save(d);
+    showStatus('Skipped today — tomorrow is a new beginning.');
+  };
+  init();
+
+  var _secs=300,_running=false,_iv=null;
+  window.timerToggle=function(){
+    var disp=document.getElementById('timerDisplay'),btn=document.getElementById('timerBtn');
+    if(disp.textContent==='Done'){_secs=300;disp.textContent='5:00';btn.textContent='Begin';return;}
+    if(_running){clearInterval(_iv);_running=false;btn.textContent='Resume';}
+    else{
+      _running=true;btn.textContent='Pause';
+      _iv=setInterval(function(){
+        _secs--;
+        var m=Math.floor(_secs/60),s=_secs%60;
+        disp.textContent=m+':'+(s<10?'0':'')+s;
+        if(_secs<=0){
+          clearInterval(_iv);_running=false;
+          disp.textContent='Done';btn.textContent='Again';_secs=300;
+          practiceMarkDone();
+        }
+      },1000);
+    }
+  };
+})();
+</script>
 </body>
 </html>
