@@ -96,6 +96,11 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
 .practice-btn-skip{background:transparent;color:rgba(255,255,255,.32);border:1px solid rgba(255,255,255,.12);padding:12px 32px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;font-weight:400;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s;}
 .practice-btn-skip:hover{color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.25);}
 .practice-status{font-family:'Cormorant Garamond',serif;font-size:clamp(15px,2vw,19px);font-style:italic;color:var(--motivation);margin-top:.5rem;line-height:1.6;}
+.nav-right-group{display:flex;align-items:center;gap:1.5rem;}
+.nav-lang{display:flex;align-items:center;gap:4px;}
+.lang-btn{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.35);cursor:pointer;transition:color .2s;background:none;border:none;padding:2px 5px;}
+.lang-btn.active{color:#fff;font-weight:500;}
+.lang-divider{color:rgba(255,255,255,.18);font-size:10px;pointer-events:none;}
 </style>
 </head>
 <body>
@@ -104,7 +109,14 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
   <a href="index.html" class="nav-logo">
     <span class="nav-int">INT</span><div class="nav-dot"></div><span class="nav-life">LIFE</span>
   </a>
-  <a href="index.html" class="nav-back">All Dimensions</a>
+  <div class="nav-right-group">
+    <a href="index.html" class="nav-back">All Dimensions</a>
+    <div class="nav-lang">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <span class="lang-divider">|</span>
+      <button class="lang-btn" id="btn-ja" onclick="setLang('ja')">日本語</button>
+    </div>
+  </div>
 </nav>
 
 <section class="hero">
@@ -230,33 +242,131 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
 </footer>
 
 <script>
-(function(){
-  var KEY='intlife_practice_motivation';
-  var today=new Date().toISOString().slice(0,10);
-  function yd(){var d=new Date();d.setDate(d.getDate()-1);return d.toISOString().slice(0,10);}
-  function load(){try{return JSON.parse(localStorage.getItem(KEY))||{};}catch(e){return {};}}
-  function save(d){localStorage.setItem(KEY,JSON.stringify(d));}
-  function showStatus(msg){
-    document.getElementById('practiceActions').style.display='none';
-    var s=document.getElementById('practiceStatus');s.textContent=msg;s.style.display='block';
+var currentLang='en';
+var practiceStatusType=null;
+var L={
+  en:{
+    dimNumber:'Dimension 05',dimTagline:'Sustain the inner fire that drives consistent action.',
+    introQuote:'"Motivation is not the spark.<br>It is the wood — and the practice of keeping it dry."',
+    introBody:'INT.LIFE approaches motivation not as something you wait for, but as something you cultivate — through clarity of purpose, honest engagement with your energy, and systems that make action the path of least resistance.',
+    pillarsLabel:'Six Pillars',pillarsTitle:'The foundations of sustained drive.',
+    pillars:[
+      {name:'Purpose',desc:'Know your why — clearly, specifically, deeply. Vague purpose produces vague effort.'},
+      {name:'Vision',desc:'A vivid picture of the future self you are becoming is more powerful than any external reward.'},
+      {name:'Momentum',desc:'Small wins compound. The hardest part is always starting — so design the start to be irresistible.'},
+      {name:'Energy',desc:'You cannot run on empty. Managing your physical and emotional energy is the foundation of motivation.'},
+      {name:'Resilience',desc:'Setbacks are not evidence that you are wrong. They are data. Learn what they are teaching and continue.'},
+      {name:'Environment',desc:'Surround yourself with people, spaces, and signals that pull you toward who you are becoming.'}
+    ],
+    philLabel:'Our Approach',
+    philQuote:'"We do not gamify your life.<br>We help you find what already burns in you."',
+    philSub:'INT.LIFE will never reduce motivation to streaks and badges. We build tools that connect you to genuine purpose — the kind that does not require external pressure to sustain.',
+    foundersLabel:"Founder's Practice",foundersTitle:'Motivation as a living discipline.',
+    founderRole:'Founder, INT.LIFE',
+    founderDesc:'Masahiro built INT.LIFE without salary, without external validation, and without a guaranteed outcome — driven entirely by the conviction that this work matters. His practice of motivation is rooted in a single discipline: return, daily, to the question of why. Not as a ritual, but as a genuine act of remembrance. When purpose is clear, effort follows naturally. When it is not, no amount of discipline will compensate.',
+    scienceCards:[
+      {label:'Self-Determination Theory',title:'Intrinsic vs. extrinsic motivation.',desc:'Decades of research by Deci and Ryan show that intrinsic motivation — driven by genuine interest, meaning, or values — produces far superior long-term outcomes compared to extrinsic rewards. More striking: external rewards can actively crowd out intrinsic motivation. When you pay someone to do something they love, they may start loving it less. INT.LIFE is designed around this insight — we will never use rewards to replace meaning.'},
+      {label:'Implementation Intentions',title:'The power of when and where.',desc:'Research by Peter Gollwitzer shows that people who specify exactly when, where, and how they will act on a goal are two to three times more likely to follow through — not because of motivation, but because of planning. The brain responds to specificity. "I will exercise" is a wish. "I will run at 7am on Tuesday in the park" is a plan. INT.LIFE helps you translate desire into specific intention.'}
+    ],
+    metaxEyebrow:'META-X Philosophy',
+    metaxQuote:'"Most people are not unmotivated. They are disconnected — from their purpose, from their body, from the specific reasons why any of this matters to them personally. Reconnection is the practice."',
+    metaxBody:'META-X applied to Motivation means dissolving the story that motivation is something that either arrives or does not — as if it were weather, beyond your control. It means recognizing that the feeling of motivation is downstream of meaning, clarity, and physical state. When you observe your own patterns of resistance without judgment, you discover: most resistance is not laziness. It is misalignment — between what you are doing and what you actually care about. Fix the alignment, and the energy follows.',
+    practiceLabel:"Today's Practice",practiceTitle:'One question. One commitment. One day at a time.',
+    practiceQuestion:'"What is the deeper why behind what you are working toward right now?"',
+    streakLabel:'day streak',btnDone:'Done for Today',btnSkip:'Not today',
+    practiceDone:'Practiced today. Come back tomorrow.',practiceSkipped:'Skipped today — tomorrow is a new beginning.',
+    ctaTitle:'Be the first to experience it.',ctaSub:'INT.LIFE is being built now.',
+    ctaBtnP:'Join the Waiting List',ctaBtnS:'← Back to Home',
+    fCopy:'Built on Absolute Integrity · No Ads · No Compromise · Open to Everyone'
+  },
+  ja:{
+    dimNumber:'次元 05',dimTagline:'一貫した行動を駆動する、内なる炎を燃やし続ける。',
+    introQuote:'「モチベーションは火花ではない。<br>それは薪だ——そしてそれを乾かし続ける実践だ。」',
+    introBody:'INT.LIFEは、モチベーションを待つものとしてではなく、育てるものとして捉えます。目的の明晰さ、エネルギーとの誠実な関わり、行動を最も抵抗の少ない道にするシステムを通じて。',
+    pillarsLabel:'六つの柱',pillarsTitle:'持続する推進力の礎。',
+    pillars:[
+      {name:'目的',desc:'あなたの「なぜ」を知れ——明確に、具体的に、深く。曖昧な目的は曖昧な努力を生む。'},
+      {name:'ビジョン',desc:'あなたがなりつつある未来の自分の鮮やかなイメージは、いかなる外的報酬よりも強力だ。'},
+      {name:'モメンタム',desc:'小さな勝利は複利で積み重なる。最も難しいのは常に始めることだ——だから始めを抗いがたくデザインせよ。'},
+      {name:'エネルギー',desc:'空のタンクで走ることはできない。身体的・感情的エネルギーの管理が、モチベーションの基盤だ。'},
+      {name:'レジリエンス',desc:'後退はあなたが間違っているという証拠ではない。データだ。それが教えていることを学び、続けよ。'},
+      {name:'環境',desc:'あなたがなりつつある人物へと引き寄せる人々、空間、シグナルで自分を囲め。'}
+    ],
+    philLabel:'私たちのアプローチ',
+    philQuote:'「私たちはあなたの人生をゲーム化しない。<br>すでにあなたの中で燃えているものを見出す助けをする。」',
+    philSub:'INT.LIFEはモチベーションをストリークやバッジに還元することは決してしません。私たちは、外的プレッシャーなしに持続できる種類の、真の目的へとあなたをつなぐツールを構築します。',
+    foundersLabel:'創設者の実践',foundersTitle:'生きた規律としてのモチベーション。',
+    founderRole:'INT.LIFE 創設者',
+    founderDesc:'坂田雅弘はINT.LIFEを給与なし、外部の検証なし、保証された結果なしに構築しました——この仕事が重要だという確信だけに駆られて。彼のモチベーションの実践は一つの規律に根ざしています。毎日、なぜという問いに戻ること。儀式としてではなく、真の想起の行為として。目的が明確なとき、努力は自然に続きます。そうでないとき、いかなる量の規律も補償しません。',
+    scienceCards:[
+      {label:'自己決定理論',title:'内発的モチベーション対外発的モチベーション。',desc:'デシとライアンによる数十年の研究は、真の興味、意味、または価値観によって駆動される内発的モチベーションが、外発的報酬と比較してはるかに優れた長期的成果をもたらすことを示しています。さらに注目すべきことに、外発的報酬は内発的モチベーションを積極的に締め出すことがあります。誰かが愛することにお金を払うと、その人はそれをより愛さなくなるかもしれません。INT.LIFEはこの洞察のもとに設計されています——私たちは意味を報酬で置き換えることは決してしません。'},
+      {label:'実施意図',title:'いつ、どこでの力。',desc:'ピーター・ゴルヴィッツァーの研究は、目標に対していつ、どこで、どのように行動するかを正確に指定した人々が、計画ではなくモチベーションによってではなく、二から三倍実行に移す可能性が高いことを示しています。脳は具体性に反応します。「運動する」は願望です。「火曜日の午前7時に公園で走る」は計画です。INT.LIFEは欲求を具体的な意図へと変換する助けをします。'}
+    ],
+    metaxEyebrow:'META-X 哲学',
+    metaxQuote:'「ほとんどの人はモチベーションがないのではない。切断されているのだ——目的から、身体から、これが個人的に重要な具体的な理由から。再接続こそが実践だ。」',
+    metaxBody:'モチベーションにおけるMETA-Xとは、モチベーションはやって来るかやって来ないかのどちらかだという物語——まるで天気のように、あなたのコントロールを超えているかのような——を溶かすことを意味します。それは、モチベーションという感覚が意味、明晰さ、身体的状態の下流にあることを認識することです。あなたが自分の抵抗のパターンを裁かずに観察するとき、気づくことがあります。ほとんどの抵抗は怠惰ではない。それは乖離です——あなたがやっていることと、あなたが実際に大切にしていることの間の。乖離を直せば、エネルギーは続きます。',
+    practiceLabel:'今日の実践',practiceTitle:'一つの問い。一つの誓い。一日ずつ。',
+    practiceQuestion:'「今あなたが向かっていることの、より深い「なぜ」は何ですか？」',
+    streakLabel:'日連続',btnDone:'今日の実践を完了',btnSkip:'今日はスキップ',
+    practiceDone:'今日も実践しました。また明日。',practiceSkipped:'今日はお休み。明日また始めよう。',
+    ctaTitle:'最初の一人になってください。',ctaSub:'INT.LIFEは今、構築中です。',
+    ctaBtnP:'ウェイティングリストに参加',ctaBtnS:'← ホームに戻る',
+    fCopy:'透徹した誠実さの上に構築 · 広告なし · 妥協なし · すべての人に開かれている'
   }
-  function init(){
-    var d=load();document.getElementById('streakCount').textContent=d.streak||0;
-    if(d.todayDate===today)showStatus(d.todayStatus==='done'?'Practiced today. Come back tomorrow.':'Skipped today — tomorrow is a new beginning.');
-  }
-  window.practiceMarkDone=function(){
-    var d=load();
-    d.streak=(d.lastDoneDate===yd())?((d.streak||0)+1):1;
-    d.lastDoneDate=today;d.todayDate=today;d.todayStatus='done';save(d);
-    document.getElementById('streakCount').textContent=d.streak;
-    showStatus('Practiced today. Come back tomorrow.');
-  };
-  window.practiceMarkSkip=function(){
-    var d=load();d.todayDate=today;d.todayStatus='skipped';save(d);
-    showStatus('Skipped today — tomorrow is a new beginning.');
-  };
-  init();
-})();
+};
+function setLang(lang){
+  currentLang=lang;
+  document.getElementById('btn-en').classList.toggle('active',lang==='en');
+  document.getElementById('btn-ja').classList.toggle('active',lang==='ja');
+  document.documentElement.lang=lang;
+  var t=L[lang];
+  document.querySelector('.dim-number').textContent=t.dimNumber;
+  document.querySelector('.dim-tagline').textContent=t.dimTagline;
+  document.querySelector('.intro-quote').innerHTML=t.introQuote;
+  document.querySelector('.intro-body').textContent=t.introBody;
+  document.querySelector('.pillars .sec-label').textContent=t.pillarsLabel;
+  document.querySelector('.pillars-title').textContent=t.pillarsTitle;
+  var pCards=document.querySelectorAll('.pillar-card');
+  t.pillars.forEach(function(p,i){pCards[i].querySelector('.pillar-name').textContent=p.name;pCards[i].querySelector('.pillar-desc').textContent=p.desc;});
+  document.querySelector('.philosophy .sec-label').textContent=t.philLabel;
+  document.querySelector('.phil-quote').innerHTML=t.philQuote;
+  document.querySelector('.phil-sub').textContent=t.philSub;
+  document.querySelector('.founders .sec-label').textContent=t.foundersLabel;
+  document.querySelector('.founders-title').textContent=t.foundersTitle;
+  document.querySelector('.founder-role').textContent=t.founderRole;
+  document.querySelector('.founder-desc').textContent=t.founderDesc;
+  var sCards=document.querySelectorAll('.science-card');
+  t.scienceCards.forEach(function(s,i){sCards[i].querySelector('.science-label').textContent=s.label;sCards[i].querySelector('.science-title').textContent=s.title;sCards[i].querySelector('.science-desc').textContent=s.desc;});
+  document.querySelector('.metax-eyebrow').textContent=t.metaxEyebrow;
+  document.querySelector('.metax-quote').textContent=t.metaxQuote;
+  document.querySelector('.metax-body').textContent=t.metaxBody;
+  document.querySelector('.practice-section .sec-label').textContent=t.practiceLabel;
+  document.querySelector('.practice-title').textContent=t.practiceTitle;
+  document.querySelector('.practice-question').textContent=t.practiceQuestion;
+  document.querySelector('.streak-label').textContent=t.streakLabel;
+  document.querySelector('.practice-btn-done').textContent=t.btnDone;
+  document.querySelector('.practice-btn-skip').textContent=t.btnSkip;
+  document.querySelector('.cta-title').textContent=t.ctaTitle;
+  document.querySelector('.cta-sub').textContent=t.ctaSub;
+  document.querySelector('.btn-p').textContent=t.ctaBtnP;
+  document.querySelector('.btn-s').textContent=t.ctaBtnS;
+  document.querySelector('.f-copy').textContent=t.fCopy;
+  if(practiceStatusType){document.getElementById('practiceStatus').textContent=practiceStatusType==='done'?t.practiceDone:t.practiceSkipped;}
+}
+var KEY='intlife_practice_motivation';
+var today=new Date().toISOString().slice(0,10);
+function yd(){var d=new Date();d.setDate(d.getDate()-1);return d.toISOString().slice(0,10);}
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{};}catch(e){return {};}}
+function save(d){localStorage.setItem(KEY,JSON.stringify(d));}
+function showStatus(type){
+  practiceStatusType=type;var t=L[currentLang];
+  document.getElementById('practiceActions').style.display='none';
+  var s=document.getElementById('practiceStatus');s.textContent=type==='done'?t.practiceDone:t.practiceSkipped;s.style.display='block';
+}
+function init(){var d=load();document.getElementById('streakCount').textContent=d.streak||0;if(d.todayDate===today)showStatus(d.todayStatus==='done'?'done':'skipped');}
+window.practiceMarkDone=function(){var d=load();d.streak=(d.lastDoneDate===yd())?((d.streak||0)+1):1;d.lastDoneDate=today;d.todayDate=today;d.todayStatus='done';save(d);document.getElementById('streakCount').textContent=d.streak;showStatus('done');};
+window.practiceMarkSkip=function(){var d=load();d.todayDate=today;d.todayStatus='skipped';save(d);showStatus('skipped');};
+init();setLang('en');
 </script>
 </body>
 </html>

@@ -99,6 +99,11 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
 .practice-btn-skip{background:transparent;color:rgba(255,255,255,.32);border:1px solid rgba(255,255,255,.12);padding:12px 32px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;font-weight:400;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s;}
 .practice-btn-skip:hover{color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.25);}
 .practice-status{font-family:'Cormorant Garamond',serif;font-size:clamp(15px,2vw,19px);font-style:italic;color:var(--flourishing);margin-top:.5rem;line-height:1.6;}
+.nav-right-group{display:flex;align-items:center;gap:1.5rem;}
+.nav-lang{display:flex;align-items:center;gap:4px;}
+.lang-btn{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.35);cursor:pointer;transition:color .2s;background:none;border:none;padding:2px 5px;}
+.lang-btn.active{color:#fff;font-weight:500;}
+.lang-divider{color:rgba(255,255,255,.18);font-size:10px;pointer-events:none;}
 </style>
 </head>
 <body>
@@ -107,7 +112,14 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
   <a href="index.html" class="nav-logo">
     <span class="nav-int">INT</span><div class="nav-dot"></div><span class="nav-life">LIFE</span>
   </a>
-  <a href="index.html" class="nav-back">All Dimensions</a>
+  <div class="nav-right-group">
+    <a href="index.html" class="nav-back">All Dimensions</a>
+    <div class="nav-lang">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <span class="lang-divider">|</span>
+      <button class="lang-btn" id="btn-ja" onclick="setLang('ja')">日本語</button>
+    </div>
+  </div>
 </nav>
 
 <section class="hero">
@@ -257,33 +269,129 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
 </footer>
 
 <script>
-(function(){
-  var KEY='intlife_practice_flourishing';
-  var today=new Date().toISOString().slice(0,10);
-  function yd(){var d=new Date();d.setDate(d.getDate()-1);return d.toISOString().slice(0,10);}
-  function load(){try{return JSON.parse(localStorage.getItem(KEY))||{};}catch(e){return {};}}
-  function save(d){localStorage.setItem(KEY,JSON.stringify(d));}
-  function showStatus(msg){
-    document.getElementById('practiceActions').style.display='none';
-    var s=document.getElementById('practiceStatus');s.textContent=msg;s.style.display='block';
+var currentLang='en';
+var practiceStatusType=null;
+var L={
+  en:{
+    dimNumber:'Dimension 07',dimTagline:'The outcome when all seven dimensions align.',
+    introQuote:'"Flourishing is not an achievement.<br>It is a way of moving through life."',
+    introBody:'INT.LIFE was built for this: the moment when time is intentional, knowledge is deep, health is whole, integrity is embodied, motivation is genuine, skills are sharp — and a human being is finally, fully alive. That is flourishing. And it is available to everyone.',
+    pillarsLabel:'Six Dimensions of Flourishing',pillarsTitle:'What it looks and feels like.',
+    pillars:[
+      {name:'Integration',desc:'All dimensions are attended to, none abandoned. The life is not compartmentalized — it is whole.'},
+      {name:'Joy',desc:'Not the absence of difficulty, but a fundamental yes to the life you are living, exactly as it is.'},
+      {name:'Meaning',desc:'What you do connects to something larger than yourself — something worth the cost of your one life.'},
+      {name:'Contribution',desc:'Flourishing overflows. A life fully lived inevitably becomes a gift to others — not as duty, but as expression.'},
+      {name:'Growth',desc:'Still becoming. Comfortable with the distance still to travel. In love with the journey, not just the destination.'},
+      {name:'Peace',desc:'Not the absence of challenge, but the absence of war with yourself. At rest in who you are and where you are going.'}
+    ],
+    philLabel:'Our Vision',
+    philQuote:'"This is not the final destination.<br>It is the natural result of the journey."',
+    philSub:'INT.LIFE does not promise flourishing. We build the conditions in which it can emerge — for every human being on earth, regardless of where they start.',
+    dimsLabel:'The Path',dimsTitle:'The six dimensions that lead here.',
+    dimNames:['Time','Knowledge','Health','Integrity','Motivation','Skills'],
+    foundersLabel:"Founder's Vision",foundersTitle:'What we are building toward.',
+    founderRole:'Founder, INT.LIFE',
+    founderDesc:'Masahiro built INT.LIFE from a single conviction: that every human being — regardless of where they were born, what resources they have, or what they have been through — deserves the tools to live their fullest life. Not a productive life. Not an optimized life. A fully human life. Flourishing is what that looks like when it arrives. And it is the reason this project exists.',
+    metaxEyebrow:'META-X Philosophy',
+    metaxQuote:'"Flourishing is not the reward for getting everything right. It is the natural state of a human being who has stopped fighting against themselves — who has learned to act from clarity rather than fear, from love rather than lack, from choice rather than compulsion."',
+    metaxBody:'META-X is the philosophical framework that underlies all seven dimensions of INT.LIFE. Its core insight: most human suffering is not caused by external circumstances, but by invisible internal patterns — patterns of thinking, reacting, and relating that were formed in the past and now run on autopilot. Flourishing becomes possible not by adding more to your life, but by dissolving what is in the way. When those patterns are seen clearly — without judgment, without resistance — they begin to release. And in that release, the fullness of life becomes available, exactly as it always was.',
+    practiceLabel:"Today's Practice",practiceTitle:'One question. One commitment. One day at a time.',
+    practiceQuestion:'"If today were the blueprint for your life, would you be living it well?"',
+    streakLabel:'day streak',btnDone:'Done for Today',btnSkip:'Not today',
+    practiceDone:'Practiced today. Come back tomorrow.',practiceSkipped:'Skipped today — tomorrow is a new beginning.',
+    ctaTitle:'Be the first to experience it.',ctaSub:'INT.LIFE is being built now.',
+    ctaBtnP:'Join the Waiting List',ctaBtnS:'← Back to Home',
+    fCopy:'Built on Absolute Integrity · No Ads · No Compromise · Open to Everyone'
+  },
+  ja:{
+    dimNumber:'次元 07',dimTagline:'七つの次元すべてが整合したときの、必然の結果。',
+    introQuote:'「繁栄は達成ではない。<br>それは人生を歩む方法だ。」',
+    introBody:'INT.LIFEはこのために作られました。時間が意図的で、知識が深く、健康が全体的で、誠実さが体現され、モチベーションが本物で、スキルが鋭い——そして一人の人間がついに、完全に生きている瞬間のために。それが繁栄です。そしてそれはすべての人に開かれています。',
+    pillarsLabel:'繁栄の六つの次元',pillarsTitle:'それがどのように見え、感じられるか。',
+    pillars:[
+      {name:'統合',desc:'すべての次元が顧みられ、一つも見捨てられていない。人生は区切られていない——それは全体だ。'},
+      {name:'喜び',desc:'困難の不在ではなく、あなたが生きている人生への、ありのままの根本的な「はい」。'},
+      {name:'意味',desc:'あなたがすることは、自分よりも大きな何かにつながっている——あなたの一つの人生のコストに値する何かに。'},
+      {name:'貢献',desc:'繁栄は溢れ出す。完全に生きられた人生は必然的に他者への贈り物となる——義務としてではなく、表現として。'},
+      {name:'成長',desc:'まだなりつつある。旅すべき距離に安らぎを感じている。目的地だけでなく、旅に恋している。'},
+      {name:'平和',desc:'挑戦の不在ではなく、自分自身との戦いの不在。あなたが誰であり、どこへ向かうかに安らいでいる。'}
+    ],
+    philLabel:'私たちのビジョン',
+    philQuote:'「これは最終的な目的地ではない。<br>それは旅の自然な結果だ。」',
+    philSub:'INT.LIFEは繁栄を約束しません。私たちは、それが生まれることのできる条件を構築します——どこから始めるかに関わらず、地球上のすべての人間のために。',
+    dimsLabel:'道',dimsTitle:'ここへと導く六つの次元。',
+    dimNames:['時間','知識','健康','誠実さ','モチベーション','スキル'],
+    foundersLabel:'創設者のビジョン',foundersTitle:'私たちが向かって構築しているもの。',
+    founderRole:'INT.LIFE 創設者',
+    founderDesc:'坂田雅弘はINT.LIFEを一つの確信から構築しました。どこに生まれ、どんな資源を持ち、何を経験してきたかに関わらず、すべての人間は最も充実した人生を生きるためのツールに値する。生産的な人生ではない。最適化された人生でもない。完全に人間的な人生を。繁栄とは、それが訪れたときにどのように見えるかです。そしてそれがこのプロジェクトが存在する理由です。',
+    metaxEyebrow:'META-X 哲学',
+    metaxQuote:'「繁栄はすべてを正しくこなすことへの報酬ではない。それは自分自身と戦うことをやめた人間の自然な状態だ——恐れではなく明晰さから、欠乏ではなく愛から、強迫ではなく選択から行動することを学んだ人の。」',
+    metaxBody:'META-XはINT.LIFEの七つすべての次元の根底にある哲学的フレームワークです。その核心的洞察：ほとんどの人間の苦しみは外部の状況によって引き起こされるのではなく、見えない内部パターン——過去に形成され、今やオートパイロットで動く思考、反応、関係のパターン——によって引き起こされます。繁栄は人生にさらに多くを加えることによってではなく、邪魔しているものを溶かすことによって可能になります。そのパターンが明晰に——裁きなく、抵抗なく——見られるとき、それらは解放し始めます。そしてその解放の中で、人生の充実さは、常にそうであったように、利用可能になります。',
+    practiceLabel:'今日の実践',practiceTitle:'一つの問い。一つの誓い。一日ずつ。',
+    practiceQuestion:'「今日があなたの人生の設計図だとしたら、あなたはそれをよく生きていますか？」',
+    streakLabel:'日連続',btnDone:'今日の実践を完了',btnSkip:'今日はスキップ',
+    practiceDone:'今日も実践しました。また明日。',practiceSkipped:'今日はお休み。明日また始めよう。',
+    ctaTitle:'最初の一人になってください。',ctaSub:'INT.LIFEは今、構築中です。',
+    ctaBtnP:'ウェイティングリストに参加',ctaBtnS:'← ホームに戻る',
+    fCopy:'透徹した誠実さの上に構築 · 広告なし · 妥協なし · すべての人に開かれている'
   }
-  function init(){
-    var d=load();document.getElementById('streakCount').textContent=d.streak||0;
-    if(d.todayDate===today)showStatus(d.todayStatus==='done'?'Practiced today. Come back tomorrow.':'Skipped today — tomorrow is a new beginning.');
-  }
-  window.practiceMarkDone=function(){
-    var d=load();
-    d.streak=(d.lastDoneDate===yd())?((d.streak||0)+1):1;
-    d.lastDoneDate=today;d.todayDate=today;d.todayStatus='done';save(d);
-    document.getElementById('streakCount').textContent=d.streak;
-    showStatus('Practiced today. Come back tomorrow.');
-  };
-  window.practiceMarkSkip=function(){
-    var d=load();d.todayDate=today;d.todayStatus='skipped';save(d);
-    showStatus('Skipped today — tomorrow is a new beginning.');
-  };
-  init();
-})();
+};
+function setLang(lang){
+  currentLang=lang;
+  document.getElementById('btn-en').classList.toggle('active',lang==='en');
+  document.getElementById('btn-ja').classList.toggle('active',lang==='ja');
+  document.documentElement.lang=lang;
+  var t=L[lang];
+  document.querySelector('.dim-number').textContent=t.dimNumber;
+  document.querySelector('.dim-tagline').textContent=t.dimTagline;
+  document.querySelector('.intro-quote').innerHTML=t.introQuote;
+  document.querySelector('.intro-body').textContent=t.introBody;
+  document.querySelector('.pillars .sec-label').textContent=t.pillarsLabel;
+  document.querySelector('.pillars-title').textContent=t.pillarsTitle;
+  var pCards=document.querySelectorAll('.pillar-card');
+  t.pillars.forEach(function(p,i){pCards[i].querySelector('.pillar-name').textContent=p.name;pCards[i].querySelector('.pillar-desc').textContent=p.desc;});
+  document.querySelector('.philosophy .sec-label').textContent=t.philLabel;
+  document.querySelector('.phil-quote').innerHTML=t.philQuote;
+  document.querySelector('.phil-sub').textContent=t.philSub;
+  document.querySelector('.dims-section .sec-label').textContent=t.dimsLabel;
+  document.querySelector('.dims-title').textContent=t.dimsTitle;
+  var dItems=document.querySelectorAll('.dim-name-small');
+  t.dimNames.forEach(function(n,i){dItems[i].textContent=n;});
+  document.querySelector('.founders .sec-label').textContent=t.foundersLabel;
+  document.querySelector('.founders-title').textContent=t.foundersTitle;
+  document.querySelector('.founder-role').textContent=t.founderRole;
+  document.querySelector('.founder-desc').textContent=t.founderDesc;
+  document.querySelector('.metax-eyebrow').textContent=t.metaxEyebrow;
+  document.querySelector('.metax-quote').textContent=t.metaxQuote;
+  document.querySelector('.metax-body').textContent=t.metaxBody;
+  document.querySelector('.practice-section .sec-label').textContent=t.practiceLabel;
+  document.querySelector('.practice-title').textContent=t.practiceTitle;
+  document.querySelector('.practice-question').textContent=t.practiceQuestion;
+  document.querySelector('.streak-label').textContent=t.streakLabel;
+  document.querySelector('.practice-btn-done').textContent=t.btnDone;
+  document.querySelector('.practice-btn-skip').textContent=t.btnSkip;
+  document.querySelector('.cta-title').textContent=t.ctaTitle;
+  document.querySelector('.cta-sub').textContent=t.ctaSub;
+  document.querySelector('.btn-p').textContent=t.ctaBtnP;
+  document.querySelector('.btn-s').textContent=t.ctaBtnS;
+  document.querySelector('.f-copy').textContent=t.fCopy;
+  if(practiceStatusType){document.getElementById('practiceStatus').textContent=practiceStatusType==='done'?t.practiceDone:t.practiceSkipped;}
+}
+var KEY='intlife_practice_flourishing';
+var today=new Date().toISOString().slice(0,10);
+function yd(){var d=new Date();d.setDate(d.getDate()-1);return d.toISOString().slice(0,10);}
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{};}catch(e){return {};}}
+function save(d){localStorage.setItem(KEY,JSON.stringify(d));}
+function showStatus(type){
+  practiceStatusType=type;var t=L[currentLang];
+  document.getElementById('practiceActions').style.display='none';
+  var s=document.getElementById('practiceStatus');s.textContent=type==='done'?t.practiceDone:t.practiceSkipped;s.style.display='block';
+}
+function init(){var d=load();document.getElementById('streakCount').textContent=d.streak||0;if(d.todayDate===today)showStatus(d.todayStatus==='done'?'done':'skipped');}
+window.practiceMarkDone=function(){var d=load();d.streak=(d.lastDoneDate===yd())?((d.streak||0)+1):1;d.lastDoneDate=today;d.todayDate=today;d.todayStatus='done';save(d);document.getElementById('streakCount').textContent=d.streak;showStatus('done');};
+window.practiceMarkSkip=function(){var d=load();d.todayDate=today;d.todayStatus='skipped';save(d);showStatus('skipped');};
+init();setLang('en');
 </script>
 </body>
 </html>

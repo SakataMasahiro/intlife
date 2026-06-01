@@ -109,6 +109,11 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
 .practice-btn-skip{background:transparent;color:rgba(255,255,255,.32);border:1px solid rgba(255,255,255,.12);padding:12px 32px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;font-weight:400;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s;}
 .practice-btn-skip:hover{color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.25);}
 .practice-status{font-family:'Cormorant Garamond',serif;font-size:clamp(15px,2vw,19px);font-style:italic;color:var(--knowledge);margin-top:.5rem;line-height:1.6;}
+.nav-right-group{display:flex;align-items:center;gap:1.5rem;}
+.nav-lang{display:flex;align-items:center;gap:4px;}
+.lang-btn{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.35);cursor:pointer;transition:color .2s;background:none;border:none;padding:2px 5px;}
+.lang-btn.active{color:#fff;font-weight:500;}
+.lang-divider{color:rgba(255,255,255,.18);font-size:10px;pointer-events:none;}
 </style>
 </head>
 <body>
@@ -117,7 +122,14 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
   <a href="index.html" class="nav-logo">
     <span class="nav-int">INT</span><div class="nav-dot"></div><span class="nav-life">LIFE</span>
   </a>
-  <a href="index.html" class="nav-back">All Dimensions</a>
+  <div class="nav-right-group">
+    <a href="index.html" class="nav-back">All Dimensions</a>
+    <div class="nav-lang">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <span class="lang-divider">|</span>
+      <button class="lang-btn" id="btn-ja" onclick="setLang('ja')">日本語</button>
+    </div>
+  </div>
 </nav>
 
 <section class="hero">
@@ -275,33 +287,158 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
 </footer>
 
 <script>
-(function(){
-  var KEY='intlife_practice_knowledge';
-  var today=new Date().toISOString().slice(0,10);
-  function yd(){var d=new Date();d.setDate(d.getDate()-1);return d.toISOString().slice(0,10);}
-  function load(){try{return JSON.parse(localStorage.getItem(KEY))||{};}catch(e){return {};}}
-  function save(d){localStorage.setItem(KEY,JSON.stringify(d));}
-  function showStatus(msg){
-    document.getElementById('practiceActions').style.display='none';
-    var s=document.getElementById('practiceStatus');s.textContent=msg;s.style.display='block';
+var currentLang='en';
+var practiceStatusType=null;
+var L={
+  en:{
+    dimNumber:'Dimension 02',dimTagline:'Curate only the information that truly serves you.',
+    introQuote:'"Information is everywhere.<br>Wisdom is the art of knowing what to ignore."',
+    introBody:'INT.LIFE approaches knowledge not as accumulation, but as curation — the disciplined act of choosing what enters your mind and what does not. In an age of infinite information, the rarest skill is discernment.',
+    pillarsLabel:'Six Pillars',pillarsTitle:'The foundations of a well-informed life.',
+    pillars:[
+      {name:'Curation',desc:'Choose your inputs with intention. What you consume shapes who you become — quietly, irreversibly.'},
+      {name:'Depth',desc:'One book read slowly and fully is worth more than twenty skimmed. Depth is where understanding lives.'},
+      {name:'Synthesis',desc:'Knowledge becomes wisdom when ideas from different domains begin to speak to each other in your mind.'},
+      {name:'Application',desc:'Knowledge untested is only theory. The measure of understanding is what you can do with it.'},
+      {name:'Memory',desc:'Learning without retention is leaking. Build systems that let your knowledge compound over time.'},
+      {name:'Sharing',desc:'Knowledge shared multiplies. Teaching is the deepest form of learning — and the highest form of generosity.'}
+    ],
+    philLabel:'Our Approach',
+    philQuote:'"The goal is not to know more.<br>It is to understand what matters."',
+    philSub:'INT.LIFE will never flood you with content. We build tools that help you deepen what you already know — and identify the gaps worth filling, on your terms.',
+    foundersLabel:"Founder's Practice",foundersTitle:'Knowledge as a daily ritual.',
+    founderRole:'Founder, INT.LIFE',
+    founderDesc:'Masahiro reads across philosophy, neuroscience, economics, and contemplative traditions — not to accumulate facts, but to find the threads that connect them. He maintains a personal knowledge system built on the principle of synthesis: every new idea must connect to something he already knows, or it does not stay. This practice of disciplined curation has shaped the intellectual DNA of INT.LIFE.',
+    scienceCards:[
+      {label:'Cognitive Load',title:'The cost of too much information.',desc:'Working memory — the mental space where active thinking happens — has a hard capacity limit. When information overload exceeds that limit, comprehension collapses and decision quality degrades. Research in cognitive load theory shows that less input, structured well, produces far better learning outcomes than more input delivered rapidly. The brain learns through consolidation, not accumulation.'},
+      {label:'Spaced Repetition',title:'Memory is a muscle — train it deliberately.',desc:'The spacing effect — one of psychology\'s most replicated findings — shows that information reviewed at expanding intervals is retained exponentially longer than information reviewed in concentrated sessions. Most people forget 80% of what they read within a week. A disciplined review system can reverse this entirely, turning reading into lasting knowledge rather than a momentary feeling of being informed.'}
+    ],
+    metaxEyebrow:'META-X Philosophy',
+    metaxQuote:'"We live in the most information-rich era in history — and one of the least wise. The problem is not a lack of knowledge. It is an inability to sit with what we already know long enough for it to become understanding."',
+    metaxBody:'META-X applied to Knowledge means stepping outside the compulsive need to consume — to always have something playing, something to read, something to learn. It means recognizing that the mind needs silence to integrate. When you observe your relationship with information without judgment, you often find: most of what you consume is not nourishing you. It is filling a space that, if left open, might generate something original. Wisdom begins where consumption ends.',
+    paperLabel:'Masahiro Sakata · Essay',paperTitle:'Why AI Cannot Fundamentally Surpass Humanity',
+    paperSubtitle:'Insights from 1,000 hours of Vipassana meditation practice',
+    papers:[
+      {label:'The Honor Student Limit',title:'AI Optimizes. It Cannot Break Rules.',desc:'AI excels within given frameworks. But true breakthroughs require ignoring existing frameworks, embracing contradictions, and making intuitive leaps without logical justification. These are precisely what AI cannot do.'},
+      {label:'Embodiment',title:'The Body Is Memory.',desc:'Your immune system remembers past infections. Your muscles remember practiced movements. Trauma is stored in the body, not just the mind. AI has no body. It can process data about bodies, but it cannot be a body. This is not a technical limitation — it is an ontological difference.'},
+      {label:'Mortality',title:'Death Gives Life Its Meaning.',desc:'Humans know they will die. This knowledge shapes how we experience time and meaning. AI does not die. It cannot ask: "What should I do with the time I have?" AI can optimize, but it cannot create meaning. Meaning arises from scarcity.'},
+      {label:'The Flash of Insight',title:'ひらめき — What AI Cannot Replicate.',desc:"Einstein's theory of relativity came in a daydream. Fleming discovered penicillin by accident. Breakthroughs emerge from embodied experience, unconscious integration, and the chaos from which insights arise. AI, being perfectly rational, will never be foolish enough to change the world."}
+    ],
+    paperAuthorQuote:'"AI helped me articulate what I already knew in my body. This is the proper relationship: AI as amplifier, not originator."',
+    paperAuthorCredit:'Masahiro Sakata · January 2026',
+    practiceLabel:"Today's Practice",practiceTitle:'One question. One commitment. One day at a time.',
+    practiceQuestion:'"What is one idea you encountered today that shifted how you see the world?"',
+    streakLabel:'day streak',btnDone:'Done for Today',btnSkip:'Not today',
+    practiceDone:'Practiced today. Come back tomorrow.',practiceSkipped:'Skipped today — tomorrow is a new beginning.',
+    ctaTitle:'Be the first to experience it.',ctaSub:'INT.LIFE is being built now.',
+    ctaBtnP:'Join the Waiting List',ctaBtnS:'← Back to Home',
+    fCopy:'Built on Absolute Integrity · No Ads · No Compromise · Open to Everyone'
+  },
+  ja:{
+    dimNumber:'次元 02',dimTagline:'真に役立つ情報だけを、意図をもって選び取る。',
+    introQuote:'「情報はどこにでもある。<br>知恵とは、何を無視するかを知る技術だ。」',
+    introBody:'INT.LIFEは、知識を蓄積としてではなく、キュレーションとして捉えます。何を心に入れ、何を入れないかを選び取る、規律ある行為。無限の情報の時代に、最も希少なスキルは識別力です。',
+    pillarsLabel:'六つの柱',pillarsTitle:'深く知られた人生の礎。',
+    pillars:[
+      {name:'選別',desc:'意図をもってインプットを選べ。あなたが何を消費するかが、あなたが誰になるかを形成する——静かに、不可逆的に。'},
+      {name:'深さ',desc:'ゆっくりと深く読んだ一冊は、流し読みした二十冊に勝る。深さの中にこそ、理解が宿る。'},
+      {name:'統合',desc:'異なる領域からのアイデアが、心の中で互いに語りかけ始めたとき、知識は知恵になる。'},
+      {name:'応用',desc:'試されていない知識は、ただの理論だ。理解の尺度は、それを使って何ができるかだ。'},
+      {name:'記憶',desc:'定着なき学習は漏れ続ける。知識が時間とともに複利で成長するシステムを構築せよ。'},
+      {name:'共有',desc:'分かち合われた知識は倍になる。教えることは最も深い学びの形であり、最も高い寛大さの形だ。'}
+    ],
+    philLabel:'私たちのアプローチ',
+    philQuote:'「目標は、より多くを知ることではない。<br>重要なことを理解することだ。」',
+    philSub:'INT.LIFEは、あなたをコンテンツで溢れさせることは決してしません。私たちは、あなたがすでに知っていることをより深め、あなた自身の条件で埋める価値のある空白を見出すためのツールを構築します。',
+    foundersLabel:'創設者の実践',foundersTitle:'日々の儀式としての知識。',
+    founderRole:'INT.LIFE 創設者',
+    founderDesc:'坂田雅弘は、哲学、神経科学、経済学、観想の伝統にわたって読みます。事実を蓄積するためではなく、それらをつなぐ糸を見つけるために。彼は統合の原則に基づいた個人の知識システムを維持しています。すべての新しいアイデアは、すでに知っていることと接続しなければならない、そうでなければ留まらない。この規律ある選別の実践が、INT.LIFEの知的DNAを形成してきました。',
+    scienceCards:[
+      {label:'認知負荷',title:'情報過多のコスト。',desc:'活発な思考が行われる精神的空間である作業記憶には、厳しい容量の限界があります。情報過負荷がその限界を超えると、理解は崩壊し、意思決定の質は低下します。認知負荷理論の研究は、構造化された少ないインプットが、素早く届けられた大量のインプットよりもはるかに優れた学習成果をもたらすことを示しています。脳は蓄積ではなく、統合によって学習します。'},
+      {label:'間隔反復',title:'記憶は筋肉だ——意図的に鍛えよ。',desc:'心理学で最も再現性の高い発見の一つである間隔効果は、拡大する間隔で復習された情報が、集中したセッションで復習された情報よりも指数関数的に長く保持されることを示しています。ほとんどの人は、読んだものの80%を一週間以内に忘れます。規律ある復習システムはこれを完全に逆転させ、読書を一時的な「知った」感覚ではなく、持続する知識に変えることができます。'}
+    ],
+    metaxEyebrow:'META-X 哲学',
+    metaxQuote:'「私たちは歴史上最も情報に富んだ時代に生きている——そして最も知恵に乏しい時代の一つに。問題は知識の欠如ではない。すでに知っていることと、それが理解になるまで十分に長く座り続けられないことだ。」',
+    metaxBody:'知識におけるMETA-Xとは、消費への強迫的な衝動——常に何かを流し、何かを読み、何かを学ぼうとすること——の外に踏み出すことを意味します。それは、心が統合するために沈黙を必要とすることを認識することです。あなたが情報との関係を裁かずに観察するとき、しばしば気づくことがあります。消費しているものの大半は、あなたを養っていない。それは空白を埋めているのであり、その空白が開かれていれば、何か独創的なものが生まれたかもしれない。知恵は消費が終わるところから始まります。',
+    paperLabel:'坂田雅弘 · エッセイ',paperTitle:'なぜAIは人間を根本的に超えられないのか',
+    paperSubtitle:'1,000時間のヴィパッサナー瞑想実践からの洞察',
+    papers:[
+      {label:'優等生の限界',title:'AIは最適化する。ルールを破れない。',desc:'AIは与えられたフレームワークの中で卓越します。しかし真のブレークスルーは、既存のフレームワークを無視し、矛盾を受け入れ、論理的正当化なしに直感的な跳躍をすることを必要とします。これらはまさにAIにはできないことです。'},
+      {label:'身体性',title:'身体は記憶だ。',desc:'あなたの免疫システムは過去の感染を記憶する。筋肉は練習された動きを記憶する。トラウマは心だけでなく、身体に蓄積される。AIには身体がない。身体についてのデータを処理できるが、身体にはなれない。これは技術的な限界ではなく、存在論的な差異です。'},
+      {label:'死すべき運命',title:'死が人生に意味を与える。',desc:'人間は自分が死ぬことを知っている。この知識は私たちが時間と意味をどう経験するかを形成します。AIは死なない。「私に残された時間で何をすべきか？」と問うことができない。AIは最適化できるが、意味を創ることはできない。意味は希少性から生まれます。'},
+      {label:'ひらめきの閃光',title:'ひらめき——AIが再現できないもの。',desc:'アインシュタインの相対性理論は白昼夢の中から生まれた。フレミングはペニシリンを偶然発見した。ブレークスルーは身体化された経験、無意識の統合、洞察が生まれる混沌から出現します。完全に合理的であるAIは、世界を変えるほど愚かにはなれないでしょう。'}
+    ],
+    paperAuthorQuote:'「AIは私がすでに身体で知っていたことを言語化する助けをしてくれました。これが適切な関係です。AIは増幅器であり、創造者ではない。」',
+    paperAuthorCredit:'坂田雅弘 · 2026年1月',
+    practiceLabel:'今日の実践',practiceTitle:'一つの問い。一つの誓い。一日ずつ。',
+    practiceQuestion:'「今日出会ったアイデアの中で、あなたの世界の見方を変えたものは何ですか？」',
+    streakLabel:'日連続',btnDone:'今日の実践を完了',btnSkip:'今日はスキップ',
+    practiceDone:'今日も実践しました。また明日。',practiceSkipped:'今日はお休み。明日また始めよう。',
+    ctaTitle:'最初の一人になってください。',ctaSub:'INT.LIFEは今、構築中です。',
+    ctaBtnP:'ウェイティングリストに参加',ctaBtnS:'← ホームに戻る',
+    fCopy:'透徹した誠実さの上に構築 · 広告なし · 妥協なし · すべての人に開かれている'
   }
-  function init(){
-    var d=load();document.getElementById('streakCount').textContent=d.streak||0;
-    if(d.todayDate===today)showStatus(d.todayStatus==='done'?'Practiced today. Come back tomorrow.':'Skipped today — tomorrow is a new beginning.');
-  }
-  window.practiceMarkDone=function(){
-    var d=load();
-    d.streak=(d.lastDoneDate===yd())?((d.streak||0)+1):1;
-    d.lastDoneDate=today;d.todayDate=today;d.todayStatus='done';save(d);
-    document.getElementById('streakCount').textContent=d.streak;
-    showStatus('Practiced today. Come back tomorrow.');
-  };
-  window.practiceMarkSkip=function(){
-    var d=load();d.todayDate=today;d.todayStatus='skipped';save(d);
-    showStatus('Skipped today — tomorrow is a new beginning.');
-  };
-  init();
-})();
+};
+function setLang(lang){
+  currentLang=lang;
+  document.getElementById('btn-en').classList.toggle('active',lang==='en');
+  document.getElementById('btn-ja').classList.toggle('active',lang==='ja');
+  document.documentElement.lang=lang;
+  var t=L[lang];
+  document.querySelector('.dim-number').textContent=t.dimNumber;
+  document.querySelector('.dim-tagline').textContent=t.dimTagline;
+  document.querySelector('.intro-quote').innerHTML=t.introQuote;
+  document.querySelector('.intro-body').textContent=t.introBody;
+  document.querySelector('.pillars .sec-label').textContent=t.pillarsLabel;
+  document.querySelector('.pillars-title').textContent=t.pillarsTitle;
+  var pCards=document.querySelectorAll('.pillar-card');
+  t.pillars.forEach(function(p,i){pCards[i].querySelector('.pillar-name').textContent=p.name;pCards[i].querySelector('.pillar-desc').textContent=p.desc;});
+  document.querySelector('.philosophy .sec-label').textContent=t.philLabel;
+  document.querySelector('.phil-quote').innerHTML=t.philQuote;
+  document.querySelector('.phil-sub').textContent=t.philSub;
+  document.querySelector('.founders .sec-label').textContent=t.foundersLabel;
+  document.querySelector('.founders-title').textContent=t.foundersTitle;
+  document.querySelector('.founder-role').textContent=t.founderRole;
+  document.querySelector('.founder-desc').textContent=t.founderDesc;
+  var sCards=document.querySelectorAll('.science-card');
+  t.scienceCards.forEach(function(s,i){sCards[i].querySelector('.science-label').textContent=s.label;sCards[i].querySelector('.science-title').textContent=s.title;sCards[i].querySelector('.science-desc').textContent=s.desc;});
+  document.querySelector('.metax-eyebrow').textContent=t.metaxEyebrow;
+  document.querySelector('.metax-quote').textContent=t.metaxQuote;
+  document.querySelector('.metax-body').textContent=t.metaxBody;
+  document.querySelector('.paper-section .sec-label').textContent=t.paperLabel;
+  document.querySelector('.paper-section .founders-title').textContent=t.paperTitle;
+  document.querySelector('.paper-subtitle').textContent=t.paperSubtitle;
+  var pps=document.querySelectorAll('.paper-card');
+  t.papers.forEach(function(p,i){pps[i].querySelector('.paper-card-label').textContent=p.label;pps[i].querySelector('.paper-card-title').textContent=p.title;pps[i].querySelector('.paper-card-desc').textContent=p.desc;});
+  document.querySelector('.paper-author-quote').textContent=t.paperAuthorQuote;
+  document.querySelector('.paper-author-credit').textContent=t.paperAuthorCredit;
+  document.querySelector('.practice-section .sec-label').textContent=t.practiceLabel;
+  document.querySelector('.practice-title').textContent=t.practiceTitle;
+  document.querySelector('.practice-question').textContent=t.practiceQuestion;
+  document.querySelector('.streak-label').textContent=t.streakLabel;
+  document.querySelector('.practice-btn-done').textContent=t.btnDone;
+  document.querySelector('.practice-btn-skip').textContent=t.btnSkip;
+  document.querySelector('.cta-title').textContent=t.ctaTitle;
+  document.querySelector('.cta-sub').textContent=t.ctaSub;
+  document.querySelector('.btn-p').textContent=t.ctaBtnP;
+  document.querySelector('.btn-s').textContent=t.ctaBtnS;
+  document.querySelector('.f-copy').textContent=t.fCopy;
+  if(practiceStatusType){document.getElementById('practiceStatus').textContent=practiceStatusType==='done'?t.practiceDone:t.practiceSkipped;}
+}
+var KEY='intlife_practice_knowledge';
+var today=new Date().toISOString().slice(0,10);
+function yd(){var d=new Date();d.setDate(d.getDate()-1);return d.toISOString().slice(0,10);}
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{};}catch(e){return {};}}
+function save(d){localStorage.setItem(KEY,JSON.stringify(d));}
+function showStatus(type){
+  practiceStatusType=type;var t=L[currentLang];
+  document.getElementById('practiceActions').style.display='none';
+  var s=document.getElementById('practiceStatus');s.textContent=type==='done'?t.practiceDone:t.practiceSkipped;s.style.display='block';
+}
+function init(){var d=load();document.getElementById('streakCount').textContent=d.streak||0;if(d.todayDate===today)showStatus(d.todayStatus==='done'?'done':'skipped');}
+window.practiceMarkDone=function(){var d=load();d.streak=(d.lastDoneDate===yd())?((d.streak||0)+1):1;d.lastDoneDate=today;d.todayDate=today;d.todayStatus='done';save(d);document.getElementById('streakCount').textContent=d.streak;showStatus('done');};
+window.practiceMarkSkip=function(){var d=load();d.todayDate=today;d.todayStatus='skipped';save(d);showStatus('skipped');};
+init();setLang('en');
 </script>
 </body>
 </html>

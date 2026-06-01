@@ -96,6 +96,11 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
 .practice-btn-skip{background:transparent;color:rgba(255,255,255,.32);border:1px solid rgba(255,255,255,.12);padding:12px 32px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;font-weight:400;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s;}
 .practice-btn-skip:hover{color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.25);}
 .practice-status{font-family:'Cormorant Garamond',serif;font-size:clamp(15px,2vw,19px);font-style:italic;color:var(--skills);margin-top:.5rem;line-height:1.6;}
+.nav-right-group{display:flex;align-items:center;gap:1.5rem;}
+.nav-lang{display:flex;align-items:center;gap:4px;}
+.lang-btn{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.35);cursor:pointer;transition:color .2s;background:none;border:none;padding:2px 5px;}
+.lang-btn.active{color:#fff;font-weight:500;}
+.lang-divider{color:rgba(255,255,255,.18);font-size:10px;pointer-events:none;}
 </style>
 </head>
 <body>
@@ -104,7 +109,14 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
   <a href="index.html" class="nav-logo">
     <span class="nav-int">INT</span><div class="nav-dot"></div><span class="nav-life">LIFE</span>
   </a>
-  <a href="index.html" class="nav-back">All Dimensions</a>
+  <div class="nav-right-group">
+    <a href="index.html" class="nav-back">All Dimensions</a>
+    <div class="nav-lang">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <span class="lang-divider">|</span>
+      <button class="lang-btn" id="btn-ja" onclick="setLang('ja')">日本語</button>
+    </div>
+  </div>
 </nav>
 
 <section class="hero">
@@ -230,33 +242,131 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
 </footer>
 
 <script>
-(function(){
-  var KEY='intlife_practice_skills';
-  var today=new Date().toISOString().slice(0,10);
-  function yd(){var d=new Date();d.setDate(d.getDate()-1);return d.toISOString().slice(0,10);}
-  function load(){try{return JSON.parse(localStorage.getItem(KEY))||{};}catch(e){return {};}}
-  function save(d){localStorage.setItem(KEY,JSON.stringify(d));}
-  function showStatus(msg){
-    document.getElementById('practiceActions').style.display='none';
-    var s=document.getElementById('practiceStatus');s.textContent=msg;s.style.display='block';
+var currentLang='en';
+var practiceStatusType=null;
+var L={
+  en:{
+    dimNumber:'Dimension 06',dimTagline:'Evolve your expertise in a rapidly changing world.',
+    introQuote:'"A skill mastered is not just a capability.<br>It is a new way of seeing the world."',
+    introBody:'INT.LIFE approaches skills not as items on a résumé, but as expressions of human potential — each one opening doors not just professionally, but perceptually. To truly master something is to be transformed by it.',
+    pillarsLabel:'Six Pillars',pillarsTitle:'The foundations of lasting expertise.',
+    pillars:[
+      {name:'Mastery',desc:'Go deep before going wide. Surface competence is easy and forgettable. Mastery changes you.'},
+      {name:'Practice',desc:'Not all practice is equal. Deliberate practice — focused, uncomfortable, specific — is what produces growth.'},
+      {name:'Feedback',desc:'You cannot improve what you cannot see. Honest feedback — from mentors, peers, or data — is irreplaceable.'},
+      {name:'Adaptability',desc:'The half-life of skills is shrinking. The most valuable skill of our era is the ability to learn new ones.'},
+      {name:'Transfer',desc:'Deep skills in one domain illuminate others. The patterns of mastery are more universal than the domains.'},
+      {name:'Teaching',desc:'You do not fully understand something until you can explain it clearly. Teaching is the final stage of learning.'}
+    ],
+    philLabel:'Our Approach',
+    philQuote:'"We are not a course platform.<br>We are a companion for the long arc of mastery."',
+    philSub:'INT.LIFE does not sell you certifications or shortcuts. We help you build a practice — one that compounds over years, not weeks, and produces capability you can trust.',
+    foundersLabel:"Founder's Practice",foundersTitle:'Skills as deliberate cultivation.',
+    founderRole:'Founder, INT.LIFE',
+    founderDesc:'Masahiro has built across product design, software engineering, philosophy, and contemplative practice — not as separate pursuits, but as one integrated inquiry into what it means to do excellent work. His approach: choose one skill worth mastering, practice it with full attention for an extended period, then let it teach you about everything else. Breadth follows naturally from depth, when depth is genuine.',
+    scienceCards:[
+      {label:'Deliberate Practice',title:'The structure of expertise.',desc:"Anders Ericsson's decades of research show that expert performance is not primarily a function of innate talent — it is a function of the right kind of practice, consistently applied over time. Deliberate practice means working at the edge of your current ability, with immediate feedback, with full concentration. Most practice is comfortable and therefore ineffective. Real development lives in the discomfort just beyond what you can currently do."},
+      {label:'Skill Transfer',title:'Mastery as a meta-skill.',desc:'Research in expertise and learning shows that deep mastery in one domain creates transferable mental models — ways of thinking that apply across fields. A chess grandmaster develops pattern recognition that transfers to strategic business decisions. A musician develops listening that transfers to negotiation. Mastery is not just domain-specific knowledge; it is an upgrade to the way you process and engage with the world.'}
+    ],
+    metaxEyebrow:'META-X Philosophy',
+    metaxQuote:'"Most people stop just before mastery — not because they lack ability, but because mastery requires a particular kind of patience with yourself that our culture does not teach. You must be willing to be bad at something for a long time before you become good."',
+    metaxBody:'META-X applied to Skills means dissolving the identity pressure to appear competent before you are. It means observing the discomfort of being a beginner without fleeing it — staying in the difficulty long enough for genuine learning to occur. The ego wants to perform expertise. Mastery requires genuine incompetence, humbly maintained, until the skill grows into something real. That willingness to not-know is the most important skill of all.',
+    practiceLabel:"Today's Practice",practiceTitle:'One question. One commitment. One day at a time.',
+    practiceQuestion:'"What did you practice with full intention today — and what did you notice?"',
+    streakLabel:'day streak',btnDone:'Done for Today',btnSkip:'Not today',
+    practiceDone:'Practiced today. Come back tomorrow.',practiceSkipped:'Skipped today — tomorrow is a new beginning.',
+    ctaTitle:'Be the first to experience it.',ctaSub:'INT.LIFE is being built now.',
+    ctaBtnP:'Join the Waiting List',ctaBtnS:'← Back to Home',
+    fCopy:'Built on Absolute Integrity · No Ads · No Compromise · Open to Everyone'
+  },
+  ja:{
+    dimNumber:'次元 06',dimTagline:'急速に変化する世界の中で、専門性を進化させ続ける。',
+    introQuote:'「習得されたスキルは、単なる能力ではない。<br>それは世界を見る新しい方法だ。」',
+    introBody:'INT.LIFEは、スキルを履歴書の項目としてではなく、人間の潜在能力の表現として捉えます。それぞれが扉を開く——職業的にだけでなく、知覚的にも。何かを真に習得するとは、それによって変容することです。',
+    pillarsLabel:'六つの柱',pillarsTitle:'永続する専門性の礎。',
+    pillars:[
+      {name:'熟達',desc:'広がる前に深く潜れ。表面的な能力は容易で忘れられる。熟達はあなたを変える。'},
+      {name:'実践',desc:'すべての練習が等しいわけではない。焦点を絞った、不快で、具体的な意図的練習こそが成長をもたらす。'},
+      {name:'フィードバック',desc:'見えないものは改善できない。メンター、仲間、データからの誠実なフィードバックは代替不可能だ。'},
+      {name:'適応力',desc:'スキルの半減期は縮まっている。私たちの時代で最も価値あるスキルは、新しいものを学ぶ能力だ。'},
+      {name:'転移',desc:'一つの領域での深いスキルは他の領域を照らす。熟達のパターンは領域よりも普遍的だ。'},
+      {name:'教えること',desc:'明確に説明できるまで、あなたはそれを完全に理解していない。教えることは学びの最終段階だ。'}
+    ],
+    philLabel:'私たちのアプローチ',
+    philQuote:'「私たちはコースプラットフォームではない。<br>熟達の長い弧の伴走者だ。」',
+    philSub:'INT.LIFEはあなたに認定や近道を売りません。私たちは実践の構築を助けます——数週間ではなく数年をかけて複利で積み重なり、信頼できる能力を生み出す実践を。',
+    foundersLabel:'創設者の実践',foundersTitle:'意図的な陶冶としてのスキル。',
+    founderRole:'INT.LIFE 創設者',
+    founderDesc:'坂田雅弘は、プロダクトデザイン、ソフトウェアエンジニアリング、哲学、観想の実践にわたって構築してきました——別々の追求としてではなく、優れた仕事をするとはどういうことかという一つの統合された探究として。彼のアプローチ：習得する価値のある一つのスキルを選び、長期間全注意を持って実践し、それが他のすべてについて教えてくれるようにする。深さが本物のとき、広さは自然に続きます。',
+    scienceCards:[
+      {label:'意図的実践',title:'専門性の構造。',desc:'アンダース・エリクソンの数十年の研究は、専門的パフォーマンスは主に生来の才能の関数ではなく、正しい種類の練習を時間をかけて一貫して適用することの関数であることを示しています。意図的実践とは、即座のフィードバックと完全な集中をもって、現在の能力の限界で取り組むことを意味します。ほとんどの練習は快適であり、したがって効果がない。真の成長は、現在できることのわずか先の不快さの中に宿ります。'},
+      {label:'スキル転移',title:'メタスキルとしての熟達。',desc:'専門性と学習の研究は、一つの領域での深い熟達が転移可能なメンタルモデルを生み出すことを示しています——さまざまな分野に適用される考え方。チェスのグランドマスターは、戦略的ビジネス決定に転移するパターン認識を発達させます。音楽家は、交渉に転移する傾聴を発達させます。熟達は単に領域固有の知識ではない。それはあなたが世界を処理し、関わる方法のアップグレードです。'}
+    ],
+    metaxEyebrow:'META-X 哲学',
+    metaxQuote:'「ほとんどの人は熟達の直前でやめる——能力が欠けているからではなく、熟達が私たちの文化が教えない特定の種類の自己への忍耐を必要とするからだ。あなたは上手くなる前に、長い間下手であることを厭わなければならない。」',
+    metaxBody:'スキルにおけるMETA-Xとは、そうなる前に有能に見せようとするアイデンティティのプレッシャーを溶かすことを意味します。それは、初心者の不快さを逃げることなく観察すること——真の学習が起こるのに十分な長さだけ困難の中に留まることを意味します。エゴは専門性を演じたがります。熟達は、スキルが本物になるまで、謙虚に維持された真の未熟さを必要とします。知らないことへのその意欲が、すべての中で最も重要なスキルです。',
+    practiceLabel:'今日の実践',practiceTitle:'一つの問い。一つの誓い。一日ずつ。',
+    practiceQuestion:'「今日、完全な意図をもって実践したことは何ですか——そして何に気づきましたか？」',
+    streakLabel:'日連続',btnDone:'今日の実践を完了',btnSkip:'今日はスキップ',
+    practiceDone:'今日も実践しました。また明日。',practiceSkipped:'今日はお休み。明日また始めよう。',
+    ctaTitle:'最初の一人になってください。',ctaSub:'INT.LIFEは今、構築中です。',
+    ctaBtnP:'ウェイティングリストに参加',ctaBtnS:'← ホームに戻る',
+    fCopy:'透徹した誠実さの上に構築 · 広告なし · 妥協なし · すべての人に開かれている'
   }
-  function init(){
-    var d=load();document.getElementById('streakCount').textContent=d.streak||0;
-    if(d.todayDate===today)showStatus(d.todayStatus==='done'?'Practiced today. Come back tomorrow.':'Skipped today — tomorrow is a new beginning.');
-  }
-  window.practiceMarkDone=function(){
-    var d=load();
-    d.streak=(d.lastDoneDate===yd())?((d.streak||0)+1):1;
-    d.lastDoneDate=today;d.todayDate=today;d.todayStatus='done';save(d);
-    document.getElementById('streakCount').textContent=d.streak;
-    showStatus('Practiced today. Come back tomorrow.');
-  };
-  window.practiceMarkSkip=function(){
-    var d=load();d.todayDate=today;d.todayStatus='skipped';save(d);
-    showStatus('Skipped today — tomorrow is a new beginning.');
-  };
-  init();
-})();
+};
+function setLang(lang){
+  currentLang=lang;
+  document.getElementById('btn-en').classList.toggle('active',lang==='en');
+  document.getElementById('btn-ja').classList.toggle('active',lang==='ja');
+  document.documentElement.lang=lang;
+  var t=L[lang];
+  document.querySelector('.dim-number').textContent=t.dimNumber;
+  document.querySelector('.dim-tagline').textContent=t.dimTagline;
+  document.querySelector('.intro-quote').innerHTML=t.introQuote;
+  document.querySelector('.intro-body').textContent=t.introBody;
+  document.querySelector('.pillars .sec-label').textContent=t.pillarsLabel;
+  document.querySelector('.pillars-title').textContent=t.pillarsTitle;
+  var pCards=document.querySelectorAll('.pillar-card');
+  t.pillars.forEach(function(p,i){pCards[i].querySelector('.pillar-name').textContent=p.name;pCards[i].querySelector('.pillar-desc').textContent=p.desc;});
+  document.querySelector('.philosophy .sec-label').textContent=t.philLabel;
+  document.querySelector('.phil-quote').innerHTML=t.philQuote;
+  document.querySelector('.phil-sub').textContent=t.philSub;
+  document.querySelector('.founders .sec-label').textContent=t.foundersLabel;
+  document.querySelector('.founders-title').textContent=t.foundersTitle;
+  document.querySelector('.founder-role').textContent=t.founderRole;
+  document.querySelector('.founder-desc').textContent=t.founderDesc;
+  var sCards=document.querySelectorAll('.science-card');
+  t.scienceCards.forEach(function(s,i){sCards[i].querySelector('.science-label').textContent=s.label;sCards[i].querySelector('.science-title').textContent=s.title;sCards[i].querySelector('.science-desc').textContent=s.desc;});
+  document.querySelector('.metax-eyebrow').textContent=t.metaxEyebrow;
+  document.querySelector('.metax-quote').textContent=t.metaxQuote;
+  document.querySelector('.metax-body').textContent=t.metaxBody;
+  document.querySelector('.practice-section .sec-label').textContent=t.practiceLabel;
+  document.querySelector('.practice-title').textContent=t.practiceTitle;
+  document.querySelector('.practice-question').textContent=t.practiceQuestion;
+  document.querySelector('.streak-label').textContent=t.streakLabel;
+  document.querySelector('.practice-btn-done').textContent=t.btnDone;
+  document.querySelector('.practice-btn-skip').textContent=t.btnSkip;
+  document.querySelector('.cta-title').textContent=t.ctaTitle;
+  document.querySelector('.cta-sub').textContent=t.ctaSub;
+  document.querySelector('.btn-p').textContent=t.ctaBtnP;
+  document.querySelector('.btn-s').textContent=t.ctaBtnS;
+  document.querySelector('.f-copy').textContent=t.fCopy;
+  if(practiceStatusType){document.getElementById('practiceStatus').textContent=practiceStatusType==='done'?t.practiceDone:t.practiceSkipped;}
+}
+var KEY='intlife_practice_skills';
+var today=new Date().toISOString().slice(0,10);
+function yd(){var d=new Date();d.setDate(d.getDate()-1);return d.toISOString().slice(0,10);}
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{};}catch(e){return {};}}
+function save(d){localStorage.setItem(KEY,JSON.stringify(d));}
+function showStatus(type){
+  practiceStatusType=type;var t=L[currentLang];
+  document.getElementById('practiceActions').style.display='none';
+  var s=document.getElementById('practiceStatus');s.textContent=type==='done'?t.practiceDone:t.practiceSkipped;s.style.display='block';
+}
+function init(){var d=load();document.getElementById('streakCount').textContent=d.streak||0;if(d.todayDate===today)showStatus(d.todayStatus==='done'?'done':'skipped');}
+window.practiceMarkDone=function(){var d=load();d.streak=(d.lastDoneDate===yd())?((d.streak||0)+1):1;d.lastDoneDate=today;d.todayDate=today;d.todayStatus='done';save(d);document.getElementById('streakCount').textContent=d.streak;showStatus('done');};
+window.practiceMarkSkip=function(){var d=load();d.todayDate=today;d.todayStatus='skipped';save(d);showStatus('skipped');};
+init();setLang('en');
 </script>
 </body>
 </html>

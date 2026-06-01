@@ -96,6 +96,11 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
 .practice-btn-skip{background:transparent;color:rgba(255,255,255,.32);border:1px solid rgba(255,255,255,.12);padding:12px 32px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;font-weight:400;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s;}
 .practice-btn-skip:hover{color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.25);}
 .practice-status{font-family:'Cormorant Garamond',serif;font-size:clamp(15px,2vw,19px);font-style:italic;color:var(--time);margin-top:.5rem;line-height:1.6;}
+.nav-right-group{display:flex;align-items:center;gap:1.5rem;}
+.nav-lang{display:flex;align-items:center;gap:4px;}
+.lang-btn{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.35);cursor:pointer;transition:color .2s;background:none;border:none;padding:2px 5px;}
+.lang-btn.active{color:#fff;font-weight:500;}
+.lang-divider{color:rgba(255,255,255,.18);font-size:10px;pointer-events:none;}
 </style>
 </head>
 <body>
@@ -104,7 +109,14 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
   <a href="index.html" class="nav-logo">
     <span class="nav-int">INT</span><div class="nav-dot"></div><span class="nav-life">LIFE</span>
   </a>
-  <a href="index.html" class="nav-back">All Dimensions</a>
+  <div class="nav-right-group">
+    <a href="index.html" class="nav-back">All Dimensions</a>
+    <div class="nav-lang">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <span class="lang-divider">|</span>
+      <button class="lang-btn" id="btn-ja" onclick="setLang('ja')">日本語</button>
+    </div>
+  </div>
 </nav>
 
 <section class="hero">
@@ -230,33 +242,131 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
 </footer>
 
 <script>
-(function(){
-  var KEY='intlife_practice_time';
-  var today=new Date().toISOString().slice(0,10);
-  function yd(){var d=new Date();d.setDate(d.getDate()-1);return d.toISOString().slice(0,10);}
-  function load(){try{return JSON.parse(localStorage.getItem(KEY))||{};}catch(e){return {};}}
-  function save(d){localStorage.setItem(KEY,JSON.stringify(d));}
-  function showStatus(msg){
-    document.getElementById('practiceActions').style.display='none';
-    var s=document.getElementById('practiceStatus');s.textContent=msg;s.style.display='block';
+var currentLang='en';
+var practiceStatusType=null;
+var L={
+  en:{
+    dimNumber:'Dimension 01',dimTagline:'Design your time around what matters most.',
+    introQuote:'"You do not manage time.<br>You choose what to give your life to."',
+    introBody:'INT.LIFE approaches time not as a resource to be optimized, but as the medium in which a life is lived. The question is never how to do more — it is how to give your full presence to what is truly worth doing.',
+    pillarsLabel:'Six Pillars',pillarsTitle:'The foundations of a well-lived day.',
+    pillars:[
+      {name:'Clarity',desc:'Know what matters most before the day begins. Without clarity, urgency fills every hour.'},
+      {name:'Focus',desc:'Deep work is not a productivity hack — it is the condition for doing anything that truly matters.'},
+      {name:'Rhythm',desc:'Life has natural cadences. Design your days to move with them, not against them.'},
+      {name:'Boundaries',desc:'Saying no is not refusal — it is the act of protecting what you have said yes to.'},
+      {name:'Presence',desc:'Time spent distracted is not time spent. Presence is what turns hours into experience.'},
+      {name:'Reflection',desc:'Without review, patterns remain invisible. Reflection is what transforms days into a life.'}
+    ],
+    philLabel:'Our Approach',
+    philQuote:'"A full calendar is not a full life.<br>A full life requires empty space."',
+    philSub:'INT.LIFE will never help you cram more into each hour. We build tools that help you see clearly — where your time is actually going, and whether it is going there by choice.',
+    foundersLabel:"Founder's Practice",foundersTitle:'Time as a daily practice.',
+    founderRole:'Founder, INT.LIFE',
+    founderDesc:'Masahiro structures each day around a single most-important question: what, if done today, would make everything else easier or unnecessary? This practice — drawn from deep work philosophy and refined through years of building in high-intensity environments — forms the backbone of his approach to time. Not more hours, but more honest hours.',
+    scienceCards:[
+      {label:'Cognitive Science',title:'The myth of multitasking.',desc:'Research consistently shows that the human brain cannot truly multitask — it can only switch between tasks rapidly, at significant cognitive cost. Each switch incurs a "task-switching penalty" that accumulates over the day. Protecting long, uninterrupted blocks of focus is not a luxury. It is a neurological necessity for any work that requires depth.'},
+      {label:'Behavioral Design',title:'The architecture of attention.',desc:'The environment shapes behavior more than willpower does. When notifications are silenced, phones are absent, and work is structured around natural energy peaks, output quality rises dramatically — not because of effort, but because of design. INT.LIFE is built on the insight that the best time management is largely environmental management.'}
+    ],
+    metaxEyebrow:'META-X Philosophy',
+    metaxQuote:'"Most people are not lazy. They are unclear. And unclear people fill their time with motion rather than direction — always busy, rarely meaningful."',
+    metaxBody:'META-X applied to Time means dissolving the invisible pressure to be always-on, always-productive, always responding. It means stepping outside the cultural story that equates busyness with worth. When you can observe your relationship with time without judgment, you begin to see: some of your most urgent tasks are not important at all, and some of your most important work has been waiting quietly for the space you have never given it.',
+    practiceLabel:"Today's Practice",practiceTitle:'One question. One commitment. One day at a time.',
+    practiceQuestion:'"What is the one thing you will give your full presence to today?"',
+    streakLabel:'day streak',btnDone:'Done for Today',btnSkip:'Not today',
+    practiceDone:'Practiced today. Come back tomorrow.',practiceSkipped:'Skipped today — tomorrow is a new beginning.',
+    ctaTitle:'Be the first to experience it.',ctaSub:'INT.LIFE is being built now.',
+    ctaBtnP:'Join the Waiting List',ctaBtnS:'← Back to Home',
+    fCopy:'Built on Absolute Integrity · No Ads · No Compromise · Open to Everyone'
+  },
+  ja:{
+    dimNumber:'次元 01',dimTagline:'最も大切なことを中心に、時間をデザインする。',
+    introQuote:'「時間を管理するのではない。<br>あなたは、何に命を注ぐかを選ぶのだ。」',
+    introBody:'INT.LIFEは、時間を最適化すべき資源としてではなく、人生が刻まれていく媒体として捉えます。問いは「いかに多くをこなすか」ではなく、「真に価値あるものに、いかに全身で向き合うか」です。',
+    pillarsLabel:'六つの柱',pillarsTitle:'一日を深く生きるための礎。',
+    pillars:[
+      {name:'明晰さ',desc:'一日が始まる前に、何が最も重要かを知ること。明晰さなくして、緊急性がすべての時間を支配する。'},
+      {name:'集中',desc:'深い仕事は生産性のテクニックではない。真に重要なことを成し遂げるための、根本的な条件である。'},
+      {name:'リズム',desc:'人生には自然な律動がある。それに逆らうのではなく、沿うように日々を設計せよ。'},
+      {name:'境界',desc:'「ノー」と言うことは拒絶ではない。あなたが「イエス」と言ったものを守る行為だ。'},
+      {name:'臨在',desc:'散漫に過ごした時間は、過ごしたとは言えない。臨在こそが、時間を経験へと変容させる。'},
+      {name:'内省',desc:'振り返りなくして、パターンは見えないままだ。内省こそが、日々を人生へと昇華させる。'}
+    ],
+    philLabel:'私たちのアプローチ',
+    philQuote:'「予定が埋まったカレンダーは、充実した人生ではない。<br>真に充実した人生には、余白が必要だ。」',
+    philSub:'INT.LIFEは、あなたの一時間により多くを詰め込む手助けは決してしません。私たちは、あなたの時間が実際どこへ向かっているのか、そしてそれが選択の結果かどうかを、明晰に見つめるためのツールを構築します。',
+    foundersLabel:'創設者の実践',foundersTitle:'時間を、日々の実践として。',
+    founderRole:'INT.LIFE 創設者',
+    founderDesc:'坂田雅弘は毎日、ただ一つの最重要な問いを中心に一日を組み立てます。「今日これをやれば、他のすべてが不要になるか、より容易になるか？」この実践は、ディープワークの哲学から引き出され、高強度の環境での長年の構築を経て磨かれてきました。より多くの時間ではなく、より誠実な時間を。',
+    scienceCards:[
+      {label:'認知科学',title:'マルチタスクという神話。',desc:'研究は一貫して示している。人間の脳は真のマルチタスクができず、タスク間を急速に切り替えるだけであり、それは大きな認知コストを伴う。切り替えのたびに「タスク切替コスト」が蓄積される。長く途切れることのない集中の時間を守ることは、贅沢ではない。深さを要する仕事には、神経学的な必要性なのだ。'},
+      {label:'行動設計',title:'注意力のアーキテクチャ。',desc:'環境は意志の力よりも強く行動を形成する。通知が消され、スマートフォンがなく、仕事が自然なエネルギーのピークに合わせて設計されると、アウトプットの質は劇的に向上する。努力ではなく、設計の力によって。INT.LIFEは、最良のタイムマネジメントとは根本的に環境マネジメントであるという洞察のうえに構築されています。'}
+    ],
+    metaxEyebrow:'META-X 哲学',
+    metaxQuote:'「ほとんどの人は怠惰ではない。ただ不明瞭なのだ。そして不明瞭な人は、方向ではなく動きで時間を満たす——常に忙しく、めったに意味がない。」',
+    metaxBody:'時間におけるMETA-Xとは、常にオン、常に生産的、常に応答するという見えない圧力を溶かすことを意味します。それは、忙しさを価値と同一視する文化的な物語の外に踏み出すことです。あなたが時間との関係を裁かずに観察できるとき、見えてくるものがあります。最も緊急に見えるタスクのいくつかは、まったく重要ではない。そして最も重要な仕事のいくつかは、あなたがこれまで与えることのなかった空白を、静かに待ち続けている。',
+    practiceLabel:'今日の実践',practiceTitle:'一つの問い。一つの誓い。一日ずつ。',
+    practiceQuestion:'「今日、あなたが全身で向き合う、ただ一つのことは何ですか？」',
+    streakLabel:'日連続',btnDone:'今日の実践を完了',btnSkip:'今日はスキップ',
+    practiceDone:'今日も実践しました。また明日。',practiceSkipped:'今日はお休み。明日また始めよう。',
+    ctaTitle:'最初の一人になってください。',ctaSub:'INT.LIFEは今、構築中です。',
+    ctaBtnP:'ウェイティングリストに参加',ctaBtnS:'← ホームに戻る',
+    fCopy:'透徹した誠実さの上に構築 · 広告なし · 妥協なし · すべての人に開かれている'
   }
-  function init(){
-    var d=load();document.getElementById('streakCount').textContent=d.streak||0;
-    if(d.todayDate===today)showStatus(d.todayStatus==='done'?'Practiced today. Come back tomorrow.':'Skipped today — tomorrow is a new beginning.');
-  }
-  window.practiceMarkDone=function(){
-    var d=load();
-    d.streak=(d.lastDoneDate===yd())?((d.streak||0)+1):1;
-    d.lastDoneDate=today;d.todayDate=today;d.todayStatus='done';save(d);
-    document.getElementById('streakCount').textContent=d.streak;
-    showStatus('Practiced today. Come back tomorrow.');
-  };
-  window.practiceMarkSkip=function(){
-    var d=load();d.todayDate=today;d.todayStatus='skipped';save(d);
-    showStatus('Skipped today — tomorrow is a new beginning.');
-  };
-  init();
-})();
+};
+function setLang(lang){
+  currentLang=lang;
+  document.getElementById('btn-en').classList.toggle('active',lang==='en');
+  document.getElementById('btn-ja').classList.toggle('active',lang==='ja');
+  document.documentElement.lang=lang;
+  var t=L[lang];
+  document.querySelector('.dim-number').textContent=t.dimNumber;
+  document.querySelector('.dim-tagline').textContent=t.dimTagline;
+  document.querySelector('.intro-quote').innerHTML=t.introQuote;
+  document.querySelector('.intro-body').textContent=t.introBody;
+  document.querySelector('.pillars .sec-label').textContent=t.pillarsLabel;
+  document.querySelector('.pillars-title').textContent=t.pillarsTitle;
+  var pCards=document.querySelectorAll('.pillar-card');
+  t.pillars.forEach(function(p,i){pCards[i].querySelector('.pillar-name').textContent=p.name;pCards[i].querySelector('.pillar-desc').textContent=p.desc;});
+  document.querySelector('.philosophy .sec-label').textContent=t.philLabel;
+  document.querySelector('.phil-quote').innerHTML=t.philQuote;
+  document.querySelector('.phil-sub').textContent=t.philSub;
+  document.querySelector('.founders .sec-label').textContent=t.foundersLabel;
+  document.querySelector('.founders-title').textContent=t.foundersTitle;
+  document.querySelector('.founder-role').textContent=t.founderRole;
+  document.querySelector('.founder-desc').textContent=t.founderDesc;
+  var sCards=document.querySelectorAll('.science-card');
+  t.scienceCards.forEach(function(s,i){sCards[i].querySelector('.science-label').textContent=s.label;sCards[i].querySelector('.science-title').textContent=s.title;sCards[i].querySelector('.science-desc').textContent=s.desc;});
+  document.querySelector('.metax-eyebrow').textContent=t.metaxEyebrow;
+  document.querySelector('.metax-quote').textContent=t.metaxQuote;
+  document.querySelector('.metax-body').textContent=t.metaxBody;
+  document.querySelector('.practice-section .sec-label').textContent=t.practiceLabel;
+  document.querySelector('.practice-title').textContent=t.practiceTitle;
+  document.querySelector('.practice-question').textContent=t.practiceQuestion;
+  document.querySelector('.streak-label').textContent=t.streakLabel;
+  document.querySelector('.practice-btn-done').textContent=t.btnDone;
+  document.querySelector('.practice-btn-skip').textContent=t.btnSkip;
+  document.querySelector('.cta-title').textContent=t.ctaTitle;
+  document.querySelector('.cta-sub').textContent=t.ctaSub;
+  document.querySelector('.btn-p').textContent=t.ctaBtnP;
+  document.querySelector('.btn-s').textContent=t.ctaBtnS;
+  document.querySelector('.f-copy').textContent=t.fCopy;
+  if(practiceStatusType){document.getElementById('practiceStatus').textContent=practiceStatusType==='done'?t.practiceDone:t.practiceSkipped;}
+}
+var KEY='intlife_practice_time';
+var today=new Date().toISOString().slice(0,10);
+function yd(){var d=new Date();d.setDate(d.getDate()-1);return d.toISOString().slice(0,10);}
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{};}catch(e){return {};}}
+function save(d){localStorage.setItem(KEY,JSON.stringify(d));}
+function showStatus(type){
+  practiceStatusType=type;var t=L[currentLang];
+  document.getElementById('practiceActions').style.display='none';
+  var s=document.getElementById('practiceStatus');s.textContent=type==='done'?t.practiceDone:t.practiceSkipped;s.style.display='block';
+}
+function init(){var d=load();document.getElementById('streakCount').textContent=d.streak||0;if(d.todayDate===today)showStatus(d.todayStatus==='done'?'done':'skipped');}
+window.practiceMarkDone=function(){var d=load();d.streak=(d.lastDoneDate===yd())?((d.streak||0)+1):1;d.lastDoneDate=today;d.todayDate=today;d.todayStatus='done';save(d);document.getElementById('streakCount').textContent=d.streak;showStatus('done');};
+window.practiceMarkSkip=function(){var d=load();d.todayDate=today;d.todayStatus='skipped';save(d);showStatus('skipped');};
+init();setLang('en');
 </script>
 </body>
 </html>

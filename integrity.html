@@ -96,6 +96,11 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
 .practice-btn-skip{background:transparent;color:rgba(255,255,255,.32);border:1px solid rgba(255,255,255,.12);padding:12px 32px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;font-weight:400;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s;}
 .practice-btn-skip:hover{color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.25);}
 .practice-status{font-family:'Cormorant Garamond',serif;font-size:clamp(15px,2vw,19px);font-style:italic;color:var(--integrity);margin-top:.5rem;line-height:1.6;}
+.nav-right-group{display:flex;align-items:center;gap:1.5rem;}
+.nav-lang{display:flex;align-items:center;gap:4px;}
+.lang-btn{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.35);cursor:pointer;transition:color .2s;background:none;border:none;padding:2px 5px;}
+.lang-btn.active{color:#fff;font-weight:500;}
+.lang-divider{color:rgba(255,255,255,.18);font-size:10px;pointer-events:none;}
 </style>
 </head>
 <body>
@@ -104,7 +109,14 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
   <a href="index.html" class="nav-logo">
     <span class="nav-int">INT</span><div class="nav-dot"></div><span class="nav-life">LIFE</span>
   </a>
-  <a href="index.html" class="nav-back">All Dimensions</a>
+  <div class="nav-right-group">
+    <a href="index.html" class="nav-back">All Dimensions</a>
+    <div class="nav-lang">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <span class="lang-divider">|</span>
+      <button class="lang-btn" id="btn-ja" onclick="setLang('ja')">日本語</button>
+    </div>
+  </div>
 </nav>
 
 <section class="hero">
@@ -230,33 +242,131 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
 </footer>
 
 <script>
-(function(){
-  var KEY='intlife_practice_integrity';
-  var today=new Date().toISOString().slice(0,10);
-  function yd(){var d=new Date();d.setDate(d.getDate()-1);return d.toISOString().slice(0,10);}
-  function load(){try{return JSON.parse(localStorage.getItem(KEY))||{};}catch(e){return {};}}
-  function save(d){localStorage.setItem(KEY,JSON.stringify(d));}
-  function showStatus(msg){
-    document.getElementById('practiceActions').style.display='none';
-    var s=document.getElementById('practiceStatus');s.textContent=msg;s.style.display='block';
+var currentLang='en';
+var practiceStatusType=null;
+var L={
+  en:{
+    dimNumber:'Dimension 04',dimTagline:'Live in alignment with your deepest values.',
+    introQuote:'"Integrity is not a standard you hold.<br>It is the life you live when no one is watching."',
+    introBody:'INT.LIFE was founded on one non-negotiable: Absolute Integrity. Not as a policy, but as a practice — the daily commitment to closing the gap between who you say you are and how you actually live. That practice is available to everyone.',
+    pillarsLabel:'Six Pillars',pillarsTitle:'The foundations of an integrated life.',
+    pillars:[
+      {name:'Values',desc:'Know what you actually stand for — not what you were told to stand for. This is harder than it sounds.'},
+      {name:'Honesty',desc:'Truth-telling begins with yourself. Most self-deception is not malicious — it is simply comfortable.'},
+      {name:'Consistency',desc:'Character is not what you do under pressure. It is what you do when no pressure demands it.'},
+      {name:'Courage',desc:'Integrity without courage is intention without action. Sometimes the aligned choice is the hard choice.'},
+      {name:'Accountability',desc:'When you fall short of your own standards — and you will — the measure is how you respond, not that you fell.'},
+      {name:'Wholeness',desc:'Integration means the same person shows up at work, at home, and alone. No masks. No performances.'}
+    ],
+    philLabel:'Our Approach',
+    philQuote:'"We do not build tools to track your integrity.<br>We build tools to help you see it clearly."',
+    philSub:'Integrity cannot be measured from the outside. INT.LIFE creates the conditions for honest self-reflection — the only place where true alignment begins.',
+    foundersLabel:"Founder's Practice",foundersTitle:'Integrity as the founding principle.',
+    founderRole:'Founder, INT.LIFE',
+    founderDesc:"The name INT.LIFE is not a shorthand — it is a declaration. Integrity is the load-bearing pillar of this entire project. Masahiro's commitment: no advertising, no data sold, free for everyone, always — not because it is strategically optimal, but because it is right. Every feature built, every design decision made, every partner considered is filtered through one question: does this serve the person, or does it serve us?",
+    scienceCards:[
+      {label:'Psychology',title:'The cost of living out of alignment.',desc:'Research in moral psychology shows that chronic misalignment between stated values and actual behavior creates significant psychological stress — often manifesting as anxiety, dissatisfaction, or a pervasive sense that something is wrong without knowing what. This "integrity gap" is one of the most common and least-discussed sources of suffering in modern life. Closing it does not require grand gestures. It requires honest daily practice.'},
+      {label:'Identity Theory',title:'You become what you repeatedly do.',desc:'Identity is not fixed — it is constructed through repeated action. Every time you act in alignment with your values, you reinforce the identity of a person who lives that way. Every time you betray them, you reinforce the opposite. This is not moral judgment — it is behavioral architecture. The person you are becoming is shaped by thousands of small choices, most of them invisible until you start paying attention.'}
+    ],
+    metaxEyebrow:'META-X Philosophy',
+    metaxQuote:'"Absolute Integrity is the highest practice in the META-X framework — because it requires you to see yourself clearly, without the filters of ego, fear, or social approval. Most people never get there. Not because they lack values, but because they lack the courage to look."',
+    metaxBody:'META-X applied to Integrity means dissolving the subtle ways we deceive ourselves — the justifications, the rationalizations, the careful stories we tell ourselves about why this particular compromise was acceptable. It means observing the gap between our ideals and our actions without shame, and without excuses. In that honest observation, the gap begins to close — not through willpower, but through clarity. You cannot unsee what you have truly seen.',
+    practiceLabel:"Today's Practice",practiceTitle:'One question. One commitment. One day at a time.',
+    practiceQuestion:'"Is the way you are living today aligned with the person you intend to become?"',
+    streakLabel:'day streak',btnDone:'Done for Today',btnSkip:'Not today',
+    practiceDone:'Practiced today. Come back tomorrow.',practiceSkipped:'Skipped today — tomorrow is a new beginning.',
+    ctaTitle:'Be the first to experience it.',ctaSub:'INT.LIFE is being built now.',
+    ctaBtnP:'Join the Waiting List',ctaBtnS:'← Back to Home',
+    fCopy:'Built on Absolute Integrity · No Ads · No Compromise · Open to Everyone'
+  },
+  ja:{
+    dimNumber:'次元 04',dimTagline:'最も深い価値観と一致した生き方をする。',
+    introQuote:'「誠実さとは、あなたが掲げる基準ではない。<br>誰も見ていないときに、あなたが生きる人生だ。」',
+    introBody:'INT.LIFEは一つの譲れないものの上に設立されました。絶対的誠実さ。方針としてではなく、実践として——あなたが自分をどう言うかと、実際にどう生きるかの間の乖離を埋める、日々の誓いとして。その実践はすべての人に開かれています。',
+    pillarsLabel:'六つの柱',pillarsTitle:'統合された人生の礎。',
+    pillars:[
+      {name:'価値観',desc:'あなたが実際に何のために立っているかを知れ——何のために立てと言われたかではなく。これは聞こえるより難しい。'},
+      {name:'誠実さ',desc:'真実を語ることは自分自身から始まる。ほとんどの自己欺瞞は悪意によるものではない——ただ心地よいだけだ。'},
+      {name:'一貫性',desc:'品格とは、プレッシャーの下でやることではない。プレッシャーが求めないときにやることだ。'},
+      {name:'勇気',desc:'勇気なき誠実さは、行動なき意図だ。整合した選択が、時に困難な選択である。'},
+      {name:'責任',desc:'自分の基準に届かないとき——それは必ずある——尺度は転んだことではなく、どう応じるかだ。'},
+      {name:'全体性',desc:'統合とは、職場でも、家庭でも、一人のときも、同じ人物として現れることだ。仮面なし、演技なし。'}
+    ],
+    philLabel:'私たちのアプローチ',
+    philQuote:'「私たちはあなたの誠実さを追跡するツールを作らない。<br>あなたがそれを明晰に見るためのツールを作る。」',
+    philSub:'誠実さは外から測ることはできない。INT.LIFEは、正直な自己省察のための条件を作ります——真の整合性が始まる唯一の場所。',
+    foundersLabel:'創設者の実践',foundersTitle:'設立の原則としての誠実さ。',
+    founderRole:'INT.LIFE 創設者',
+    founderDesc:'INT.LIFEという名前は略語ではありません——それは宣言です。誠実さは、このプロジェクト全体の荷重を担う柱です。坂田の誓い：広告なし、データは売らない、すべての人に永遠に無料で——それが戦略的に最適だからではなく、正しいからです。構築されるすべての機能、下されるすべての設計上の決定、検討されるすべてのパートナーは、一つの問いでフィルタリングされます。これは人を、それとも私たちを利するか？',
+    scienceCards:[
+      {label:'心理学',title:'乖離の中で生きるコスト。',desc:'道徳心理学の研究は、表明された価値観と実際の行動との慢性的な乖離が、重大な心理的ストレスを生み出すことを示しています。それはしばしば不安、不満、あるいは何かが間違っているという漠然とした感覚として現れます。この「誠実さのギャップ」は現代の苦しみの最も一般的でありながら最も語られない源の一つです。それを閉じるには大きな身振りは必要ない。誠実な日々の実践が必要です。'},
+      {label:'アイデンティティ理論',title:'あなたは繰り返してやることになっていく。',desc:'アイデンティティは固定されていない——繰り返しの行動を通じて構築されます。あなたが価値観と一致して行動するたびに、そのように生きる人のアイデンティティを強化します。それを裏切るたびに、反対のものを強化します。これは道徳的判断ではなく、行動のアーキテクチャです。あなたがなりつつある人物は、何千もの小さな選択によって形成されており、注意を払い始めるまでそのほとんどは見えないままです。'}
+    ],
+    metaxEyebrow:'META-X 哲学',
+    metaxQuote:'「絶対的誠実さはMETA-Xフレームワークにおける最高の実践だ——なぜならそれは、エゴ、恐れ、社会的承認のフィルターなしに、あなた自身を明晰に見ることを要求するからだ。ほとんどの人はそこに辿り着かない。価値観が欠けているからではなく、見る勇気が欠けているから。」',
+    metaxBody:'誠実さにおけるMETA-Xとは、私たちが自分を欺く微妙な方法——正当化、合理化、この特定の妥協が受け入れられた理由についての注意深い物語——を溶かすことを意味します。それは恥なく、言い訳なく、理想と行動の間の乖離を観察することを意味します。その誠実な観察の中で、乖離は閉じ始めます——意志の力によってではなく、明晰さによって。真に見たものを未見に戻すことはできない。',
+    practiceLabel:'今日の実践',practiceTitle:'一つの問い。一つの誓い。一日ずつ。',
+    practiceQuestion:'「今日のあなたの生き方は、あなたがなろうとしている人物と一致していますか？」',
+    streakLabel:'日連続',btnDone:'今日の実践を完了',btnSkip:'今日はスキップ',
+    practiceDone:'今日も実践しました。また明日。',practiceSkipped:'今日はお休み。明日また始めよう。',
+    ctaTitle:'最初の一人になってください。',ctaSub:'INT.LIFEは今、構築中です。',
+    ctaBtnP:'ウェイティングリストに参加',ctaBtnS:'← ホームに戻る',
+    fCopy:'透徹した誠実さの上に構築 · 広告なし · 妥協なし · すべての人に開かれている'
   }
-  function init(){
-    var d=load();document.getElementById('streakCount').textContent=d.streak||0;
-    if(d.todayDate===today)showStatus(d.todayStatus==='done'?'Practiced today. Come back tomorrow.':'Skipped today — tomorrow is a new beginning.');
-  }
-  window.practiceMarkDone=function(){
-    var d=load();
-    d.streak=(d.lastDoneDate===yd())?((d.streak||0)+1):1;
-    d.lastDoneDate=today;d.todayDate=today;d.todayStatus='done';save(d);
-    document.getElementById('streakCount').textContent=d.streak;
-    showStatus('Practiced today. Come back tomorrow.');
-  };
-  window.practiceMarkSkip=function(){
-    var d=load();d.todayDate=today;d.todayStatus='skipped';save(d);
-    showStatus('Skipped today — tomorrow is a new beginning.');
-  };
-  init();
-})();
+};
+function setLang(lang){
+  currentLang=lang;
+  document.getElementById('btn-en').classList.toggle('active',lang==='en');
+  document.getElementById('btn-ja').classList.toggle('active',lang==='ja');
+  document.documentElement.lang=lang;
+  var t=L[lang];
+  document.querySelector('.dim-number').textContent=t.dimNumber;
+  document.querySelector('.dim-tagline').textContent=t.dimTagline;
+  document.querySelector('.intro-quote').innerHTML=t.introQuote;
+  document.querySelector('.intro-body').textContent=t.introBody;
+  document.querySelector('.pillars .sec-label').textContent=t.pillarsLabel;
+  document.querySelector('.pillars-title').textContent=t.pillarsTitle;
+  var pCards=document.querySelectorAll('.pillar-card');
+  t.pillars.forEach(function(p,i){pCards[i].querySelector('.pillar-name').textContent=p.name;pCards[i].querySelector('.pillar-desc').textContent=p.desc;});
+  document.querySelector('.philosophy .sec-label').textContent=t.philLabel;
+  document.querySelector('.phil-quote').innerHTML=t.philQuote;
+  document.querySelector('.phil-sub').textContent=t.philSub;
+  document.querySelector('.founders .sec-label').textContent=t.foundersLabel;
+  document.querySelector('.founders-title').textContent=t.foundersTitle;
+  document.querySelector('.founder-role').textContent=t.founderRole;
+  document.querySelector('.founder-desc').textContent=t.founderDesc;
+  var sCards=document.querySelectorAll('.science-card');
+  t.scienceCards.forEach(function(s,i){sCards[i].querySelector('.science-label').textContent=s.label;sCards[i].querySelector('.science-title').textContent=s.title;sCards[i].querySelector('.science-desc').textContent=s.desc;});
+  document.querySelector('.metax-eyebrow').textContent=t.metaxEyebrow;
+  document.querySelector('.metax-quote').textContent=t.metaxQuote;
+  document.querySelector('.metax-body').textContent=t.metaxBody;
+  document.querySelector('.practice-section .sec-label').textContent=t.practiceLabel;
+  document.querySelector('.practice-title').textContent=t.practiceTitle;
+  document.querySelector('.practice-question').textContent=t.practiceQuestion;
+  document.querySelector('.streak-label').textContent=t.streakLabel;
+  document.querySelector('.practice-btn-done').textContent=t.btnDone;
+  document.querySelector('.practice-btn-skip').textContent=t.btnSkip;
+  document.querySelector('.cta-title').textContent=t.ctaTitle;
+  document.querySelector('.cta-sub').textContent=t.ctaSub;
+  document.querySelector('.btn-p').textContent=t.ctaBtnP;
+  document.querySelector('.btn-s').textContent=t.ctaBtnS;
+  document.querySelector('.f-copy').textContent=t.fCopy;
+  if(practiceStatusType){document.getElementById('practiceStatus').textContent=practiceStatusType==='done'?t.practiceDone:t.practiceSkipped;}
+}
+var KEY='intlife_practice_integrity';
+var today=new Date().toISOString().slice(0,10);
+function yd(){var d=new Date();d.setDate(d.getDate()-1);return d.toISOString().slice(0,10);}
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{};}catch(e){return {};}}
+function save(d){localStorage.setItem(KEY,JSON.stringify(d));}
+function showStatus(type){
+  practiceStatusType=type;var t=L[currentLang];
+  document.getElementById('practiceActions').style.display='none';
+  var s=document.getElementById('practiceStatus');s.textContent=type==='done'?t.practiceDone:t.practiceSkipped;s.style.display='block';
+}
+function init(){var d=load();document.getElementById('streakCount').textContent=d.streak||0;if(d.todayDate===today)showStatus(d.todayStatus==='done'?'done':'skipped');}
+window.practiceMarkDone=function(){var d=load();d.streak=(d.lastDoneDate===yd())?((d.streak||0)+1):1;d.lastDoneDate=today;d.todayDate=today;d.todayStatus='done';save(d);document.getElementById('streakCount').textContent=d.streak;showStatus('done');};
+window.practiceMarkSkip=function(){var d=load();d.todayDate=today;d.todayStatus='skipped';save(d);showStatus('skipped');};
+init();setLang('en');
 </script>
 </body>
 </html>

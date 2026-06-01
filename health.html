@@ -122,6 +122,11 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
 .practice-btn-skip{background:transparent;color:rgba(255,255,255,.32);border:1px solid rgba(255,255,255,.12);padding:12px 32px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;font-weight:400;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s;}
 .practice-btn-skip:hover{color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.25);}
 .practice-status{font-family:'Cormorant Garamond',serif;font-size:clamp(15px,2vw,19px);font-style:italic;color:var(--health);margin-top:.5rem;line-height:1.6;}
+.nav-right-group{display:flex;align-items:center;gap:1.5rem;}
+.nav-lang{display:flex;align-items:center;gap:4px;}
+.lang-btn{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.35);cursor:pointer;transition:color .2s;background:none;border:none;padding:2px 5px;}
+.lang-btn.active{color:#fff;font-weight:500;}
+.lang-divider{color:rgba(255,255,255,.18);font-size:10px;pointer-events:none;}
 </style>
 </head>
 <body>
@@ -130,7 +135,14 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
   <a href="index.html" class="nav-logo">
     <span class="nav-int">INT</span><div class="nav-dot"></div><span class="nav-life">LIFE</span>
   </a>
-  <a href="index.html" class="nav-back">All Dimensions</a>
+  <div class="nav-right-group">
+    <a href="index.html" class="nav-back">All Dimensions</a>
+    <div class="nav-lang">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <span class="lang-divider">|</span>
+      <button class="lang-btn" id="btn-ja" onclick="setLang('ja')">日本語</button>
+    </div>
+  </div>
 </nav>
 
 <section class="hero">
@@ -320,53 +332,195 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
 </footer>
 
 <script>
-(function(){
-  var KEY='intlife_practice_health';
-  var today=new Date().toISOString().slice(0,10);
-  function yd(){var d=new Date();d.setDate(d.getDate()-1);return d.toISOString().slice(0,10);}
-  function load(){try{return JSON.parse(localStorage.getItem(KEY))||{};}catch(e){return {};}}
-  function save(d){localStorage.setItem(KEY,JSON.stringify(d));}
-  function showStatus(msg){
-    document.getElementById('practiceActions').style.display='none';
-    var s=document.getElementById('practiceStatus');s.textContent=msg;s.style.display='block';
+var currentLang='en';
+var practiceStatusType=null;
+var L={
+  en:{
+    dimNumber:'Dimension 03',dimTagline:'Integrate body and mind into one living whole.',
+    introQuote:'"Your body is not a vehicle for your mind.<br>It is your mind — made physical."',
+    introBody:'INT.LIFE approaches health not as a set of metrics to optimize, but as a state of wholeness — the harmony between what you feel, what you think, and how you move through the world.',
+    pillarsLabel:'Six Pillars',pillarsTitle:'The foundations of a healthy life.',
+    pillars:[
+      {name:'Movement',desc:'Move your body with intention — not to punish, but to express the life within you.'},
+      {name:'Rest',desc:'Sleep is not lost time. It is when the body integrates everything you have lived.'},
+      {name:'Nourishment',desc:'Food is information. What you eat tells your cells what kind of life you are living.'},
+      {name:'Mind',desc:'Mental health is not the absence of difficulty. It is the capacity to meet it fully.'},
+      {name:'Connection',desc:'Loneliness is a health crisis. Human connection is as vital as any nutrient.'},
+      {name:'Environment',desc:'The spaces you inhabit shape your biology. Design them for life, not just convenience.'}
+    ],
+    philLabel:'Our Approach',
+    philQuote:'"No algorithm can tell you how you feel.<br>Health begins with listening."',
+    philSub:'INT.LIFE will never reduce your health to a score. We build tools that help you listen — to your body, your rhythms, and the life you are living.',
+    foundersLabel:"Founder's Practice",foundersTitle:'Health as lived experience.',
+    founderRole:'Founder, INT.LIFE',
+    founderDesc:'Masahiro is a practitioner of Vipassana meditation — one of the oldest and most demanding forms of mindfulness in existence. Through 10-day silent retreats and sustained daily practice, he has experienced firsthand what neuroscience is now confirming: the mind can be trained, the brain can be changed, and suffering can be met at its root — not managed from a distance, but transformed from within.',
+    scienceCards:[
+      {label:'Neuroplasticity',title:'Meditation changes the brain.',desc:'Decades of research show that consistent meditation practice increases grey matter density in the prefrontal cortex — the seat of attention, decision-making, and self-awareness. The amygdala, which governs fear and reactivity, measurably shrinks with sustained practice. What was once considered fixed becomes fluid. The brain you have today is not the brain you must keep.'},
+      {label:'Stress Reduction',title:'Stillness as medicine.',desc:'Vipassana has been shown to significantly reduce cortisol levels, lower blood pressure, and improve heart rate variability — markers of deep physiological resilience. More than symptom management, it addresses the source: the habitual patterns of mind that generate suffering in the first place. Stress is not an event. It is a response. And responses can be changed.'}
+    ],
+    metaxEyebrow:'META-X Philosophy',
+    metaxQuote:'"META-X is the practice of going beyond the patterns that define you — not by force, but by seeing them clearly. When you observe the mind without judgment, you step outside the story. That is where transformation lives."',
+    metaxBody:"META-X is the philosophical framework at the heart of INT.LIFE's approach to health. It holds that true wellbeing is not achieved by adding more — more discipline, more optimization, more effort — but by dissolving the invisible structures that keep us contracted. Through practices like Vipassana, we learn to observe our own conditioning without being ruled by it. In that gap between stimulus and response, we find the freedom to choose who we become.",
+    vipassanaLabel:'Masahiro Sakata · Vipassana',vipassanaTitle:'The Nature of Awareness in Vipassana',
+    vipassanaIntro:'After 1,000 hours of practice in the Vipassana tradition, these four principles have become the foundation of how Masahiro understands the mind, suffering, and freedom.',
+    concepts:[
+      {label:'Sati',title:'Pure Awareness',desc:'Sati — often translated as "mindfulness" — is more precisely the capacity to observe what is arising without adding anything to it. Not interpretation, not judgment, not the next thought. Just this sensation, this breath, this moment, exactly as it is.'},
+      {label:'The 10-Second Pause',title:'Space Before Response',desc:'Between a stimulus and a reaction lives a gap. Vipassana trains the practitioner to feel into that gap — to catch the craving or aversion before it becomes behavior. Ten seconds of awareness can change a lifetime of automatic response.'},
+      {label:'Impermanence',title:'Anicca — Everything Passes',desc:'Every sensation — pleasant or painful — arises and passes. Vipassana teaches this not as philosophy but as direct bodily experience. When you feel impermanence at the cellular level, you stop fighting what cannot be held and stop fearing what cannot stay.'},
+      {label:'Equanimity',title:'Upekkha — The Stable Ground',desc:'Equanimity is not detachment or indifference. It is the capacity to be fully present with what is — joy, grief, difficulty, beauty — without being thrown by any of it. It is the ground from which everything can be met.'}
+    ],
+    authorNote:'"These are not concepts I have read. They are things I have sat with, in silence, for hundreds of hours — until they stopped being ideas and became lived reality."',
+    authorCredit:'From 1,000 hours of Vipassana practice — Masahiro Sakata',
+    stressLabel:'The Science',stressTitle:'Meditation and Stress Reduction',
+    evidence:[
+      {stat:'4 Days',label:'Cortisol Reduction',desc:'A landmark study published in Psychoneuroendocrinology found measurable reductions in cortisol — the primary stress hormone — after just four days of mindfulness meditation practice. The nervous system responds faster than most believe possible.'},
+      {stat:'Harvard',label:'Brain Study · Sara Lazar Lab',desc:'Harvard neuroscientist Sara Lazar found that long-term meditators had increased cortical thickness in regions associated with attention, interoception, and sensory processing — changes directly correlated with years of practice, not age.'},
+      {stat:'5 min',label:'Frequency Beats Duration',desc:'Research consistently shows that five minutes of daily meditation produces greater long-term neurological benefit than a single 60-minute weekly session. The brain consolidates learning through repetition, not volume. Consistency is the practice.'},
+      {stat:'Science',label:'Evidence-Based Wellbeing',desc:'Meta-analyses across hundreds of studies confirm that mindfulness-based interventions reliably reduce symptoms of anxiety, depression, and chronic pain — with effect sizes comparable to pharmaceutical interventions, and without side effects.'}
+    ],
+    timerLabel:'5-minute meditation',timerBegin:'Begin',timerPause:'Pause',timerResume:'Resume',timerAgain:'Again',
+    practiceLabel:"Today's Practice",practiceTitle:'One question. One commitment. One day at a time.',
+    practiceQuestion:'"Can you give your body five minutes of complete stillness today?"',
+    streakLabel:'day streak',btnDone:'Done for Today',btnSkip:'Not today',
+    practiceDone:'Practiced today. Come back tomorrow.',practiceSkipped:'Skipped today — tomorrow is a new beginning.',
+    ctaTitle:'Be the first to experience it.',ctaSub:'INT.LIFE is being built now.',
+    ctaBtnP:'Join the Waiting List',ctaBtnS:'← Back to Home',
+    fCopy:'Built on Absolute Integrity · No Ads · No Compromise · Open to Everyone'
+  },
+  ja:{
+    dimNumber:'次元 03',dimTagline:'身体と心を、一つの生きた全体へと統合する。',
+    introQuote:'「あなたの身体は、心の乗り物ではない。<br>身体そのものが、肉体として現れた心なのだ。」',
+    introBody:'INT.LIFEは、健康を最適化すべき指標の集合としてではなく、全体性の状態として捉えます。感じること、考えること、世界を歩むことの間にある調和。それが健康です。',
+    pillarsLabel:'六つの柱',pillarsTitle:'健やかな人生の礎。',
+    pillars:[
+      {name:'動き',desc:'罰するためではなく、あなたの内なる生命を表現するために、意図をもって身体を動かせ。'},
+      {name:'休息',desc:'眠りは失われた時間ではない。身体があなたが生きたすべてを統合する、かけがえない時間だ。'},
+      {name:'栄養',desc:'食べ物は情報だ。あなたが何を食べるかは、細胞にあなたがどんな人生を生きているかを告げる。'},
+      {name:'こころ',desc:'精神的な健康とは、困難がないことではない。困難に完全に向き合う能力のことだ。'},
+      {name:'つながり',desc:'孤独は健康危機だ。人とのつながりは、いかなる栄養素と同様に、生命に不可欠だ。'},
+      {name:'環境',desc:'あなたが住む空間はあなたの生物学的状態を形成する。利便性だけでなく、命のために設計せよ。'}
+    ],
+    philLabel:'私たちのアプローチ',
+    philQuote:'「あなたの状態を語れるアルゴリズムはない。<br>健康は、耳を傾けることから始まる。」',
+    philSub:'INT.LIFEは、あなたの健康を決してスコアに還元しません。私たちは、あなたが自分の身体、リズム、そして生きている人生に耳を傾けるためのツールを構築します。',
+    foundersLabel:'創設者の実践',foundersTitle:'生きた経験としての健康。',
+    founderRole:'INT.LIFE 創設者',
+    founderDesc:'坂田雅弘は、ヴィパッサナー瞑想の実践者です。10日間のサイレントリトリートと継続的な日々の実践を通じて、神経科学が今まさに確認しつつあることを直接体験してきました。心は訓練できる。脳は変えられる。そして苦しみは、遠くから管理するのではなく、その根から向き合い、変容させることができる。',
+    scienceCards:[
+      {label:'神経可塑性',title:'瞑想は脳を変える。',desc:'数十年の研究が示しているのは、継続的な瞑想実践が前頭前皮質の灰白質密度を高めるということです。前頭前皮質は注意、意思決定、自己認識の座です。恐怖と反応性を司る扁桃体は、持続的な実践によって測定可能なほど縮小します。かつて固定されていると考えられていたものが流動的になる。今日のあなたの脳は、保ち続けなければならない脳ではありません。'},
+      {label:'ストレス低減',title:'静寂という薬。',desc:'ヴィパッサナーはコルチゾール値を大幅に低下させ、血圧を下げ、心拍変動性を改善することが示されています。症状の管理にとどまらず、その根源——苦しみを生み出す心の習慣的パターン——に対処します。ストレスは出来事ではない。それは反応です。そして反応は変えられる。'}
+    ],
+    metaxEyebrow:'META-X 哲学',
+    metaxQuote:'「META-Xとは、あなたを定義するパターンを超えていく実践だ。力によってではなく、明晰に見ることによって。裁かずに心を観察するとき、あなたはその物語の外に踏み出す。変容はそこに宿る。」',
+    metaxBody:'META-XはINT.LIFEの健康へのアプローチの中核にある哲学的フレームワークです。真の健康とは、より多くのもの——より多くの規律、より多くの最適化、より多くの努力——を加えることによって達成されるのではなく、私たちを収縮させている見えない構造を溶かすことによって得られると考えます。ヴィパッサナーのような実践を通じて、私たちは自分自身の条件付けを、それに支配されることなく観察することを学びます。刺激と反応の間にある隙間の中に、私たちは誰になるかを選ぶ自由を見出します。',
+    vipassanaLabel:'坂田雅弘 · ヴィパッサナー',vipassanaTitle:'ヴィパッサナーにおける気づきの本質',
+    vipassanaIntro:'ヴィパッサナーの伝統における1,000時間の実践ののち、これら四つの原則が、坂田雅弘が心、苦しみ、そして自由を理解する礎となりました。',
+    concepts:[
+      {label:'サティ',title:'純粋な気づき',desc:'「マインドフルネス」と訳されることの多いサティは、より正確には、何かが生起しているとき、それに何も付け加えることなく観察する能力です。解釈も、判断も、次の思考もなく。ただこの感覚、この呼吸、この瞬間を、あるがままに。'},
+      {label:'10秒間のポーズ',title:'反応の前の空間',desc:'刺激と反応の間には隙間があります。ヴィパッサナーは実践者に、その隙間に感じ入ることを訓練します——渇望や嫌悪が行動になる前に捉えること。10秒間の気づきが、生涯の自動反応を変えうる。'},
+      {label:'無常',title:'アニッチャー——すべては過ぎ去る',desc:'すべての感覚は——快くとも苦しくとも——生起し、消え去ります。ヴィパッサナーはこれを哲学としてではなく、直接の身体的経験として教えます。無常を細胞レベルで感じるとき、あなたは保てないものとの闘いをやめ、去ることのできないものへの恐れをやめます。'},
+      {label:'平静心',title:'ウペッカー——安定した大地',desc:'平静心とは超然とした態度や無関心ではありません。あるがままのもの——喜び、悲しみ、困難、美しさ——に完全に臨在する能力です。そのどれにも揺さぶられることなく。それはすべてに向き合うことのできる大地です。'}
+    ],
+    authorNote:'「これは読んで知ったことではありません。何百時間もの沈黙の中で座り続け、アイデアであることをやめて生きた現実となるまで向き合ってきたことです。」',
+    authorCredit:'1,000時間のヴィパッサナー実践より——坂田雅弘',
+    stressLabel:'科学',stressTitle:'瞑想とストレス低減',
+    evidence:[
+      {stat:'4日間',label:'コルチゾール低減',desc:'精神神経内分泌学誌に掲載された画期的な研究では、たった4日間のマインドフルネス瞑想実践後に、主要ストレスホルモンであるコルチゾールの測定可能な低減が見られました。神経系は多くの人が信じるよりもはるかに速く反応します。'},
+      {stat:'ハーバード',label:'脳研究 · サラ・ラザー研究室',desc:'ハーバード大学の神経科学者サラ・ラザーは、長期の瞑想実践者が注意、内受容感覚、感覚処理に関連する領域で皮質の厚みが増していることを発見しました。これは年齢ではなく、実践年数と直接相関する変化です。'},
+      {stat:'5分',label:'頻度が継続時間を上回る',desc:'研究は一貫して示しています。5分間の毎日の瞑想は、週に1回の60分のセッションよりも大きな長期的神経学的恩恵をもたらします。脳は量ではなく反復によって学習を定着させます。一貫性こそが実践です。'},
+      {stat:'科学',label:'エビデンスに基づく健康',desc:'数百の研究にわたるメタ分析は、マインドフルネスに基づく介入が不安、うつ病、慢性疼痛の症状を確実に低減することを確認しています。その効果量は薬物療法に匹敵し、副作用はありません。'}
+    ],
+    timerLabel:'5分間の瞑想',timerBegin:'始める',timerPause:'一時停止',timerResume:'再開',timerAgain:'もう一度',
+    practiceLabel:'今日の実践',practiceTitle:'一つの問い。一つの誓い。一日ずつ。',
+    practiceQuestion:'「今日、あなたは五分間の完全な静寂を、身体に与えられますか？」',
+    streakLabel:'日連続',btnDone:'今日の実践を完了',btnSkip:'今日はスキップ',
+    practiceDone:'今日も実践しました。また明日。',practiceSkipped:'今日はお休み。明日また始めよう。',
+    ctaTitle:'最初の一人になってください。',ctaSub:'INT.LIFEは今、構築中です。',
+    ctaBtnP:'ウェイティングリストに参加',ctaBtnS:'← ホームに戻る',
+    fCopy:'透徹した誠実さの上に構築 · 広告なし · 妥協なし · すべての人に開かれている'
   }
-  function init(){
-    var d=load();document.getElementById('streakCount').textContent=d.streak||0;
-    if(d.todayDate===today)showStatus(d.todayStatus==='done'?'Practiced today. Come back tomorrow.':'Skipped today — tomorrow is a new beginning.');
+};
+function setLang(lang){
+  currentLang=lang;
+  document.getElementById('btn-en').classList.toggle('active',lang==='en');
+  document.getElementById('btn-ja').classList.toggle('active',lang==='ja');
+  document.documentElement.lang=lang;
+  var t=L[lang];
+  document.querySelector('.dim-number').textContent=t.dimNumber;
+  document.querySelector('.dim-tagline').textContent=t.dimTagline;
+  document.querySelector('.intro-quote').innerHTML=t.introQuote;
+  document.querySelector('.intro-body').textContent=t.introBody;
+  document.querySelector('.pillars .sec-label').textContent=t.pillarsLabel;
+  document.querySelector('.pillars-title').textContent=t.pillarsTitle;
+  var pCards=document.querySelectorAll('.pillar-card');
+  t.pillars.forEach(function(p,i){pCards[i].querySelector('.pillar-name').textContent=p.name;pCards[i].querySelector('.pillar-desc').textContent=p.desc;});
+  document.querySelector('.philosophy .sec-label').textContent=t.philLabel;
+  document.querySelector('.phil-quote').innerHTML=t.philQuote;
+  document.querySelector('.phil-sub').textContent=t.philSub;
+  document.querySelector('.founders .sec-label').textContent=t.foundersLabel;
+  document.querySelector('.founders-title').textContent=t.foundersTitle;
+  document.querySelector('.founder-role').textContent=t.founderRole;
+  document.querySelector('.founder-desc').textContent=t.founderDesc;
+  var sCards=document.querySelectorAll('.science-card');
+  t.scienceCards.forEach(function(s,i){sCards[i].querySelector('.science-label').textContent=s.label;sCards[i].querySelector('.science-title').textContent=s.title;sCards[i].querySelector('.science-desc').textContent=s.desc;});
+  document.querySelector('.metax-eyebrow').textContent=t.metaxEyebrow;
+  document.querySelector('.metax-quote').textContent=t.metaxQuote;
+  document.querySelector('.metax-body').textContent=t.metaxBody;
+  document.querySelector('.vipassana-section .sec-label').textContent=t.vipassanaLabel;
+  document.querySelector('.vipassana-section .founders-title').textContent=t.vipassanaTitle;
+  document.querySelector('.vipassana-intro').textContent=t.vipassanaIntro;
+  var cCards=document.querySelectorAll('.concept-card');
+  t.concepts.forEach(function(c,i){cCards[i].querySelector('.concept-label').textContent=c.label;cCards[i].querySelector('.concept-title').textContent=c.title;cCards[i].querySelector('.concept-desc').textContent=c.desc;});
+  document.querySelector('.author-note-text').textContent=t.authorNote;
+  document.querySelector('.author-note-credit').textContent=t.authorCredit;
+  document.querySelector('.stress-section .sec-label').textContent=t.stressLabel;
+  document.querySelector('.stress-section .founders-title').textContent=t.stressTitle;
+  var eCards=document.querySelectorAll('.evidence-card');
+  t.evidence.forEach(function(e,i){eCards[i].querySelector('.evidence-stat').textContent=e.stat;eCards[i].querySelector('.evidence-label').textContent=e.label;eCards[i].querySelector('.evidence-desc').textContent=e.desc;});
+  document.querySelector('.timer-label-text').textContent=t.timerLabel;
+  document.querySelector('.practice-section .sec-label').textContent=t.practiceLabel;
+  document.querySelector('.practice-title').textContent=t.practiceTitle;
+  document.querySelector('.practice-question').textContent=t.practiceQuestion;
+  document.querySelector('.streak-label').textContent=t.streakLabel;
+  document.querySelector('.practice-btn-done').textContent=t.btnDone;
+  document.querySelector('.practice-btn-skip').textContent=t.btnSkip;
+  document.querySelector('.cta-title').textContent=t.ctaTitle;
+  document.querySelector('.cta-sub').textContent=t.ctaSub;
+  document.querySelector('.btn-p').textContent=t.ctaBtnP;
+  document.querySelector('.btn-s').textContent=t.ctaBtnS;
+  document.querySelector('.f-copy').textContent=t.fCopy;
+  if(practiceStatusType){document.getElementById('practiceStatus').textContent=practiceStatusType==='done'?t.practiceDone:t.practiceSkipped;}
+}
+var KEY='intlife_practice_health';
+var today=new Date().toISOString().slice(0,10);
+function yd(){var d=new Date();d.setDate(d.getDate()-1);return d.toISOString().slice(0,10);}
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{};}catch(e){return {};}}
+function save(d){localStorage.setItem(KEY,JSON.stringify(d));}
+function showStatus(type){
+  practiceStatusType=type;var t=L[currentLang];
+  document.getElementById('practiceActions').style.display='none';
+  var s=document.getElementById('practiceStatus');s.textContent=type==='done'?t.practiceDone:t.practiceSkipped;s.style.display='block';
+}
+function init(){var d=load();document.getElementById('streakCount').textContent=d.streak||0;if(d.todayDate===today)showStatus(d.todayStatus==='done'?'done':'skipped');}
+window.practiceMarkDone=function(){var d=load();d.streak=(d.lastDoneDate===yd())?((d.streak||0)+1):1;d.lastDoneDate=today;d.todayDate=today;d.todayStatus='done';save(d);document.getElementById('streakCount').textContent=d.streak;showStatus('done');};
+window.practiceMarkSkip=function(){var d=load();d.todayDate=today;d.todayStatus='skipped';save(d);showStatus('skipped');};
+init();
+var _secs=300,_running=false,_iv=null;
+window.timerToggle=function(){
+  var t=L[currentLang];
+  var disp=document.getElementById('timerDisplay'),btn=document.getElementById('timerBtn');
+  if(disp.textContent==='Done'||disp.textContent==='完了'){_secs=300;disp.textContent='5:00';btn.textContent=t.timerBegin;return;}
+  if(_running){clearInterval(_iv);_running=false;btn.textContent=t.timerResume;}
+  else{
+    _running=true;btn.textContent=t.timerPause;
+    _iv=setInterval(function(){
+      _secs--;var m=Math.floor(_secs/60),s=_secs%60;
+      disp.textContent=m+':'+(s<10?'0':'')+s;
+      if(_secs<=0){clearInterval(_iv);_running=false;disp.textContent=lang==='ja'?'完了':'Done';btn.textContent=L[currentLang].timerAgain;_secs=300;practiceMarkDone();}
+    },1000);
   }
-  window.practiceMarkDone=function(){
-    var d=load();
-    d.streak=(d.lastDoneDate===yd())?((d.streak||0)+1):1;
-    d.lastDoneDate=today;d.todayDate=today;d.todayStatus='done';save(d);
-    document.getElementById('streakCount').textContent=d.streak;
-    showStatus('Practiced today. Come back tomorrow.');
-  };
-  window.practiceMarkSkip=function(){
-    var d=load();d.todayDate=today;d.todayStatus='skipped';save(d);
-    showStatus('Skipped today — tomorrow is a new beginning.');
-  };
-  init();
-
-  var _secs=300,_running=false,_iv=null;
-  window.timerToggle=function(){
-    var disp=document.getElementById('timerDisplay'),btn=document.getElementById('timerBtn');
-    if(disp.textContent==='Done'){_secs=300;disp.textContent='5:00';btn.textContent='Begin';return;}
-    if(_running){clearInterval(_iv);_running=false;btn.textContent='Resume';}
-    else{
-      _running=true;btn.textContent='Pause';
-      _iv=setInterval(function(){
-        _secs--;
-        var m=Math.floor(_secs/60),s=_secs%60;
-        disp.textContent=m+':'+(s<10?'0':'')+s;
-        if(_secs<=0){
-          clearInterval(_iv);_running=false;
-          disp.textContent='Done';btn.textContent='Again';_secs=300;
-          practiceMarkDone();
-        }
-      },1000);
-    }
-  };
-})();
+};
+setLang('en');
 </script>
 </body>
 </html>
