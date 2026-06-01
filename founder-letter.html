@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="INT.LIFE — A Letter from the Founder: The one who will save you is already here.">
+<title>Founder's Letter — INT.LIFE</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{--navy:#1A1648;--deep:#0E0C2E;--coral:#FF6040;--purple:#534AB7;--lavender:#AFA9EC;--theme:#FF6040;}
+html{scroll-behavior:smooth;}
+body{background:var(--deep);color:#fff;font-family:'Jost',sans-serif;overflow-x:hidden;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(14,12,46,.92),transparent);backdrop-filter:blur(8px);}
+.nav-logo{display:flex;align-items:center;gap:4px;text-decoration:none;}
+.nav-int{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:white;}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:var(--coral);margin-bottom:2px;}
+.nav-life{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;letter-spacing:3px;color:#D4D0FF;}
+.nav-right-group{display:flex;align-items:center;gap:1.5rem;}
+.nav-back{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s;}
+.nav-back::before{content:'← ';}
+.nav-back:hover{color:var(--theme);}
+.nav-lang{display:flex;align-items:center;gap:4px;}
+.lang-btn{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.35);cursor:pointer;transition:color .2s;background:none;border:none;padding:2px 5px;}
+.lang-btn.active{color:#fff;font-weight:500;}
+.lang-divider{color:rgba(255,255,255,.18);font-size:10px;pointer-events:none;}
+
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6rem 2rem 4rem;text-align:center;position:relative;overflow:hidden;}
+.hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(255,96,64,.09) 0%,transparent 65%);pointer-events:none;}
+.dim-number{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--theme);margin-bottom:1.5rem;opacity:0;animation:fadeup 1s ease forwards;}
+.letter-title{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,5.5vw,68px);font-weight:300;color:white;line-height:1.15;letter-spacing:-1.5px;opacity:0;animation:fadeup 1s ease .2s forwards;max-width:720px;}
+.dim-line{width:56px;height:2px;background:var(--theme);margin:2rem auto;opacity:0;animation:fadeup 1s ease .35s forwards;}
+.dim-tagline{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2.4vw,26px);font-style:italic;color:rgba(255,255,255,.68);max-width:540px;line-height:1.75;opacity:0;animation:fadeup 1s ease .5s forwards;}
+@keyframes fadeup{to{opacity:1;transform:translateY(0);}from{opacity:0;transform:translateY(20px);}}
+
+.letter-section{background:var(--deep);padding:6rem 2rem;}
+.letter-inner{max-width:660px;margin:0 auto;}
+.sec-label{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--theme);margin-bottom:2.5rem;text-align:center;}
+.letter-body{font-size:15px;color:rgba(255,255,255,.62);line-height:2.05;margin-bottom:1.75rem;}
+.letter-said{font-size:14px;color:rgba(255,255,255,.35);font-style:italic;margin-bottom:.75rem;}
+.letter-key-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,2.8vw,32px);font-weight:600;color:white;line-height:1.5;letter-spacing:-.3px;border-left:2px solid var(--theme);padding:.5rem 0 .5rem 1.75rem;margin:2.5rem 0;text-align:left;}
+.letter-sig{font-family:'Jost',sans-serif;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--theme);margin-top:3.5rem;padding-top:2rem;border-top:1px solid rgba(255,96,64,.2);}
+
+.practice-section{background:var(--navy);padding:6rem 2rem;text-align:center;}
+.practice-title-text{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.5vw,28px);font-weight:300;color:rgba(255,255,255,.5);text-align:center;margin-bottom:3rem;letter-spacing:-.3px;}
+.practice-card{max-width:580px;margin:0 auto;padding:3rem 2.5rem;border:1px solid rgba(255,96,64,.2);border-radius:3px;background:rgba(255,96,64,.04);}
+.practice-question{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.5vw,26px);font-style:italic;color:rgba(255,255,255,.85);line-height:1.72;margin-bottom:2.5rem;letter-spacing:-.2px;}
+.practice-streak{margin-bottom:2rem;}
+.streak-count{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,7vw,68px);font-weight:600;color:var(--theme);line-height:1;display:block;}
+.streak-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.3);display:block;margin-top:6px;}
+.practice-actions{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:.5rem;}
+.practice-btn-done{background:var(--theme);color:white;border:none;padding:12px 32px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s;}
+.practice-btn-done:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,96,64,.35);}
+.practice-btn-skip{background:transparent;color:rgba(255,255,255,.32);border:1px solid rgba(255,255,255,.12);padding:12px 32px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;font-weight:400;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s;}
+.practice-btn-skip:hover{color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.25);}
+.practice-status{font-family:'Cormorant Garamond',serif;font-size:clamp(15px,2vw,19px);font-style:italic;color:var(--theme);margin-top:.5rem;line-height:1.6;}
+
+.cta-section{background:var(--deep);padding:6rem 2rem;text-align:center;border-top:1px solid rgba(255,255,255,.06);}
+.cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.5vw,40px);color:white;margin-bottom:.75rem;font-weight:400;}
+.cta-sub{font-size:12px;color:rgba(255,255,255,.38);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:2.5rem;}
+.btn-p{background:var(--coral);color:white;border:none;padding:13px 34px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block;}
+.btn-p:hover{background:#FF7555;transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,96,64,.35);}
+.btn-s{background:transparent;color:var(--lavender);border:1px solid rgba(175,169,236,.4);padding:13px 34px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block;}
+.btn-s:hover{border-color:var(--lavender);color:white;transform:translateY(-2px);}
+
+footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding:2.5rem 2rem;text-align:center;}
+.f-logo{display:flex;align-items:center;justify-content:center;gap:4px;margin-bottom:1rem;}
+.f-int{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:white;}
+.f-dot{width:7px;height:7px;border-radius:50%;background:var(--coral);margin-bottom:3px;}
+.f-life{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;letter-spacing:3px;color:#D4D0FF;}
+.f-links{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.25rem;}
+.f-links a{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.28);text-decoration:none;transition:color .2s;}
+.f-links a:hover{color:rgba(255,255,255,.7);}
+.f-copy{font-size:11px;color:rgba(255,255,255,.18);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="nav-int">INT</span><div class="nav-dot"></div><span class="nav-life">LIFE</span>
+  </a>
+  <div class="nav-right-group">
+    <a href="index.html" class="nav-back" id="nav-back-link">All Dimensions</a>
+    <div class="nav-lang">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <span class="lang-divider">|</span>
+      <button class="lang-btn" id="btn-ja" onclick="setLang('ja')">日本語</button>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-glow"></div>
+  <p class="dim-number" id="hero-label">Founder's Letter</p>
+  <h1 class="letter-title" id="hero-title">A Letter from the Founder</h1>
+  <div class="dim-line"></div>
+  <p class="dim-tagline" id="hero-tagline">The one who will save you is already here. It is you.</p>
+</section>
+
+<section class="letter-section">
+  <div class="letter-inner">
+    <p class="sec-label" id="letter-label">From the Founder</p>
+
+    <p class="letter-body">
+      <span class="lang-en">Years after starting my own business, I hit a wall. The company was struggling. Financially, I was in serious trouble. I reached out to a friend, hoping for help.</span>
+      <span class="lang-ja">私が自分で事業を始めて何年かした時に、大きな困難にぶつかりました。会社の事業が不振に陥り、財政的に大きな困難に陥りました。その時に友人の支援を求めました。その友人はこう言いました。</span>
+    </p>
+
+    <p class="letter-said lang-en">He said:</p>
+
+    <blockquote class="letter-key-quote">
+      <span class="lang-en">"No one is going to save you. Only you can save yourself."</span>
+      <span class="lang-ja">「あなたを助けるのは誰でもない、それはあなた自身です。」</span>
+    </blockquote>
+
+    <p class="letter-body lang-en">It was a shock. But in that moment, something shifted. Of course. No one else can solve this. Only me.</p>
+    <p class="letter-body lang-en">Those words gave me courage. They gave me hope.</p>
+    <p class="letter-body lang-en">When we are in difficulty, we naturally look outward — to other people, to government, to organizations. But the truth is, the only one we can truly rely on is ourselves.</p>
+    <p class="letter-body lang-en">From that moment, I thought about everything. I acted on everything. New ideas came. New paths opened. I found my way through.</p>
+
+    <p class="letter-body lang-ja">その時は大きなショックでありましたが、ふと気づいたのです。そうだ、この問題を解決できるのは自分以外にないと。この言葉に大きな勇気と希望を与えられました。困難にある時はどうしても自分ではなく他の人や、国や組織に頼ろうとします。しかし、本当に頼れるのは自分以外ありません。それから必死になって事態を打開するためにあらゆることを考え、行動に移したのです。その結果、新しいアイデアが湧いて出て、新しい事業に進出して困難を乗り越えました。</p>
+
+    <p class="letter-body">
+      <span class="lang-en">This is not a special story. Many people in business have lived through exactly this.</span>
+      <span class="lang-ja">これは特別のことではありません。多くの事業家が経験されていることです。だから、あなたにも必ずできます。</span>
+    </p>
+
+    <p class="letter-body lang-en">Which means — so can you.</p>
+
+    <p class="letter-sig" id="letter-sig">Masahiro Sakata · Founder, INT.LIFE</p>
+  </div>
+</section>
+
+<section class="practice-section">
+  <p class="sec-label" id="practice-label">Today's Practice</p>
+  <h2 class="practice-title-text" id="practice-title">One question. One commitment. One day at a time.</h2>
+  <div class="practice-card">
+    <p class="practice-question" id="practice-question">"What is one small thing you can do today, for yourself, by yourself?"</p>
+    <div class="practice-streak">
+      <span class="streak-count" id="streakCount">0</span>
+      <span class="streak-label" id="streak-label">day streak</span>
+    </div>
+    <div id="practiceActions" class="practice-actions">
+      <button class="practice-btn-done" id="btn-done" onclick="practiceMarkDone()">Done for Today</button>
+      <button class="practice-btn-skip" id="btn-skip" onclick="practiceMarkSkip()">Not today</button>
+    </div>
+    <p id="practiceStatus" class="practice-status" style="display:none;"></p>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2 class="cta-title" id="cta-title">Be the first to experience it.</h2>
+  <p class="cta-sub" id="cta-sub">INT.LIFE is being built now.</p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+    <a href="index.html#signup" class="btn-p" id="btn-join">Join the Waiting List</a>
+    <a href="index.html" class="btn-s" id="btn-back">← Back to Home</a>
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo">
+    <span class="f-int">INT</span><div class="f-dot"></div><span class="f-life">LIFE</span>
+  </div>
+  <div class="f-links">
+    <a href="https://github.com/SakataMasahiro/intlife" target="_blank">GitHub</a>
+    <a href="constitution.html">Constitution</a>
+    <a href="index.html#declaration">Declaration</a>
+    <a href="index.html#builder">Join as Builder</a>
+    <a href="mailto:contact@int.life">contact@int.life</a>
+  </div>
+  <p class="f-copy" id="f-copy">Built on Absolute Integrity · No Ads · No Compromise · Open to Everyone</p>
+</footer>
+
+<script>
+var currentLang = 'en';
+var practiceStatusType = null;
+
+var L = {
+  en: {
+    navBack: 'All Dimensions',
+    heroLabel: "Founder's Letter",
+    heroTitle: 'A Letter from the Founder',
+    heroTagline: 'The one who will save you is already here. It is you.',
+    letterLabel: 'From the Founder',
+    letterSig: 'Masahiro Sakata · Founder, INT.LIFE',
+    practiceLabel: "Today's Practice",
+    practiceTitle: 'One question. One commitment. One day at a time.',
+    practiceQuestion: '"What is one small thing you can do today, for yourself, by yourself?"',
+    streakLabel: 'day streak',
+    btnDone: 'Done for Today',
+    btnSkip: 'Not today',
+    practiceDone: 'Practiced today. Come back tomorrow.',
+    practiceSkipped: 'Skipped today — tomorrow is a new beginning.',
+    ctaTitle: 'Be the first to experience it.',
+    ctaSub: 'INT.LIFE is being built now.',
+    btnJoin: 'Join the Waiting List',
+    btnBack: '← Back to Home',
+    fCopy: 'Built on Absolute Integrity · No Ads · No Compromise · Open to Everyone'
+  },
+  ja: {
+    navBack: 'すべての次元',
+    heroLabel: '創業者の手紙',
+    heroTitle: '創業者の手紙',
+    heroTagline: 'あなたを助けるのは、あなた自身です。',
+    letterLabel: '創設者より',
+    letterSig: '坂田雅洋 · INT.LIFE 創設者',
+    practiceLabel: '今日の実践',
+    practiceTitle: '一つの問い。一つのコミットメント。一日一日、着実に。',
+    practiceQuestion: '「今日、自分のために、自分だけでできる小さなことは何ですか？」',
+    streakLabel: '日連続',
+    btnDone: '今日、実践した',
+    btnSkip: '今日は難しい',
+    practiceDone: '今日実践しました。また明日。',
+    practiceSkipped: '今日はスキップ — 明日は新しい始まり。',
+    ctaTitle: '最初の一人になってください。',
+    ctaSub: 'INT.LIFEは今、構築中です。',
+    btnJoin: 'ウェイティングリストに登録する',
+    btnBack: '← ホームに戻る',
+    fCopy: '透徹した誠実さの上に構築 · 広告なし · 妥協なし · すべての人に開かれている'
+  }
+};
+
+function setLang(lang) {
+  currentLang = lang;
+  var t = L[lang];
+
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-ja').classList.toggle('active', lang === 'ja');
+  document.documentElement.lang = lang;
+
+  document.querySelectorAll('.lang-en').forEach(function(el){ el.hidden = (lang !== 'en'); });
+  document.querySelectorAll('.lang-ja').forEach(function(el){ el.hidden = (lang !== 'ja'); });
+
+  document.getElementById('nav-back-link').textContent = t.navBack;
+  document.getElementById('hero-label').textContent = t.heroLabel;
+  document.getElementById('hero-title').textContent = t.heroTitle;
+  document.getElementById('hero-tagline').textContent = t.heroTagline;
+  document.getElementById('letter-label').textContent = t.letterLabel;
+  document.getElementById('letter-sig').textContent = t.letterSig;
+  document.getElementById('practice-label').textContent = t.practiceLabel;
+  document.getElementById('practice-title').textContent = t.practiceTitle;
+  document.getElementById('practice-question').textContent = t.practiceQuestion;
+  document.getElementById('streak-label').textContent = t.streakLabel;
+  document.getElementById('btn-done').textContent = t.btnDone;
+  document.getElementById('btn-skip').textContent = t.btnSkip;
+  document.getElementById('cta-title').textContent = t.ctaTitle;
+  document.getElementById('cta-sub').textContent = t.ctaSub;
+  document.getElementById('btn-join').textContent = t.btnJoin;
+  document.getElementById('btn-back').textContent = t.btnBack;
+  document.getElementById('f-copy').textContent = t.fCopy;
+
+  if (practiceStatusType) {
+    document.getElementById('practiceStatus').textContent =
+      practiceStatusType === 'done' ? t.practiceDone : t.practiceSkipped;
+  }
+}
+
+var PRACTICE_KEY = 'intlife_practice_founderletter';
+var TODAY = new Date().toISOString().slice(0, 10);
+
+function yd() {
+  var d = new Date(); d.setDate(d.getDate() - 1); return d.toISOString().slice(0, 10);
+}
+function practiceLoad() {
+  try { return JSON.parse(localStorage.getItem(PRACTICE_KEY)) || {}; } catch(e) { return {}; }
+}
+function practiceSave(d) { localStorage.setItem(PRACTICE_KEY, JSON.stringify(d)); }
+
+function showPracticeStatus(type) {
+  practiceStatusType = type;
+  document.getElementById('practiceActions').style.display = 'none';
+  var s = document.getElementById('practiceStatus');
+  s.textContent = type === 'done' ? L[currentLang].practiceDone : L[currentLang].practiceSkipped;
+  s.style.display = 'block';
+}
+
+window.practiceMarkDone = function() {
+  var d = practiceLoad();
+  d.streak = (d.lastDoneDate === yd()) ? ((d.streak || 0) + 1) : 1;
+  d.lastDoneDate = TODAY; d.todayDate = TODAY; d.todayStatus = 'done';
+  practiceSave(d);
+  document.getElementById('streakCount').textContent = d.streak;
+  showPracticeStatus('done');
+};
+
+window.practiceMarkSkip = function() {
+  var d = practiceLoad();
+  d.todayDate = TODAY; d.todayStatus = 'skipped';
+  practiceSave(d);
+  showPracticeStatus('skipped');
+};
+
+(function initPractice() {
+  var d = practiceLoad();
+  document.getElementById('streakCount').textContent = d.streak || 0;
+  if (d.todayDate === TODAY) showPracticeStatus(d.todayStatus);
+})();
+
+setLang('en');
+</script>
+</body>
+</html>
