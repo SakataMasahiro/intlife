@@ -125,9 +125,9 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
   <div class="nav-right-group">
     <a href="index.html" class="nav-back">All Dimensions</a>
     <div class="nav-lang">
-      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <button type="button" class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
       <span class="lang-divider">|</span>
-      <button class="lang-btn" id="btn-ja" onclick="setLang('ja')">日本語</button>
+      <button type="button" class="lang-btn" id="btn-ja" onclick="setLang('ja')">日本語</button>
     </div>
   </div>
 </nav>
@@ -425,6 +425,7 @@ function setLang(lang){
   document.querySelector('.f-copy').textContent=t.fCopy;
   if(practiceStatusType){document.getElementById('practiceStatus').textContent=practiceStatusType==='done'?t.practiceDone:t.practiceSkipped;}
 }
+window.setLang=setLang;
 var KEY='intlife_practice_knowledge';
 var today=new Date().toISOString().slice(0,10);
 function yd(){var d=new Date();d.setDate(d.getDate()-1);return d.toISOString().slice(0,10);}
