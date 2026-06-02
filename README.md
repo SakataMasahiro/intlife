@@ -4,7 +4,7 @@
 
 ## *ひとつの人生。すべての次元。*
 
-**人間の豊かな生を支えるプラットフォーム — 絶対的な誠実さの上に築かれています。**
+**人間の豊かな生を支えるプラットフォーム — 透徹した誠実さの上に築かれています。**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](https://opensource.org/licenses/MIT)
 [![Status: Building](https://img.shields.io/badge/Status-Building-orange.svg)]()
@@ -190,7 +190,7 @@ intlife/
 │   └── ui/           # 共有デザインシステム コンポーネント
 ├── docs/
 │   ├── declaration/  # プラットフォーム宣言（INT.LIFE の魂）
-│   ├── philosophy/   # 絶対的な誠実さ · コーラルレッドのドット
+│   ├── philosophy/   # 透徹した誠実さ · コーラルレッドのドット
 │   └── architecture/ # 技術アーキテクチャの意思決定
 └── .github/
     └── workflows/    # CI/CD パイプライン
@@ -237,6 +237,6 @@ INT.LIFE は、瞑想の一瞬に生まれました。
 
 **INT.LIFE** · ひとつの人生。すべての次元。
 
-絶対的な誠実さの上に構築 · 広告なし · 妥協なし · すべての人に開かれた
+透徹した誠実さの上に構築 · 広告なし · 妥協なし · すべての人に開かれた
 
 </div>
