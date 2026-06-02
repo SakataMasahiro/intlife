@@ -2,9 +2,9 @@
 
 # INT.LIFE
 
-## *One Life. All Dimensions.*
+## *ひとつの人生。すべての次元。*
 
-**A platform for human flourishing — built on Absolute Integrity.**
+**人間の豊かな生を支えるプラットフォーム — 絶対的な誠実さの上に築かれています。**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](https://opensource.org/licenses/MIT)
 [![Status: Building](https://img.shields.io/badge/Status-Building-orange.svg)]()
@@ -15,228 +15,228 @@
 
 ---
 
-> **"We believe every human being deserves to live their fullest life."**
+> **「すべての人は、その人生を最大限に生きる権利があると、私たちは信じています。」**
 
-This is not a statement about technology. It is a statement about humanity.
+これは技術についての宣言ではありません。人間についての宣言です。
 
-Across every nation, every culture, every language on Earth — people wake each morning with the same deep wish: to live better, to grow wiser, to love more fully, to leave something behind that mattered.
+地球上のあらゆる国、あらゆる文化、あらゆる言語において — 人々は毎朝、同じ深い願いを抱いて目を覚まします。より良く生きたい、より賢くなりたい、より深く愛したい、意味のある何かを残したいと。
 
-**INT.LIFE** exists to serve that wish.
+**INT.LIFE** は、その願いに応えるために存在しています。
 
 ---
 
-## What is INT.?
+## INT. とは何か？
 
-`INT.` is not an abbreviation. It is a doorway.
+`INT.` は略語ではありません。それは入り口です。
 
-Every time someone asks *"what does INT. stand for?"* — a conversation begins.
+誰かが *「INT ってどういう意味？」* と尋ねるたびに、ひとつの会話が始まります。
 
-| Word | Origin | Meaning in INT.LIFE |
+| 語 | 語源 | INT.LIFE における意味 |
 |------|--------|---------------------|
-| **Integral** | Latin *integer* | Wholeness — a life where nothing is missing |
-| **Intelligence** | Latin *inter + legere* | Reading between things — the capacity to understand deeply |
-| **Integrity** | Latin *integrum* | The unbroken state — saying what you mean, doing what you say |
-| **Intention** | Latin *intendere* | The conscious direction of a life |
-| **International** | Universal | Belonging to no single nation — open to every human on Earth |
-| **Interius** | Latin | *That which lies within* — the inner journey |
-| **Integrum** | Latin | The unbroken, complete state — human potential at its fullest |
-| **Entelécheia** | Greek *(Aristotle)* | The actualization of potential — the acorn becoming the oak |
+| **Integral** | ラテン語 *integer* | 全体性 — 何も欠けていない人生 |
+| **Intelligence** | ラテン語 *inter + legere* | 物事の間を読む — 深く理解する能力 |
+| **Integrity** | ラテン語 *integrum* | 壊れていない状態 — 思ったことを言い、言ったことを行う |
+| **Intention** | ラテン語 *intendere* | 人生を意識的に方向づけること |
+| **International** | 普遍的 | 特定の国に属さない — 地球上のすべての人に開かれている |
+| **Interius** | ラテン語 | *内側にあるもの* — 内なる旅 |
+| **Integrum** | ラテン語 | 壊れていない、完全な状態 — 人間の可能性の極致 |
+| **Entelécheia** | ギリシャ語 *(アリストテレス)* | 可能性の現実化 — どんぐりが樫の木になること |
 
-> *"One dot. Five thousand years of human wisdom. One platform."*
-
----
-
-## The Coral Red Dot ●
-
-The dot between **INT** and **LIFE** is not punctuation. It is a compass.
-
-It points always toward the highest goal of a human life:
-
-> **Love · Hope · Freedom · Dream · Peace · Prosperity · Happiness · Compassion**
-
-*Silent. Present. Radiant. Unwavering.*
+> *「ひとつのドット。五千年の人類の知恵。ひとつのプラットフォーム。」*
 
 ---
 
-## The 7 Dimensions
+## コーラルレッドのドット ●
 
-INT.LIFE integrates every dimension of a human life into one living system.
+**INT** と **LIFE** の間のドットは、句読点ではありません。それはコンパスです。
 
-| Dimension | Purpose |
+それは常に、人生の最高の目標を指し示しています：
+
+> **愛 · 希望 · 自由 · 夢 · 平和 · 繁栄 · 幸福 · 慈悲**
+
+*静かに。そこに在る。輝きながら。揺るぎなく。*
+
+---
+
+## 7つの次元
+
+INT.LIFE は、人間の生のあらゆる次元をひとつの生きたシステムへと統合します。
+
+| 次元 | 目的 |
 |-----------|---------|
-| ⏱ **Time** | Design your time around what matters most |
-| 📖 **Knowledge** | Curate only the information that truly serves you |
-| 💚 **Health** | Integrate body and mind into one living whole |
-| ✦ **Integrity** | Live in alignment with your deepest values |
-| 🔥 **Motivation** | Sustain the inner fire that drives consistent action |
-| ⚡ **Skills & Tech** | Evolve your expertise in a rapidly changing world |
-| 🌟 **Flourishing** | The outcome when all seven dimensions align |
+| ⏱ **時間** | 本当に大切なことを中心に、自分の時間をデザインする |
+| 📖 **知識** | 本当に自分の役に立つ情報だけを厳選する |
+| 💚 **健康** | 体と心をひとつの生きた全体として統合する |
+| ✦ **誠実さ** | 自分の深い価値観に沿って生きる |
+| 🔥 **モチベーション** | 継続的な行動を生み出す内なる炎を持続させる |
+| ⚡ **スキル＆テクノロジー** | 急速に変化する世界で専門性を進化させる |
+| 🌟 **フラーリッシング** | 7つの次元がすべて揃ったときに生まれるもの |
 
-The platform learns your patterns, respects your values, and becomes more deeply *yours* with every use.
+プラットフォームはあなたのパターンを学び、あなたの価値観を尊重し、使えば使うほど深く *あなたのもの* になっていきます。
 
 ---
 
-## Our Promises
+## 私たちの約束
 
-| Promise | Meaning |
+| 約束 | 意味 |
 |---------|---------|
-| ✓ **Free for everyone. Always.** | No feature locked behind payment |
-| ✓ **No advertisements.** | Your attention is not a product. Your data is not for sale. |
-| ✓ **AI for independence.** | The AI guides you toward your own thinking — never dependency |
-| ✓ **Radically transparent.** | Finances, decisions, progress, failures — all public |
-| ✓ **Voluntarily sustained.** | Supported by those who feel its value — freely, without pressure |
+| ✓ **誰もが永遠に無料。** | 有料機能は一切ありません |
+| ✓ **広告なし。** | あなたの注意は商品ではありません。あなたのデータは販売しません。 |
+| ✓ **自立のためのAI。** | AIはあなた自身の思考へと導きます — 依存させることはありません |
+| ✓ **徹底的な透明性。** | 財務、意思決定、進捗、失敗 — すべて公開します |
+| ✓ **自発的な支援で成り立つ。** | 価値を感じてくれた方に、自由に、プレッシャーなしに支えていただきます |
 
 ---
 
-## The Support Model
+## 支援モデル
 
-We follow the model Wikipedia proved:
+私たちはWikipediaが証明したモデルに倣っています：
 
-> *"Value felt, freely given."*
+> *「価値を感じたら、自由に贈る。」*
 
-| Tier | Amount | What it means |
+| ティア | 金額 | 意味 |
 |------|--------|---------------|
-| **Free Forever** | $0 | All features, all users, all the time |
-| **Supporter** | $3–10/month *(self-chosen)* | A cup of coffee. A gesture of gratitude. |
-| **Patron** | $20+/month *(self-chosen)* | Not a customer. A co-creator. |
+| **永久無料** | $0 | すべての機能、すべてのユーザー、常に |
+| **サポーター** | $3〜10/月 *（自由選択）* | 一杯のコーヒー。感謝のしるし。 |
+| **パトロン** | $20+/月 *（自由選択）* | お客様ではありません。共同創造者です。 |
 
-No advertising. No investor pressure. No data sold. Ever.
+広告なし。投資家からのプレッシャーなし。データの販売なし。永遠に。
 
 ---
 
-## Technology Stack
+## テクノロジースタック
 
-| Layer | Technology |
+| レイヤー | テクノロジー |
 |-------|-----------|
-| **Frontend** | Next.js 14 (React) + React Native (Expo) |
-| **Backend** | Node.js + TypeScript + GraphQL (Apollo) |
-| **Database** | PostgreSQL + Prisma ORM + Redis |
-| **AI Layer** | Claude API / OpenAI API + Python (scikit-learn → PyTorch) |
-| **Infra** | Vercel + Railway + GitHub Actions (CI/CD) |
-| **Security** | Auth.js + AES-256 encryption → Zero-Knowledge (Phase 3) |
+| **フロントエンド** | Next.js 14 (React) + React Native (Expo) |
+| **バックエンド** | Node.js + TypeScript + GraphQL (Apollo) |
+| **データベース** | PostgreSQL + Prisma ORM + Redis |
+| **AIレイヤー** | Claude API / OpenAI API + Python (scikit-learn → PyTorch) |
+| **インフラ** | Vercel + Railway + GitHub Actions (CI/CD) |
+| **セキュリティ** | Auth.js + AES-256暗号化 → ゼロ知識証明（フェーズ3） |
 
-**Design principles baked into the code:**
+**コードに組み込まれた設計原則：**
 
-- **Privacy by Design** — user data encrypted client-side; servers store only ciphertext
-- **Open Source First** — transparency is not a feature, it is the architecture
-- **Offline First** — Morning Clarity works without internet; syncs when reconnected
-- **Accessibility First** — WCAG 2.1 AAA; screen readers; voice input; high contrast
-- **Anti-Addiction Design** — we actively build features that reduce over-reliance on us
+- **プライバシー・バイ・デザイン** — ユーザーデータはクライアント側で暗号化。サーバーは暗号文のみを保存
+- **オープンソース・ファースト** — 透明性は機能ではなく、アーキテクチャそのものです
+- **オフライン・ファースト** — Morning Clarity はインターネットなしでも動作し、再接続時に同期します
+- **アクセシビリティ・ファースト** — WCAG 2.1 AAA 準拠。スクリーンリーダー・音声入力・高コントラスト対応
+- **アンチ・アディクション・デザイン** — 私たちへの過度な依存を減らす機能を積極的に構築しています
 
 ---
 
-## Roadmap
+## ロードマップ
 
-| Phase | Timeline | Goal |
+| フェーズ | タイムライン | 目標 |
 |-------|----------|------|
-| **Phase 0** ← *now* | Today | Declaration · Logo · Brand · GitHub · Domain |
-| **Phase 1** | 3–6 months | MVP Web App · 100 users · Morning Clarity · Integrity Score |
-| **Phase 2** | 6–12 months | Full platform · 1,000 users · Support model · Multi-language |
-| **Phase 3** | 1–3 years | Foundation · 1M users · 10 languages · On-Device AI |
+| **フェーズ0** ← *現在* | 今日 | 宣言 · ロゴ · ブランド · GitHub · ドメイン |
+| **フェーズ1** | 3〜6か月 | MVP Webアプリ · ユーザー100名 · Morning Clarity · Integrity Score |
+| **フェーズ2** | 6〜12か月 | フルプラットフォーム · ユーザー1,000名 · 支援モデル · 多言語対応 |
+| **フェーズ3** | 1〜3年 | 財団設立 · ユーザー100万人 · 10言語対応 · オンデバイスAI |
 
 ---
 
-## We Are Looking for Builders
+## 一緒に作る仲間を探しています
 
-> *"We are not hiring. We are gathering."*
+> *「採用しているのではありません。集まっているのです。」*
 
-INT.LIFE is built entirely by volunteers. No salaries. No equity.
-Only those genuinely moved by the mission are welcome here.
+INT.LIFE は完全にボランティアで作られています。給与なし。株式なし。
+本当にミッションに心を動かされた方だけを、ここでは歓迎しています。
 
-**This is NOT for you if:**
-- You are primarily motivated by salary or career advancement
-- You believe technology is the goal, rather than the means
-- You want to move fast and break things — especially people's trust
+**こんな方には向いていません：**
+- 給与やキャリアアップが主な動機の方
+- 技術が手段ではなく目的だと考えている方
+- 速く動いて物事を壊したい方 — 特に人々の信頼を
 
-**This IS for you if:**
-- You have looked at the world and felt a genuine urgency to make it better
-- You believe what we build shapes how people think, feel, and live — and you take that seriously
-- You understand that Linux and Wikipedia were built by people who cared more about the work than the credit
+**こんな方に来てほしいです：**
+- 世界を見て、より良くしなければという本物の切迫感を感じている方
+- 私たちが作るものが、人々の思考・感情・生き方を形作ると信じており、それを真剣に受け止めている方
+- Linux と Wikipedia が、名声よりも仕事そのものを大切にした人々によって作られたことを理解している方
 
-### Roles We Need
+### 必要な役割
 
-| Role | What you will do |
+| 役割 | 担当内容 |
 |------|-----------------|
-| **AI / ML Engineers** | Build the Personal Algorithm — Deep Learning, NLP, personalization |
-| **Full-Stack Engineers** | Web + mobile + API — the skeleton of the platform |
-| **UX / Product Designers** | Make complexity feel gentle. Make depth feel simple. |
-| **Researchers & Thinkers** | Psychology, philosophy, health science — ground the platform in truth |
-| **Community Builders** | Bridge cultures. Translate not just language, but meaning. |
-| **Security / Privacy** | Make our promises technically unbreakable |
+| **AI / ML エンジニア** | パーソナルアルゴリズムの構築 — ディープラーニング、NLP、パーソナライゼーション |
+| **フルスタックエンジニア** | Web + モバイル + API — プラットフォームの骨格 |
+| **UX / プロダクトデザイナー** | 複雑さを優しく感じさせる。深さをシンプルに表現する。 |
+| **リサーチャー＆思想家** | 心理学、哲学、健康科学 — プラットフォームを真実に根ざす |
+| **コミュニティ・ビルダー** | 文化を橋渡しする。言葉だけでなく、意味を翻訳する。 |
+| **セキュリティ / プライバシー** | 私たちの約束を技術的に揺るぎないものにする |
 
-### How to Join
+### 参加するには
 
-Don't send a CV.
-**Tell us why you want to build this.**
-That answer will tell us everything.
+CVを送らないでください。
+**なぜこれを作りたいのかを教えてください。**
+その答えが、すべてを教えてくれます。
 
 - 📧 Email: `contact@int.life`
-- 💬 Discussions: [GitHub Discussions](../../discussions)
-- 🌐 Website: `int.life` *(coming soon)*
+- 💬 ディスカッション: [GitHub Discussions](../../discussions)
+- 🌐 ウェブサイト: `int.life` *(近日公開)*
 
 ---
 
-## Project Structure
+## プロジェクト構成
 
 ```
 intlife/
 ├── apps/
-│   ├── web/          # Next.js 14 web application
+│   ├── web/          # Next.js 14 ウェブアプリケーション
 │   └── mobile/       # React Native (Expo) iOS + Android
 ├── packages/
 │   ├── api/          # GraphQL API (Node.js + TypeScript)
-│   ├── ai/           # AI Layer (Python + LLM integrations)
-│   ├── db/           # Database schema (Prisma + PostgreSQL)
-│   └── ui/           # Shared design system components
+│   ├── ai/           # AIレイヤー (Python + LLM インテグレーション)
+│   ├── db/           # データベーススキーマ (Prisma + PostgreSQL)
+│   └── ui/           # 共有デザインシステム コンポーネント
 ├── docs/
-│   ├── declaration/  # Platform Declaration (the soul of INT.LIFE)
-│   ├── philosophy/   # Absolute Integrity · The Coral Red Dot
-│   └── architecture/ # Technical architecture decisions
+│   ├── declaration/  # プラットフォーム宣言（INT.LIFE の魂）
+│   ├── philosophy/   # 絶対的な誠実さ · コーラルレッドのドット
+│   └── architecture/ # 技術アーキテクチャの意思決定
 └── .github/
-    └── workflows/    # CI/CD pipelines
+    └── workflows/    # CI/CD パイプライン
 ```
 
 ---
 
-## Contributing
+## コントリビューション（貢献する）
 
-1. Read the [Platform Declaration](./docs/declaration/) first. Understand the soul before touching the code.
-2. Check [open issues](../../issues) or start a [Discussion](../../discussions).
-3. Fork → Branch → Pull Request.
-4. Every PR must pass: *"Does this bring a person closer to living Love, Hope, Freedom, Dream, Peace, Prosperity, Happiness, or Compassion?"*
-
----
-
-## License
-
-MIT License — because knowledge and tools for human flourishing belong to everyone.
+1. まず [プラットフォーム宣言](./docs/declaration/) を読んでください。コードに触れる前に、その魂を理解してください。
+2. [オープンなイシュー](../../issues) を確認するか、[ディスカッション](../../discussions) を始めてください。
+3. Fork → Branch → Pull Request。
+4. すべての PR は次の問いに答えなければなりません：*「これは、ある人が愛、希望、自由、夢、平和、繁栄、幸福、または慈悲の中に生きることに近づけるか？」*
 
 ---
 
-## The Founding Story
+## ライセンス
 
-INT.LIFE was born in a moment of meditation.
+MIT ライセンス — 人間の豊かな生のための知識とツールは、すべての人のものだからです。
 
-One person. One quiet morning. One question that would not let go:
+---
 
-> *"What if there was a platform that truly helped people live better — not by optimising their metrics, but by understanding their whole life?"*
+## 創業の物語
 
-That question became this project.
-That project is now this platform.
-And this platform is now yours.
+INT.LIFE は、瞑想の一瞬に生まれました。
+
+ひとりの人間。静かなある朝。離れられないひとつの問い：
+
+> *「もし、人々が本当に良く生きることを助けるプラットフォームがあったなら — 指標を最適化するのではなく、その人の人生全体を理解することによって。」*
+
+その問いが、このプロジェクトになりました。
+そのプロジェクトは今、このプラットフォームになっています。
+そしてこのプラットフォームは今、あなたのものです。
 
 ---
 
 <div align="center">
 
-*"The coral red dot between INT and LIFE is a compass,*
-*pointing always toward the highest goal of a human life.*
-*May it point the way for you."*
+*「INTとLIFEの間のコーラルレッドのドットはコンパスです。*
+*常に人生の最高の目標を指し示しています。*
+*どうかそれが、あなたの道を照らしますように。」*
 
 ---
 
-**INT.LIFE** · One Life. All Dimensions.
+**INT.LIFE** · ひとつの人生。すべての次元。
 
-Built on Absolute Integrity · No Ads · No Compromise · Open to Everyone
+絶対的な誠実さの上に構築 · 広告なし · 妥協なし · すべての人に開かれた
 
 </div>
