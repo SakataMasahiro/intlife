@@ -481,26 +481,39 @@ async function handleSignup(){
 
 function toggleRole(el){el.classList.toggle('selected');}
 
-function handleBuilder(){
-  const name=document.getElementById('b-name').value.trim();
-  const email=document.getElementById('b-email').value.trim();
-  const message=document.getElementById('b-message').value.trim();
+async function handleBuilder(){
+  const nameEl=document.getElementById('b-name');
+  const emailEl=document.getElementById('b-email');
+  const messageEl=document.getElementById('b-message');
+  const name=nameEl.value.trim();
+  const email=emailEl.value.trim();
+  const message=messageEl.value.trim();
   const roles=[...document.querySelectorAll('.builder-role.selected')].map(r=>r.textContent).join(', ');
   const country=document.getElementById('b-country').value.trim();
   const github=document.getElementById('b-github').value.trim();
-  if(!name||!email||!message){
-    if(!name)document.getElementById('b-name').style.borderColor='#FF6040';
-    if(!email)document.getElementById('b-email').style.borderColor='#FF6040';
-    if(!message)document.getElementById('b-message').style.borderColor='#FF6040';
-    return;
+  if(!name)nameEl.style.borderColor='#FF6040';else nameEl.style.borderColor='';
+  if(!email)emailEl.style.borderColor='#FF6040';else emailEl.style.borderColor='';
+  if(!message)messageEl.style.borderColor='#FF6040';else messageEl.style.borderColor='';
+  if(!name||!email||!message)return;
+  const btn=document.getElementById('builder-btn');
+  btn.textContent='...';btn.disabled=true;
+  const oldErr=document.getElementById('builder-err');if(oldErr)oldErr.remove();
+  try{
+    const res=await fetch(`${SUPABASE_URL}/rest/v1/builders`,{
+      method:'POST',
+      headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`,'Content-Type':'application/json','Prefer':'return=minimal'},
+      body:JSON.stringify({name,role:roles||null,country:country||null,email,github:github||null,message})
+    });
+    if(res.ok||res.status===201){
+      document.getElementById('builder-form').innerHTML=`<div style="text-align:center;padding:2rem 0;"><p style="font-family:'Cormorant Garamond',serif;font-size:26px;color:white;font-style:italic;line-height:1.6;">Thank you, ${name}. Welcome to INT.LIFE.</p></div>`;
+    }else{
+      btn.textContent=T[currentLang].builderBtn;btn.disabled=false;
+      document.getElementById('builder-form').insertAdjacentHTML('beforeend','<p id="builder-err" style="color:#FF6040;font-size:13px;text-align:center;margin-top:1rem;">Something went wrong. Please try again.</p>');
+    }
+  }catch(e){
+    btn.textContent=T[currentLang].builderBtn;btn.disabled=false;
+    document.getElementById('builder-form').insertAdjacentHTML('beforeend','<p id="builder-err" style="color:#FF6040;font-size:13px;text-align:center;margin-top:1rem;">Something went wrong. Please try again.</p>');
   }
-  const subject=encodeURIComponent('INT.LIFE Builder Application — '+name);
-  const body=encodeURIComponent('Name: '+name+'\nRole: '+(roles||'Not specified')+'\nCountry: '+(country||'Not specified')+'\nEmail: '+email+'\nGitHub: '+(github||'Not provided')+'\n\nWhy I want to build this:\n'+message);
-  window.location.href='mailto:contact@int.life?subject='+subject+'&body='+body;
-  const thanks=currentLang==='ja'
-    ?`<div style="text-align:center;padding:2rem 0;"><p style="font-family:'Cormorant Garamond',serif;font-size:26px;color:white;font-style:italic;line-height:1.6;margin-bottom:1rem;">${name}様、ありがとうございます。</p><p style="font-family:'Cormorant Garamond',serif;font-size:18px;color:rgba(255,255,255,.6);font-style:italic;line-height:1.7;">メッセージを受け取りました。<br>必ずご連絡いたします。</p><p style="font-size:13px;color:rgba(255,255,255,.35);margin-top:1.5rem;">「私たちはスタートアップを作っているのではない。ムーブメントを始めているのだ。」</p></div>`
-    :`<div style="text-align:center;padding:2rem 0;"><p style="font-family:'Cormorant Garamond',serif;font-size:26px;color:white;font-style:italic;line-height:1.6;margin-bottom:1rem;">Thank you, ${name}.</p><p style="font-family:'Cormorant Garamond',serif;font-size:18px;color:rgba(255,255,255,.6);font-style:italic;line-height:1.7;">Your message is on its way.<br>We will be in touch.</p><p style="font-size:13px;color:rgba(255,255,255,.35);margin-top:1.5rem;">"We are not building a startup. We are starting a movement."</p></div>`;
-  document.getElementById('builder-form').innerHTML=thanks;
 }
 </script>
 </body>
