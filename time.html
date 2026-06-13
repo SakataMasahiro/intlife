@@ -19,7 +19,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.25rem 2rem;display
 .nav-life{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;letter-spacing:3px;color:#D4D0FF;}
 .nav-back{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s;}
 .nav-back::before{content:'← ';}
-.nav-back:hover{color:var(--time);}
+.nav-back:hover{color:var(--time);}.nav-link{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s;}.nav-link:hover{color:rgba(255,255,255,.8);}
 
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6rem 2rem 4rem;text-align:center;position:relative;overflow:hidden;}
 .hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(127,119,221,.09) 0%,transparent 65%);pointer-events:none;}
@@ -111,6 +111,8 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
   </a>
   <div class="nav-right-group">
     <a href="index.html" class="nav-back">All Dimensions</a>
+    <a href="library.html" class="nav-link">Library</a>
+    <a href="contribute.html" class="nav-link">Contribute</a>
     <div class="nav-lang">
       <button type="button" class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
       <span class="lang-divider">|</span>
@@ -223,7 +225,7 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
   <p class="cta-sub">INT.LIFE is being built now.</p>
   <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
     <a href="index.html#signup" class="btn-p">Join the Waiting List</a>
-    <a href="index.html" class="btn-s">← Back to Home</a>
+    <a href="library.html?dimension=time" class="btn-s">See Time Library</a>
   </div>
 </section>
 
@@ -233,6 +235,8 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
   </div>
   <div class="f-links">
     <a href="https://github.com/SakataMasahiro/intlife" target="_blank">GitHub</a>
+    <a href="library.html">Library</a>
+    <a href="contribute.html">Contribute</a>
     <a href="constitution.html">Constitution</a>
     <a href="index.html#declaration">Declaration</a>
     <a href="index.html#builder">Join as Builder</a>

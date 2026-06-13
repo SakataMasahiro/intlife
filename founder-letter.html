@@ -20,7 +20,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.25rem 2rem;display
 .nav-right-group{display:flex;align-items:center;gap:1.5rem;}
 .nav-back{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s;}
 .nav-back::before{content:'← ';}
-.nav-back:hover{color:var(--theme);}
+.nav-back:hover{color:var(--theme);}.nav-link{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s;}.nav-link:hover{color:rgba(255,255,255,.8);}
 .nav-lang{display:flex;align-items:center;gap:4px;}
 .lang-btn{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.35);cursor:pointer;transition:color .2s;background:none;border:none;padding:2px 5px;}
 .lang-btn.active{color:#fff;font-weight:500;}
@@ -83,6 +83,8 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
   </a>
   <div class="nav-right-group">
     <a href="index.html" class="nav-back" id="nav-back-link">All Dimensions</a>
+    <a href="library.html" class="nav-link" id="nav-library-link">Library</a>
+    <a href="contribute.html" class="nav-link" id="nav-contribute-link">Contribute</a>
     <div class="nav-lang">
       <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
       <span class="lang-divider">|</span>
@@ -165,6 +167,8 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
   </div>
   <div class="f-links">
     <a href="https://github.com/SakataMasahiro/intlife" target="_blank">GitHub</a>
+    <a href="library.html">Library</a>
+    <a href="contribute.html">Contribute</a>
     <a href="constitution.html">Constitution</a>
     <a href="index.html#declaration">Declaration</a>
     <a href="index.html#builder">Join as Builder</a>
@@ -180,6 +184,8 @@ var practiceStatusType = null;
 var L = {
   en: {
     navBack: 'All Dimensions',
+    navLibrary: 'Library',
+    navContribute: 'Contribute',
     heroLabel: "Founder's Letter",
     heroTitle: 'A Letter from the Founder',
     heroTagline: 'The one who will save you is already here. It is you.',
@@ -201,6 +207,8 @@ var L = {
   },
   ja: {
     navBack: 'すべての次元',
+    navLibrary: 'ライブラリ',
+    navContribute: '寄稿する',
     heroLabel: '創業者の手紙',
     heroTitle: '創業者の手紙',
     heroTagline: 'あなたを助けるのは、あなた自身です。',
@@ -234,6 +242,8 @@ function setLang(lang) {
   document.querySelectorAll('.lang-ja').forEach(function(el){ el.hidden = (lang !== 'ja'); });
 
   document.getElementById('nav-back-link').textContent = t.navBack;
+  document.getElementById('nav-library-link').textContent = t.navLibrary;
+  document.getElementById('nav-contribute-link').textContent = t.navContribute;
   document.getElementById('hero-label').textContent = t.heroLabel;
   document.getElementById('hero-title').textContent = t.heroTitle;
   document.getElementById('hero-tagline').textContent = t.heroTagline;
