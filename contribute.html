@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="INT.LIFE — Contribute to the shared library of human flourishing.">
+<title>Contribute — INT.LIFE</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{--navy:#1A1648;--deep:#0E0C2E;--coral:#FF6040;--purple:#534AB7;--lavender:#AFA9EC;}
+html{scroll-behavior:smooth;}
+body{background:var(--deep);color:#fff;font-family:'Jost',sans-serif;min-height:100vh;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(14,12,46,.95),transparent);backdrop-filter:blur(8px);}
+.nav-logo{display:flex;align-items:center;gap:4px;text-decoration:none;}
+.nav-int{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:white;}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:var(--coral);margin-bottom:2px;}
+.nav-life{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;letter-spacing:3px;color:#D4D0FF;}
+.nav-right{display:flex;align-items:center;gap:1.5rem;}
+.nav-link{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s;}
+.nav-link:hover{color:rgba(255,255,255,.8);}
+.lang-btn{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.4);cursor:pointer;transition:color .2s;background:none;border:none;padding:2px 4px;}
+.lang-btn.active{color:#fff;font-weight:500;}
+.lang-divider{color:rgba(255,255,255,.2);font-size:11px;}
+.page-wrap{max-width:720px;margin:0 auto;padding:7rem 2rem 4rem;}
+.page-label{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--coral);margin-bottom:1rem;}
+.page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,54px);font-weight:300;color:white;line-height:1.15;margin-bottom:1rem;letter-spacing:-.5px;}
+.page-sub{font-size:13px;color:rgba(255,255,255,.42);line-height:1.85;margin-bottom:3rem;max-width:520px;}
+.divider{height:1px;background:rgba(255,255,255,.07);margin:2.5rem 0;}
+
+/* Auth states */
+#state-login,#state-not-builder,#state-form{display:none;}
+#state-login.active,#state-not-builder.active,#state-form.active{display:block;}
+
+/* Login form */
+.auth-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:2.5rem;max-width:440px;}
+.auth-card-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;color:white;margin-bottom:.5rem;}
+.auth-card-sub{font-size:12px;color:rgba(255,255,255,.38);line-height:1.7;margin-bottom:1.75rem;}
+.field-row{margin-bottom:1.25rem;}
+.field-label{display:block;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:8px;}
+.field-input{width:100%;padding:13px 16px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:3px;color:white;font-family:'Jost',sans-serif;font-size:13px;outline:none;transition:border-color .3s;}
+.field-input:focus{border-color:var(--coral);}
+.field-input::placeholder{color:rgba(255,255,255,.25);}
+.btn-primary{background:var(--coral);color:white;border:none;padding:13px 34px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:all .3s;width:100%;}
+.btn-primary:hover:not(:disabled){background:#FF7555;transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,96,64,.3);}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+.btn-secondary{background:transparent;color:var(--lavender);border:1px solid rgba(175,169,236,.4);padding:13px 34px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block;}
+.btn-secondary:hover{border-color:var(--lavender);color:white;transform:translateY(-1px);}
+.auth-msg{font-size:13px;color:rgba(255,255,255,.55);line-height:1.7;padding:1rem;background:rgba(175,169,236,.08);border-radius:3px;border-left:2px solid var(--lavender);margin-top:1rem;}
+.auth-msg.success{border-left-color:#2DD4AA;background:rgba(45,212,170,.06);}
+.auth-msg.error{border-left-color:var(--coral);background:rgba(255,96,64,.06);}
+
+/* Not-builder state */
+.notice-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:2.5rem;max-width:520px;}
+.notice-card-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;color:white;margin-bottom:.75rem;}
+.notice-card-body{font-size:13px;color:rgba(255,255,255,.5);line-height:1.85;margin-bottom:1.5rem;}
+
+/* Contribution form */
+.form-section-title{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:1.25rem;padding-bottom:.5rem;border-bottom:1px solid rgba(255,255,255,.07);}
+.field-row-half{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+@media(max-width:560px){.field-row-half{grid-template-columns:1fr;}}
+.field-textarea{width:100%;padding:13px 16px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:3px;color:white;font-family:'Jost',sans-serif;font-size:13px;outline:none;resize:vertical;min-height:90px;transition:border-color .3s;}
+.field-textarea:focus{border-color:var(--coral);}
+.field-textarea::placeholder{color:rgba(255,255,255,.25);}
+.dim-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px;}
+@media(max-width:560px){.dim-grid{grid-template-columns:repeat(2,1fr);}}
+.dim-btn{padding:10px 6px;border-radius:3px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.45);font-family:'Jost',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;text-align:center;}
+.dim-btn:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.75);}
+.dim-btn.selected{border-color:var(--coral);color:white;background:rgba(255,96,64,.1);}
+
+/* File drop zone */
+.drop-zone{border:2px dashed rgba(255,255,255,.15);border-radius:4px;padding:2.5rem 1.5rem;text-align:center;cursor:pointer;transition:all .25s;position:relative;margin-top:8px;}
+.drop-zone:hover,.drop-zone.drag-over{border-color:var(--coral);background:rgba(255,96,64,.04);}
+.drop-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.drop-icon{font-size:28px;margin-bottom:.75rem;opacity:.4;}
+.drop-label{font-size:12px;color:rgba(255,255,255,.4);letter-spacing:1px;}
+.drop-hint{font-size:11px;color:rgba(255,255,255,.22);margin-top:6px;letter-spacing:.5px;}
+.file-preview{display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:3px;margin-top:8px;}
+.file-preview-icon{font-size:20px;opacity:.7;}
+.file-preview-info{flex:1;min-width:0;}
+.file-preview-name{font-size:13px;color:white;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.file-preview-size{font-size:11px;color:rgba(255,255,255,.35);margin-top:2px;}
+.file-preview-remove{background:none;border:none;color:rgba(255,255,255,.3);cursor:pointer;font-size:16px;padding:4px;line-height:1;transition:color .2s;}
+.file-preview-remove:hover{color:var(--coral);}
+.progress-bar-wrap{height:3px;background:rgba(255,255,255,.08);border-radius:2px;margin-top:8px;overflow:hidden;display:none;}
+.progress-bar{height:100%;background:var(--coral);width:0%;transition:width .3s;border-radius:2px;}
+.submit-row{display:flex;align-items:center;gap:1rem;margin-top:2rem;flex-wrap:wrap;}
+.form-msg{font-size:12px;color:rgba(255,255,255,.45);margin-top:.5rem;}
+.form-msg.error{color:#FF8066;}
+.form-msg.success{color:#2DD4AA;}
+
+/* Own contributions list */
+.my-section{margin-top:3.5rem;}
+.my-section-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:white;margin-bottom:1.5rem;}
+.contrib-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:4px;padding:1.25rem 1.5rem;margin-bottom:12px;display:flex;align-items:flex-start;gap:1rem;}
+.contrib-card-body{flex:1;min-width:0;}
+.contrib-card-title{font-size:14px;color:white;font-weight:500;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.contrib-card-meta{font-size:11px;color:rgba(255,255,255,.32);display:flex;gap:12px;flex-wrap:wrap;}
+.dim-badge{display:inline-block;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:2px;border:1px solid;}
+.contrib-card-actions{display:flex;gap:8px;align-items:center;flex-shrink:0;}
+.action-link{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.35);text-decoration:none;transition:color .2s;}
+.action-link:hover{color:var(--lavender);}
+.action-delete{background:none;border:none;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,96,64,.4);cursor:pointer;transition:color .2s;}
+.action-delete:hover{color:var(--coral);}
+.empty-state{text-align:center;padding:3rem 0;color:rgba(255,255,255,.25);font-size:13px;font-style:italic;letter-spacing:.5px;}
+.user-bar{display:flex;align-items:center;gap:12px;margin-bottom:2.5rem;padding:12px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:3px;}
+.user-email{font-size:12px;color:rgba(255,255,255,.45);flex:1;}
+.user-logout{background:none;border:none;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.25);cursor:pointer;transition:color .2s;}
+.user-logout:hover{color:var(--coral);}
+footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding:2.5rem 2rem;text-align:center;margin-top:4rem;}
+.f-logo{display:flex;align-items:center;justify-content:center;gap:4px;margin-bottom:1rem;}
+.f-int{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:white;}
+.f-dot{width:7px;height:7px;border-radius:50%;background:var(--coral);margin-bottom:3px;}
+.f-life{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;letter-spacing:3px;color:#D4D0FF;}
+.f-links{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.25rem;}
+.f-links a{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.28);text-decoration:none;transition:color .2s;}
+.f-links a:hover{color:rgba(255,255,255,.7);}
+.f-copy{font-size:11px;color:rgba(255,255,255,.18);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="nav-int">INT</span><div class="nav-dot"></div><span class="nav-life">LIFE</span>
+  </a>
+  <div class="nav-right">
+    <a href="library.html" class="nav-link" id="nav-library-link">Library</a>
+    <a href="index.html" class="nav-link" id="nav-home-link">Home</a>
+    <div style="display:flex;align-items:center;gap:4px;">
+      <button type="button" class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <span class="lang-divider">|</span>
+      <button type="button" class="lang-btn" id="btn-ja" onclick="setLang('ja')">日本語</button>
+    </div>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <p class="page-label" id="page-label">For Builders</p>
+  <h1 class="page-title" id="page-title">Contribute to<br>the Library</h1>
+  <p class="page-sub" id="page-sub">Share knowledge, insights, and resources with every human being on Earth. Files you upload become part of the INT.LIFE public library — free, forever.</p>
+
+  <!-- STATE 1: Not logged in -->
+  <div id="state-login">
+    <div class="auth-card">
+      <h2 class="auth-card-title" id="login-title">Sign in as Builder</h2>
+      <p class="auth-card-sub" id="login-sub">Enter your email address. We'll send you a magic link — no password needed.</p>
+      <div class="field-row">
+        <label class="field-label" id="login-email-label">Email address</label>
+        <input type="email" class="field-input" id="login-email" placeholder="you@example.com" autocomplete="email">
+      </div>
+      <button class="btn-primary" id="login-btn" onclick="handleMagicLink()">Send Magic Link</button>
+      <div id="login-msg" style="display:none;margin-top:1rem;"></div>
+    </div>
+  </div>
+
+  <!-- STATE 2: Logged in but not a builder -->
+  <div id="state-not-builder">
+    <div class="notice-card">
+      <h2 class="notice-card-title" id="not-builder-title">Builder Registration Required</h2>
+      <div class="notice-card-body" id="not-builder-body">
+        <p>Your email is not registered as an INT.LIFE Builder yet.</p>
+        <p style="margin-top:.75rem;">Contributions are only open to Builders — volunteers who share the mission of helping every human being live their fullest life.</p>
+      </div>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+        <a href="index.html#builder" class="btn-primary" style="text-decoration:none;text-align:center;" id="not-builder-btn">Register as Builder</a>
+        <button class="btn-secondary" onclick="handleSignOut()" id="not-builder-signout-btn">Sign Out</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATE 3: Logged in builder -->
+  <div id="state-form">
+    <div class="user-bar">
+      <span class="user-email" id="user-email-display"></span>
+      <button class="user-logout" onclick="handleSignOut()" id="signout-btn">Sign Out</button>
+    </div>
+
+    <form id="contrib-form" onsubmit="handleSubmit(event)">
+      <p class="form-section-title" id="form-section-content">Content</p>
+
+      <div class="field-row-half">
+        <div class="field-row">
+          <label class="field-label" id="label-title-en">Title (English) *</label>
+          <input type="text" class="field-input" id="f-title" placeholder="e.g. Morning Clarity Framework" required>
+        </div>
+        <div class="field-row">
+          <label class="field-label" id="label-title-ja">Title (日本語・任意)</label>
+          <input type="text" class="field-input" id="f-title-ja" placeholder="例: モーニング・クラリティ">
+        </div>
+      </div>
+
+      <div class="field-row-half">
+        <div class="field-row">
+          <label class="field-label" id="label-desc-en">Description (EN)</label>
+          <textarea class="field-textarea" id="f-desc" rows="3" placeholder="What is this about?"></textarea>
+        </div>
+        <div class="field-row">
+          <label class="field-label" id="label-desc-ja">Description (日本語)</label>
+          <textarea class="field-textarea" id="f-desc-ja" rows="3" placeholder="どんな内容ですか？"></textarea>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <label class="field-label" id="label-dimension">Dimension *</label>
+        <div class="dim-grid" id="dim-grid">
+          <button type="button" class="dim-btn" data-dim="time"        onclick="selectDim(this)" style="--dc:#7F77DD">Time</button>
+          <button type="button" class="dim-btn" data-dim="knowledge"   onclick="selectDim(this)" style="--dc:#5BB4FF">Knowledge</button>
+          <button type="button" class="dim-btn" data-dim="health"      onclick="selectDim(this)" style="--dc:#2DD4AA">Health</button>
+          <button type="button" class="dim-btn" data-dim="integrity"   onclick="selectDim(this)" style="--dc:#FF6040">Integrity</button>
+          <button type="button" class="dim-btn" data-dim="motivation"  onclick="selectDim(this)" style="--dc:#FFB830">Motivation</button>
+          <button type="button" class="dim-btn" data-dim="skills"      onclick="selectDim(this)" style="--dc:#80D830">Skills</button>
+          <button type="button" class="dim-btn" data-dim="flourishing" onclick="selectDim(this)" style="--dc:#C4B4FF">Flourishing</button>
+          <button type="button" class="dim-btn" data-dim="general"     onclick="selectDim(this)" style="--dc:#AFA9EC">General</button>
+        </div>
+        <input type="hidden" id="f-dimension" required>
+      </div>
+
+      <div class="field-row">
+        <label class="field-label" id="label-file">File *</label>
+        <div class="drop-zone" id="drop-zone">
+          <input type="file" id="f-file" accept=".pdf,.png,.jpg,.jpeg,.webp,.md,.txt" onchange="handleFileChange(this.files[0])">
+          <div class="drop-icon">📄</div>
+          <p class="drop-label" id="drop-label-text">Drop a file here, or click to browse</p>
+          <p class="drop-hint" id="drop-hint-text">PDF, PNG, JPG, WebP, Markdown, TXT — max 20MB</p>
+        </div>
+        <div class="file-preview" id="file-preview" style="display:none;">
+          <span class="file-preview-icon" id="file-icon">📄</span>
+          <div class="file-preview-info">
+            <div class="file-preview-name" id="file-name-display"></div>
+            <div class="file-preview-size" id="file-size-display"></div>
+          </div>
+          <button type="button" class="file-preview-remove" onclick="clearFile()" title="Remove">✕</button>
+        </div>
+        <div class="progress-bar-wrap" id="progress-wrap">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+      </div>
+
+      <div class="submit-row">
+        <button type="submit" class="btn-primary" id="submit-btn" style="width:auto;padding:13px 40px;" disabled>Submit Contribution</button>
+      </div>
+      <div id="form-msg" style="display:none;margin-top:.75rem;"></div>
+    </form>
+
+    <div class="my-section">
+      <h2 class="my-section-title" id="my-section-title">Your Contributions</h2>
+      <div id="my-list"><div class="empty-state" id="my-empty">Loading...</div></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="f-logo">
+    <span class="f-int">INT</span><div class="f-dot"></div><span class="f-life">LIFE</span>
+  </div>
+  <div class="f-links">
+    <a href="library.html" id="f-library">Library</a>
+    <a href="https://github.com/SakataMasahiro/intlife" target="_blank">GitHub</a>
+    <a href="constitution.html">Constitution</a>
+    <a href="index.html#declaration">Declaration</a>
+    <a href="index.html#builder">Join as Builder</a>
+    <a href="mailto:contact@int.life">contact@int.life</a>
+  </div>
+  <p class="f-copy" id="f-copy">Built on Absolute Integrity · No Ads · No Compromise · Open to Everyone</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+const SUPA_URL = 'https://lzlxqxalwtkneclpgexh.supabase.co';
+const SUPA_KEY = 'sb_publishable_a1Q20LH5Y40jfZbq6CY4vw_uc-gooc_';
+const sb = supabase.createClient(SUPA_URL, SUPA_KEY);
+
+const DIMS = {
+  time:        {label:'Time',        labelJa:'時間',       color:'#7F77DD'},
+  knowledge:   {label:'Knowledge',   labelJa:'知識',       color:'#5BB4FF'},
+  health:      {label:'Health',      labelJa:'健康',       color:'#2DD4AA'},
+  integrity:   {label:'Integrity',   labelJa:'誠実さ',     color:'#FF6040'},
+  motivation:  {label:'Motivation',  labelJa:'モチベーション',color:'#FFB830'},
+  skills:      {label:'Skills',      labelJa:'スキル',     color:'#80D830'},
+  flourishing: {label:'Flourishing', labelJa:'フラーリッシング',color:'#C4B4FF'},
+  general:     {label:'General',     labelJa:'一般',       color:'#AFA9EC'},
+};
+
+const T = {
+  en: {
+    pageLabel:'For Builders', pageTitle:'Contribute to<br>the Library',
+    pageSub:'Share knowledge, insights, and resources with every human being on Earth. Files you upload become part of the INT.LIFE public library — free, forever.',
+    loginTitle:'Sign in as Builder', loginSub:'Enter your email address. We\'ll send you a magic link — no password needed.',
+    loginEmailLabel:'Email address', loginBtn:'Send Magic Link',
+    magicSent:'Check your email — the magic link is on its way.',
+    notBuilderTitle:'Builder Registration Required',
+    notBuilderBody:'<p>Your email is not registered as an INT.LIFE Builder yet.</p><p style="margin-top:.75rem;">Contributions are only open to Builders — volunteers who share the mission of helping every human being live their fullest life.</p>',
+    notBuilderBtn:'Register as Builder', notBuilderSignout:'Sign Out',
+    signout:'Sign Out',
+    formSectionContent:'Content',
+    labelTitleEn:'Title (English) *', labelTitleJa:'Title (日本語 · optional)',
+    labelDescEn:'Description (EN)', labelDescJa:'Description (日本語)',
+    labelDimension:'Dimension *', labelFile:'File *',
+    dropLabel:'Drop a file here, or click to browse',
+    dropHint:'PDF, PNG, JPG, WebP, Markdown, TXT — max 20MB',
+    submitBtn:'Submit Contribution',
+    mysectionTitle:'Your Contributions',
+    myEmpty:'No contributions yet. Be the first to add one.',
+    fCopy:'Built on Absolute Integrity · No Ads · No Compromise · Open to Everyone',
+    navLibrary:'Library', navHome:'Home',
+    fLibrary:'Library',
+  },
+  ja: {
+    pageLabel:'ビルダー専用', pageTitle:'ライブラリへの<br>寄稿',
+    pageSub:'地球上のすべての人に、知識・洞察・リソースを届けましょう。アップロードしたファイルはINT.LIFEの公開ライブラリに加わります——無料で、永遠に。',
+    loginTitle:'ビルダーとしてサインイン', loginSub:'メールアドレスを入力してください。マジックリンクをお送りします——パスワード不要。',
+    loginEmailLabel:'メールアドレス', loginBtn:'マジックリンクを送る',
+    magicSent:'メールを確認してください——マジックリンクが届いています。',
+    notBuilderTitle:'ビルダー登録が必要です',
+    notBuilderBody:'<p>このメールアドレスはINT.LIFEビルダーとしてまだ登録されていません。</p><p style="margin-top:.75rem;">寄稿はビルダーのみが行えます——すべての人間が最も豊かな人生を生きることを支援するミッションを共有するボランティアです。</p>',
+    notBuilderBtn:'ビルダーとして登録する', notBuilderSignout:'サインアウト',
+    signout:'サインアウト',
+    formSectionContent:'コンテンツ',
+    labelTitleEn:'タイトル（英語・必須）', labelTitleJa:'タイトル（日本語・任意）',
+    labelDescEn:'説明（英語）', labelDescJa:'説明（日本語）',
+    labelDimension:'次元 *', labelFile:'ファイル *',
+    dropLabel:'ここにファイルをドロップ、またはクリックして選択',
+    dropHint:'PDF、PNG、JPG、WebP、Markdown、TXT — 最大20MB',
+    submitBtn:'寄稿する',
+    mysectionTitle:'あなたの寄稿',
+    myEmpty:'まだ寄稿がありません。最初の一人になりましょう。',
+    fCopy:'透徹した誠実さの上に構築 · 広告なし · 妥協なし · すべての人に開かれている',
+    navLibrary:'ライブラリ', navHome:'ホーム',
+    fLibrary:'ライブラリ',
+  }
+};
+
+let currentLang = 'ja';
+let currentUser = null;
+let currentBuilder = null;
+let selectedFile = null;
+let selectedDim = null;
+
+function setLang(lang) {
+  currentLang = lang;
+  const t = T[lang];
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-ja').classList.toggle('active', lang === 'ja');
+  document.getElementById('page-label').textContent = t.pageLabel;
+  document.getElementById('page-title').innerHTML = t.pageTitle;
+  document.getElementById('page-sub').textContent = t.pageSub;
+  document.getElementById('login-title').textContent = t.loginTitle;
+  document.getElementById('login-sub').textContent = t.loginSub;
+  document.getElementById('login-email-label').textContent = t.loginEmailLabel;
+  document.getElementById('login-btn').textContent = t.loginBtn;
+  document.getElementById('not-builder-title').textContent = t.notBuilderTitle;
+  document.getElementById('not-builder-body').innerHTML = t.notBuilderBody;
+  document.getElementById('not-builder-btn').textContent = t.notBuilderBtn;
+  document.getElementById('not-builder-signout-btn').textContent = t.notBuilderSignout;
+  document.getElementById('signout-btn').textContent = t.signout;
+  document.getElementById('form-section-content').textContent = t.formSectionContent;
+  document.getElementById('label-title-en').textContent = t.labelTitleEn;
+  document.getElementById('label-title-ja').textContent = t.labelTitleJa;
+  document.getElementById('label-desc-en').textContent = t.labelDescEn;
+  document.getElementById('label-desc-ja').textContent = t.labelDescJa;
+  document.getElementById('label-dimension').textContent = t.labelDimension;
+  document.getElementById('label-file').textContent = t.labelFile;
+  document.getElementById('drop-label-text').textContent = t.dropLabel;
+  document.getElementById('drop-hint-text').textContent = t.dropHint;
+  document.getElementById('submit-btn').textContent = t.submitBtn;
+  document.getElementById('my-section-title').textContent = t.mysectionTitle;
+  document.getElementById('f-copy').textContent = t.fCopy;
+  document.getElementById('nav-library-link').textContent = t.navLibrary;
+  document.getElementById('nav-home-link').textContent = t.navHome;
+  document.getElementById('f-library').textContent = t.fLibrary;
+  updateDimButtons();
+  if (currentBuilder) renderMyList(window._myContribs || []);
+}
+
+function updateDimButtons() {
+  document.querySelectorAll('.dim-btn').forEach(btn => {
+    const dim = btn.dataset.dim;
+    if (dim) btn.textContent = currentLang === 'ja' ? DIMS[dim].labelJa : DIMS[dim].label;
+  });
+}
+
+function selectDim(btn) {
+  document.querySelectorAll('.dim-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedDim = btn.dataset.dim;
+  document.getElementById('f-dimension').value = selectedDim;
+  updateSubmitBtn();
+}
+
+function showState(id) {
+  ['state-login','state-not-builder','state-form'].forEach(s => {
+    document.getElementById(s).classList.toggle('active', s === id);
+  });
+}
+
+function showMsg(id, text, type) {
+  const el = document.getElementById(id);
+  el.textContent = text;
+  el.className = 'auth-msg ' + (type || '');
+  el.style.display = 'block';
+}
+
+function showFormMsg(text, type) {
+  const el = document.getElementById('form-msg');
+  el.textContent = text;
+  el.className = 'form-msg ' + (type || '');
+  el.style.display = 'block';
+}
+
+function hideFormMsg() {
+  document.getElementById('form-msg').style.display = 'none';
+}
+
+async function handleMagicLink() {
+  const email = document.getElementById('login-email').value.trim();
+  if (!email || !email.includes('@')) {
+    document.getElementById('login-email').style.borderColor = 'var(--coral)';
+    return;
+  }
+  document.getElementById('login-email').style.borderColor = '';
+  const btn = document.getElementById('login-btn');
+  btn.disabled = true;
+  btn.textContent = '...';
+  const redirectUrl = window.location.href.split('?')[0].split('#')[0];
+  const { error } = await sb.auth.signInWithOtp({
+    email,
+    options: { emailRedirectTo: redirectUrl }
+  });
+  if (error) {
+    showMsg('login-msg', error.message, 'error');
+    btn.disabled = false;
+    btn.textContent = T[currentLang].loginBtn;
+  } else {
+    showMsg('login-msg', T[currentLang].magicSent, 'success');
+  }
+}
+
+async function handleSignOut() {
+  await sb.auth.signOut();
+  currentUser = null;
+  currentBuilder = null;
+  showState('state-login');
+}
+
+async function checkBuilderStatus(email) {
+  const { data, error } = await sb
+    .from('builders')
+    .select('id, name, email')
+    .eq('email', email)
+    .maybeSingle();
+  if (error) return null;
+  return data;
+}
+
+async function init() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) {
+    currentUser = session.user;
+    await handleAuthedUser(session.user);
+  } else {
+    showState('state-login');
+  }
+  sb.auth.onAuthStateChange(async (_event, session) => {
+    if (session) {
+      currentUser = session.user;
+      await handleAuthedUser(session.user);
+    } else {
+      currentUser = null;
+      currentBuilder = null;
+      showState('state-login');
+    }
+  });
+}
+
+async function handleAuthedUser(user) {
+  const builder = await checkBuilderStatus(user.email);
+  if (!builder) {
+    showState('state-not-builder');
+    return;
+  }
+  currentBuilder = builder;
+  document.getElementById('user-email-display').textContent = user.email;
+  showState('state-form');
+  await loadMyContributions();
+}
+
+// File handling
+function getFileIcon(type) {
+  if (type === 'application/pdf') return '📕';
+  if (type.startsWith('image/')) return '🖼️';
+  if (type === 'text/markdown') return '📝';
+  return '📄';
+}
+
+function formatSize(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+}
+
+function handleFileChange(file) {
+  if (!file) return;
+  const allowed = ['application/pdf','image/png','image/jpeg','image/webp','text/markdown','text/plain'];
+  if (!allowed.includes(file.type)) {
+    showFormMsg('Unsupported file type. Please use PDF, PNG, JPG, WebP, Markdown, or TXT.', 'error');
+    clearFile();
+    return;
+  }
+  if (file.size > 20 * 1024 * 1024) {
+    showFormMsg('File is too large (max 20MB).', 'error');
+    clearFile();
+    return;
+  }
+  selectedFile = file;
+  document.getElementById('drop-zone').style.display = 'none';
+  const preview = document.getElementById('file-preview');
+  preview.style.display = 'flex';
+  document.getElementById('file-icon').textContent = getFileIcon(file.type);
+  document.getElementById('file-name-display').textContent = file.name;
+  document.getElementById('file-size-display').textContent = formatSize(file.size);
+  hideFormMsg();
+  updateSubmitBtn();
+}
+
+function clearFile() {
+  selectedFile = null;
+  document.getElementById('f-file').value = '';
+  document.getElementById('drop-zone').style.display = '';
+  document.getElementById('file-preview').style.display = 'none';
+  document.getElementById('progress-wrap').style.display = 'none';
+  document.getElementById('progress-bar').style.width = '0%';
+  updateSubmitBtn();
+}
+
+function updateSubmitBtn() {
+  const ok = selectedFile && selectedDim && document.getElementById('f-title').value.trim();
+  document.getElementById('submit-btn').disabled = !ok;
+}
+document.getElementById('f-title').addEventListener('input', updateSubmitBtn);
+
+// Drag and drop
+const dz = document.getElementById('drop-zone');
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
+dz.addEventListener('drop', e => {
+  e.preventDefault();
+  dz.classList.remove('drag-over');
+  if (e.dataTransfer.files[0]) handleFileChange(e.dataTransfer.files[0]);
+});
+
+function sanitizeFilename(name) {
+  return name.replace(/[^a-zA-Z0-9._-]/g, '_').replace(/__+/g, '_');
+}
+
+async function handleSubmit(e) {
+  e.preventDefault();
+  if (!selectedFile || !selectedDim || !currentBuilder) return;
+
+  const title = document.getElementById('f-title').value.trim();
+  const titleJa = document.getElementById('f-title-ja').value.trim();
+  const desc = document.getElementById('f-desc').value.trim();
+  const descJa = document.getElementById('f-desc-ja').value.trim();
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = '...';
+  hideFormMsg();
+
+  // Build storage path
+  const ext = selectedFile.name.split('.').pop().toLowerCase();
+  const storagePath = `${currentBuilder.id}/${Date.now()}_${Math.random().toString(36).slice(2,8)}.${ext}`;
+
+  // Show progress
+  const progressWrap = document.getElementById('progress-wrap');
+  const progressBar = document.getElementById('progress-bar');
+  progressWrap.style.display = 'block';
+  progressBar.style.width = '30%';
+
+  // Upload to Storage
+  const { data: uploadData, error: uploadErr } = await sb.storage
+    .from('contributions')
+    .upload(storagePath, selectedFile, { contentType: selectedFile.type, upsert: false });
+
+  if (uploadErr) {
+    showFormMsg('Upload failed: ' + uploadErr.message, 'error');
+    btn.disabled = false;
+    btn.textContent = T[currentLang].submitBtn;
+    progressWrap.style.display = 'none';
+    return;
+  }
+  progressBar.style.width = '70%';
+
+  // Get public URL
+  const { data: { publicUrl } } = sb.storage.from('contributions').getPublicUrl(storagePath);
+
+  // Insert into contributions
+  const { error: insertErr } = await sb.from('contributions').insert({
+    builder_id: currentBuilder.id,
+    title,
+    title_ja: titleJa || null,
+    description: desc || null,
+    description_ja: descJa || null,
+    dimension: selectedDim,
+    file_url: publicUrl,
+    file_name: selectedFile.name,
+    file_type: selectedFile.type,
+    file_size: selectedFile.size,
+  });
+
+  progressBar.style.width = '100%';
+
+  if (insertErr) {
+    // Rollback storage upload on insert failure
+    await sb.storage.from('contributions').remove([storagePath]);
+    showFormMsg('Failed to save contribution: ' + insertErr.message, 'error');
+    btn.disabled = false;
+    btn.textContent = T[currentLang].submitBtn;
+    progressWrap.style.display = 'none';
+    return;
+  }
+
+  // Success — reset form
+  setTimeout(() => { progressWrap.style.display = 'none'; progressBar.style.width = '0%'; }, 600);
+  document.getElementById('f-title').value = '';
+  document.getElementById('f-title-ja').value = '';
+  document.getElementById('f-desc').value = '';
+  document.getElementById('f-desc-ja').value = '';
+  document.querySelectorAll('.dim-btn').forEach(b => b.classList.remove('selected'));
+  selectedDim = null;
+  document.getElementById('f-dimension').value = '';
+  clearFile();
+  btn.disabled = true;
+  btn.textContent = T[currentLang].submitBtn;
+
+  showFormMsg('✓ Contribution submitted! It\'s now live in the Library.', 'success');
+  await loadMyContributions();
+}
+
+async function loadMyContributions() {
+  if (!currentBuilder) return;
+  const { data, error } = await sb
+    .from('contributions')
+    .select('id, title, title_ja, dimension, file_url, file_name, file_type, created_at')
+    .eq('builder_id', currentBuilder.id)
+    .order('created_at', { ascending: false });
+
+  window._myContribs = data || [];
+  renderMyList(window._myContribs);
+}
+
+function renderMyList(items) {
+  const container = document.getElementById('my-list');
+  if (!items || items.length === 0) {
+    container.innerHTML = `<div class="empty-state">${T[currentLang].myEmpty}</div>`;
+    return;
+  }
+  container.innerHTML = items.map(item => {
+    const dim = DIMS[item.dimension] || DIMS.general;
+    const dimLabel = currentLang === 'ja' ? dim.labelJa : dim.label;
+    const title = (currentLang === 'ja' && item.title_ja) ? item.title_ja : item.title;
+    const date = new Date(item.created_at).toLocaleDateString(currentLang === 'ja' ? 'ja-JP' : 'en-US', { year:'numeric', month:'short', day:'numeric' });
+    return `<div class="contrib-card">
+      <div class="contrib-card-body">
+        <div class="contrib-card-title">${escHtml(title)}</div>
+        <div class="contrib-card-meta">
+          <span class="dim-badge" style="color:${dim.color};border-color:${dim.color}40;">${dimLabel}</span>
+          <span>${date}</span>
+          <span>${escHtml(item.file_name)}</span>
+        </div>
+      </div>
+      <div class="contrib-card-actions">
+        <a href="${escHtml(item.file_url)}" target="_blank" rel="noopener" class="action-link">Open</a>
+        <button class="action-delete" onclick="deleteContrib('${item.id}')">Delete</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function deleteContrib(id) {
+  if (!confirm('Delete this contribution? This cannot be undone.')) return;
+  const { error } = await sb.from('contributions').delete().eq('id', id);
+  if (!error) await loadMyContributions();
+}
+
+function escHtml(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+init();
+setLang('ja');
+</script>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="INT.LIFE Library — Knowledge shared by Builders, free for all humanity.">
+<title>Library — INT.LIFE</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{--navy:#1A1648;--deep:#0E0C2E;--coral:#FF6040;--purple:#534AB7;--lavender:#AFA9EC;}
+html{scroll-behavior:smooth;}
+body{background:var(--deep);color:#fff;font-family:'Jost',sans-serif;min-height:100vh;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(14,12,46,.95),transparent);backdrop-filter:blur(8px);}
+.nav-logo{display:flex;align-items:center;gap:4px;text-decoration:none;}
+.nav-int{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:white;}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:var(--coral);margin-bottom:2px;}
+.nav-life{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;letter-spacing:3px;color:#D4D0FF;}
+.nav-right{display:flex;align-items:center;gap:1.5rem;}
+.nav-link{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s;}
+.nav-link:hover{color:rgba(255,255,255,.8);}
+.lang-btn{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.4);cursor:pointer;transition:color .2s;background:none;border:none;padding:2px 4px;}
+.lang-btn.active{color:#fff;font-weight:500;}
+.lang-divider{color:rgba(255,255,255,.2);font-size:11px;}
+.hero{padding:8rem 2rem 4rem;text-align:center;background:linear-gradient(to bottom,rgba(83,74,183,.08),transparent);}
+.hero-label{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--coral);margin-bottom:1rem;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,6vw,66px);font-weight:300;color:white;line-height:1.1;letter-spacing:-.5px;margin-bottom:1rem;}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.4);line-height:1.85;max-width:480px;margin:0 auto 2.5rem;}
+.hero-cta{display:inline-flex;gap:1rem;flex-wrap:wrap;justify-content:center;}
+.btn-p{background:var(--coral);color:white;border:none;padding:12px 28px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block;}
+.btn-p:hover{background:#FF7555;transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,96,64,.3);}
+.stats-bar{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;padding:.75rem 2rem;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);}
+.stat-item{font-size:11px;color:rgba(255,255,255,.3);letter-spacing:1px;text-align:center;}
+.stat-num{display:block;font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:white;line-height:1;}
+.filter-bar{padding:1.5rem 2rem 0;max-width:1100px;margin:0 auto;}
+.filter-scroll{display:flex;gap:8px;flex-wrap:wrap;padding-bottom:.5rem;}
+.filter-btn{padding:8px 16px;border-radius:3px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.4);font-family:'Jost',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.filter-btn:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.75);}
+.filter-btn.active{border-color:var(--coral);color:white;background:rgba(255,96,64,.1);}
+.main{max-width:1100px;margin:0 auto;padding:2rem;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem;}
+.card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:4px;padding:1.5rem;display:flex;flex-direction:column;gap:.75rem;transition:all .25s;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--dim-color,var(--lavender));}
+.card:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.14);transform:translateY(-2px);}
+.card-dim{display:inline-flex;align-items:center;gap:6px;}
+.card-dim-badge{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim-color,var(--lavender));}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;color:white;line-height:1.35;margin-top:2px;}
+.card-desc{font-size:12px;color:rgba(255,255,255,.42);line-height:1.7;flex:1;}
+.card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto;flex-wrap:wrap;gap:.5rem;}
+.card-meta{font-size:11px;color:rgba(255,255,255,.25);display:flex;flex-direction:column;gap:2px;}
+.card-builder{font-size:11px;color:rgba(255,255,255,.35);}
+.card-date{font-size:10px;color:rgba(255,255,255,.2);}
+.card-actions{display:flex;gap:8px;}
+.card-open{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--lavender);text-decoration:none;padding:6px 14px;border:1px solid rgba(175,169,236,.3);border-radius:2px;transition:all .2s;}
+.card-open:hover{border-color:var(--lavender);color:white;background:rgba(175,169,236,.08);}
+.card-file-type{font-size:10px;color:rgba(255,255,255,.2);letter-spacing:.5px;text-transform:uppercase;}
+.empty-section{text-align:center;padding:5rem 2rem;}
+.empty-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:rgba(255,255,255,.5);margin-bottom:.75rem;}
+.empty-sub{font-size:12px;color:rgba(255,255,255,.25);letter-spacing:1px;text-transform:uppercase;margin-bottom:2rem;}
+.loading-dots{display:flex;gap:8px;justify-content:center;padding:4rem 0;}
+.loading-dot{width:8px;height:8px;border-radius:50%;background:var(--coral);animation:ldot 1.2s ease-in-out infinite;}
+.loading-dot:nth-child(2){animation-delay:.2s;}
+.loading-dot:nth-child(3){animation-delay:.4s;}
+@keyframes ldot{0%,80%,100%{opacity:.2;transform:scale(.8);}40%{opacity:1;transform:scale(1);}}
+footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding:2.5rem 2rem;text-align:center;margin-top:2rem;}
+.f-logo{display:flex;align-items:center;justify-content:center;gap:4px;margin-bottom:1rem;}
+.f-int{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:white;}
+.f-dot{width:7px;height:7px;border-radius:50%;background:var(--coral);margin-bottom:3px;}
+.f-life{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;letter-spacing:3px;color:#D4D0FF;}
+.f-links{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.25rem;}
+.f-links a{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.28);text-decoration:none;transition:color .2s;}
+.f-links a:hover{color:rgba(255,255,255,.7);}
+.f-copy{font-size:11px;color:rgba(255,255,255,.18);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="nav-int">INT</span><div class="nav-dot"></div><span class="nav-life">LIFE</span>
+  </a>
+  <div class="nav-right">
+    <a href="contribute.html" class="nav-link" id="nav-contribute-link">Contribute</a>
+    <a href="index.html" class="nav-link" id="nav-home-link">Home</a>
+    <div style="display:flex;align-items:center;gap:4px;">
+      <button type="button" class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <span class="lang-divider">|</span>
+      <button type="button" class="lang-btn" id="btn-ja" onclick="setLang('ja')">日本語</button>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <p class="hero-label" id="hero-label">Open to All Humanity</p>
+  <h1 class="hero-title" id="hero-title">The INT.LIFE<br>Library</h1>
+  <p class="hero-sub" id="hero-sub">Knowledge shared by Builders — free for every human being on Earth, without barriers, without end.</p>
+  <div class="hero-cta">
+    <a href="contribute.html" class="btn-p" id="hero-contribute-btn">Contribute</a>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-item"><span class="stat-num" id="stat-total">—</span><span id="stat-total-label">contributions</span></div>
+  <div class="stat-item"><span class="stat-num" id="stat-dims">—</span><span id="stat-dims-label">dimensions covered</span></div>
+  <div class="stat-item"><span class="stat-num" id="stat-builders">—</span><span id="stat-builders-label">builders contributed</span></div>
+</div>
+
+<div class="filter-bar">
+  <div class="filter-scroll" id="filter-scroll">
+    <button class="filter-btn active" data-dim="all" onclick="filterDim('all')" id="filter-all">All</button>
+    <button class="filter-btn" data-dim="time"        onclick="filterDim('time')"        id="filter-time">Time</button>
+    <button class="filter-btn" data-dim="knowledge"   onclick="filterDim('knowledge')"   id="filter-knowledge">Knowledge</button>
+    <button class="filter-btn" data-dim="health"      onclick="filterDim('health')"      id="filter-health">Health</button>
+    <button class="filter-btn" data-dim="integrity"   onclick="filterDim('integrity')"   id="filter-integrity">Integrity</button>
+    <button class="filter-btn" data-dim="motivation"  onclick="filterDim('motivation')"  id="filter-motivation">Motivation</button>
+    <button class="filter-btn" data-dim="skills"      onclick="filterDim('skills')"      id="filter-skills">Skills</button>
+    <button class="filter-btn" data-dim="flourishing" onclick="filterDim('flourishing')" id="filter-flourishing">Flourishing</button>
+    <button class="filter-btn" data-dim="general"     onclick="filterDim('general')"     id="filter-general">General</button>
+  </div>
+</div>
+
+<div class="main">
+  <div id="grid-container">
+    <div class="loading-dots">
+      <div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="f-logo">
+    <span class="f-int">INT</span><div class="f-dot"></div><span class="f-life">LIFE</span>
+  </div>
+  <div class="f-links">
+    <a href="contribute.html" id="f-contribute">Contribute</a>
+    <a href="https://github.com/SakataMasahiro/intlife" target="_blank">GitHub</a>
+    <a href="constitution.html">Constitution</a>
+    <a href="index.html#declaration">Declaration</a>
+    <a href="index.html#builder">Join as Builder</a>
+    <a href="mailto:contact@int.life">contact@int.life</a>
+  </div>
+  <p class="f-copy" id="f-copy">Built on Absolute Integrity · No Ads · No Compromise · Open to Everyone</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+const SUPA_URL = 'https://lzlxqxalwtkneclpgexh.supabase.co';
+const SUPA_KEY = 'sb_publishable_a1Q20LH5Y40jfZbq6CY4vw_uc-gooc_';
+const sb = supabase.createClient(SUPA_URL, SUPA_KEY);
+
+const DIMS = {
+  all:         {label:'All',         labelJa:'すべて',           color:'#AFA9EC'},
+  time:        {label:'Time',        labelJa:'時間',              color:'#7F77DD'},
+  knowledge:   {label:'Knowledge',   labelJa:'知識',              color:'#5BB4FF'},
+  health:      {label:'Health',      labelJa:'健康',              color:'#2DD4AA'},
+  integrity:   {label:'Integrity',   labelJa:'誠実さ',            color:'#FF6040'},
+  motivation:  {label:'Motivation',  labelJa:'モチベーション',     color:'#FFB830'},
+  skills:      {label:'Skills',      labelJa:'スキル',            color:'#80D830'},
+  flourishing: {label:'Flourishing', labelJa:'フラーリッシング',   color:'#C4B4FF'},
+  general:     {label:'General',     labelJa:'一般',              color:'#AFA9EC'},
+};
+
+const T = {
+  en: {
+    heroLabel:'Open to All Humanity', heroTitle:'The INT.LIFE<br>Library',
+    heroSub:'Knowledge shared by Builders — free for every human being on Earth, without barriers, without end.',
+    heroContribute:'Contribute',
+    statTotalLabel:'contributions', statDimsLabel:'dimensions covered', statBuildersLabel:'builders',
+    navContribute:'Contribute', navHome:'Home',
+    emptyTitle:'Be the first to contribute.',
+    emptySub:'No contributions yet in this dimension.',
+    emptyBtn:'Contribute Now',
+    openBtn:'Open', downloadBtn:'Download',
+    fCopy:'Built on Absolute Integrity · No Ads · No Compromise · Open to Everyone',
+    fContribute:'Contribute',
+  },
+  ja: {
+    heroLabel:'全人類に開かれた', heroTitle:'INT.LIFEライブラリ',
+    heroSub:'ビルダーが共有する知識——地球上のすべての人間に、障壁なく、永遠に無料で。',
+    heroContribute:'寄稿する',
+    statTotalLabel:'件の寄稿', statDimsLabel:'の次元', statBuildersLabel:'人のビルダー',
+    navContribute:'寄稿する', navHome:'ホーム',
+    emptyTitle:'最初の寄稿者になりましょう。',
+    emptySub:'この次元にはまだ寄稿がありません。',
+    emptyBtn:'今すぐ寄稿する',
+    openBtn:'開く', downloadBtn:'ダウンロード',
+    fCopy:'透徹した誠実さの上に構築 · 広告なし · 妥協なし · すべての人に開かれている',
+    fContribute:'寄稿する',
+  }
+};
+
+let currentLang = 'ja';
+let allContribs = [];
+let activeDim = 'all';
+
+// Handle URL param ?dimension=health
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const dim = params.get('dimension');
+  if (dim && DIMS[dim]) activeDim = dim;
+})();
+
+function setLang(lang) {
+  currentLang = lang;
+  const t = T[lang];
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-ja').classList.toggle('active', lang === 'ja');
+  document.getElementById('hero-label').textContent = t.heroLabel;
+  document.getElementById('hero-title').innerHTML = t.heroTitle;
+  document.getElementById('hero-sub').textContent = t.heroSub;
+  document.getElementById('hero-contribute-btn').textContent = t.heroContribute;
+  document.getElementById('stat-total-label').textContent = t.statTotalLabel;
+  document.getElementById('stat-dims-label').textContent = t.statDimsLabel;
+  document.getElementById('stat-builders-label').textContent = t.statBuildersLabel;
+  document.getElementById('nav-contribute-link').textContent = t.navContribute;
+  document.getElementById('nav-home-link').textContent = t.navHome;
+  document.getElementById('f-copy').textContent = t.fCopy;
+  document.getElementById('f-contribute').textContent = t.fContribute;
+  Object.keys(DIMS).forEach(dim => {
+    const btn = document.getElementById('filter-' + dim);
+    if (btn) btn.textContent = DIMS[dim][lang === 'ja' ? 'labelJa' : 'label'];
+  });
+  renderGrid(allContribs);
+}
+
+function filterDim(dim) {
+  activeDim = dim;
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.dim === dim);
+  });
+  renderGrid(allContribs);
+}
+
+function getFileIcon(type) {
+  if (type === 'application/pdf') return '📕';
+  if (type && type.startsWith('image/')) return '🖼️';
+  if (type === 'text/markdown') return '📝';
+  return '📄';
+}
+
+function escHtml(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function renderGrid(items) {
+  const t = T[currentLang];
+  const filtered = activeDim === 'all' ? items : items.filter(i => i.dimension === activeDim);
+  const container = document.getElementById('grid-container');
+
+  if (filtered.length === 0) {
+    container.innerHTML = `<div class="empty-section">
+      <p class="empty-title">${t.emptyTitle}</p>
+      <p class="empty-sub">${t.emptySub}</p>
+      <a href="contribute.html" class="btn-p">${t.emptyBtn}</a>
+    </div>`;
+    return;
+  }
+
+  container.innerHTML = `<div class="grid">${filtered.map(item => {
+    const dim = DIMS[item.dimension] || DIMS.general;
+    const dimLabel = currentLang === 'ja' ? dim.labelJa : dim.label;
+    const title = (currentLang === 'ja' && item.title_ja) ? item.title_ja : item.title;
+    const desc = (currentLang === 'ja' && item.description_ja) ? item.description_ja : (item.description || '');
+    const builderName = item.builders ? item.builders.name : '';
+    const date = new Date(item.created_at).toLocaleDateString(currentLang === 'ja' ? 'ja-JP' : 'en-US', {year:'numeric',month:'short',day:'numeric'});
+    const icon = getFileIcon(item.file_type);
+    const ext = item.file_name ? item.file_name.split('.').pop().toUpperCase() : '';
+    return `<div class="card" style="--dim-color:${dim.color}">
+      <div class="card-dim">
+        <span class="card-dim-badge" style="color:${dim.color}">${dimLabel}</span>
+        <span class="card-file-type">${icon} ${ext}</span>
+      </div>
+      <h3 class="card-title">${escHtml(title)}</h3>
+      ${desc ? `<p class="card-desc">${escHtml(desc)}</p>` : ''}
+      <div class="card-footer">
+        <div class="card-meta">
+          ${builderName ? `<span class="card-builder">${escHtml(builderName)}</span>` : ''}
+          <span class="card-date">${date}</span>
+        </div>
+        <div class="card-actions">
+          <a href="${escHtml(item.file_url)}" target="_blank" rel="noopener" class="card-open">${t.openBtn}</a>
+        </div>
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function updateStats(items) {
+  document.getElementById('stat-total').textContent = items.length;
+  const dims = new Set(items.map(i => i.dimension)).size;
+  document.getElementById('stat-dims').textContent = dims;
+  const builders = new Set(items.map(i => i.builder_id)).size;
+  document.getElementById('stat-builders').textContent = builders;
+}
+
+async function load() {
+  const { data, error } = await sb
+    .from('contributions')
+    .select('id, builder_id, title, title_ja, description, description_ja, dimension, file_url, file_name, file_type, created_at, builders(name)')
+    .eq('is_published', true)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    document.getElementById('grid-container').innerHTML =
+      `<div class="empty-section"><p class="empty-title" style="color:rgba(255,96,64,.7)">Failed to load library.</p></div>`;
+    return;
+  }
+
+  allContribs = data || [];
+  updateStats(allContribs);
+
+  // Apply initial dimension filter from URL
+  if (activeDim !== 'all') {
+    document.querySelectorAll('.filter-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.dim === activeDim);
+    });
+  }
+  renderGrid(allContribs);
+}
+
+load();
+setLang('ja');
+</script>
+</body>
+</html>
