@@ -114,20 +114,11 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
 </style>
 </head>
 <body>
-<nav>
-  <a href="index.html" class="nav-logo">
-    <span class="nav-int">INT</span><div class="nav-dot"></div><span class="nav-life">LIFE</span>
-  </a>
-  <div class="nav-right">
-    <a href="library.html" class="nav-link" id="nav-library-link">Library</a>
-    <a href="contribute.html" class="nav-link" id="nav-contribute-link">Contribute</a>
-    <div style="display:flex;align-items:center;gap:4px;">
-      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
-      <span class="lang-divider">|</span>
-      <button class="lang-btn" id="btn-ja" onclick="setLang('ja')">日本語</button>
-    </div>
-  </div>
-</nav>
+<div class="lang-switcher">
+  <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+  <span class="lang-divider">|</span>
+  <button class="lang-btn" id="btn-ja" onclick="setLang('ja')">日本語</button>
+</div>
 
 <section class="hero">
   <div class="stars" id="stars"></div>
@@ -420,8 +411,6 @@ function setLang(lang){
   document.getElementById('builder-note').textContent=t.builderNote;
   document.getElementById('f-declaration').textContent=t.fDeclaration;
   document.getElementById('f-builder').textContent=t.fBuilder;
-  document.getElementById('nav-library-link').textContent=t.navLibrary;
-  document.getElementById('nav-contribute-link').textContent=t.navContribute;
   document.getElementById('f-copy').textContent=t.fCopy;
   const wf=document.getElementById('words-flow');
   wf.innerHTML='';
