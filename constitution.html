@@ -19,7 +19,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.25rem 2rem;display
 .nav-life{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;letter-spacing:3px;color:#D4D0FF;}
 .nav-back{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s;}
 .nav-back::before{content:'← ';}
-.nav-back:hover{color:var(--coral);}.nav-link{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s;}.nav-link:hover{color:rgba(255,255,255,.8);}
+.nav-back:hover{color:var(--coral);}.lang-btn{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.4);cursor:pointer;transition:color .2s;background:none;border:none;padding:2px 4px;}.lang-btn.active{color:#fff;font-weight:500;}.lang-divider{color:rgba(255,255,255,.2);font-size:11px;}.nav-link{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s;}.nav-link:hover{color:rgba(255,255,255,.8);}
 
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6rem 2rem 4rem;text-align:center;position:relative;overflow:hidden;}
 .hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 35%,rgba(255,96,64,.07) 0%,transparent 60%);pointer-events:none;}
@@ -85,9 +85,14 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
     <span class="nav-int">INT</span><div class="nav-dot"></div><span class="nav-life">LIFE</span>
   </a>
   <div style="display:flex;align-items:center;gap:1.5rem;">
-  <a href="index.html" class="nav-back">ホーム</a>
-  <a href="library.html" class="nav-link">Library</a>
-  <a href="contribute.html" class="nav-link">Contribute</a>
+    <a href="library.html" class="nav-link">Library</a>
+    <a href="contribute.html" class="nav-link">Contribute</a>
+    <a href="index.html" class="nav-link">Home</a>
+    <div style="display:flex;align-items:center;gap:4px;">
+      <button type="button" class="lang-btn active" id="btn-en">EN</button>
+      <span class="lang-divider">|</span>
+      <button type="button" class="lang-btn" id="btn-ja">日本語</button>
+    </div>
   </div>
 </nav>
 

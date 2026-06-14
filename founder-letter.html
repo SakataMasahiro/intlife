@@ -82,9 +82,9 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
     <span class="nav-int">INT</span><div class="nav-dot"></div><span class="nav-life">LIFE</span>
   </a>
   <div class="nav-right-group">
-    <a href="index.html" class="nav-back" id="nav-back-link">All Dimensions</a>
     <a href="library.html" class="nav-link" id="nav-library-link">Library</a>
     <a href="contribute.html" class="nav-link" id="nav-contribute-link">Contribute</a>
+    <a href="index.html" class="nav-link" id="nav-home-link">Home</a>
     <div class="nav-lang">
       <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
       <span class="lang-divider">|</span>
@@ -183,7 +183,7 @@ var practiceStatusType = null;
 
 var L = {
   en: {
-    navBack: 'All Dimensions',
+    navHome: 'Home',
     navLibrary: 'Library',
     navContribute: 'Contribute',
     heroLabel: "Founder's Letter",
@@ -206,7 +206,7 @@ var L = {
     fCopy: 'Built on Absolute Integrity · No Ads · No Compromise · Open to Everyone'
   },
   ja: {
-    navBack: 'すべての次元',
+    navHome: 'ホーム',
     navLibrary: 'ライブラリ',
     navContribute: '寄稿する',
     heroLabel: '創業者の手紙',
@@ -241,7 +241,7 @@ function setLang(lang) {
   document.querySelectorAll('.lang-en').forEach(function(el){ el.hidden = (lang !== 'en'); });
   document.querySelectorAll('.lang-ja').forEach(function(el){ el.hidden = (lang !== 'ja'); });
 
-  document.getElementById('nav-back-link').textContent = t.navBack;
+  document.getElementById('nav-home-link').textContent = t.navHome;
   document.getElementById('nav-library-link').textContent = t.navLibrary;
   document.getElementById('nav-contribute-link').textContent = t.navContribute;
   document.getElementById('hero-label').textContent = t.heroLabel;
