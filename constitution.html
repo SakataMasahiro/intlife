@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="INT.LIFE 憲法 — 透徹した誠実さの上に構築されています。">
-<title>憲法 — INT.LIFE</title>
+<meta name="description" content="INT.LIFE Constitution — Built on Absolute Integrity.">
+<title>Constitution — INT.LIFE</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
@@ -85,9 +85,9 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
     <span class="nav-int">INT</span><div class="nav-dot"></div><span class="nav-life">LIFE</span>
   </a>
   <div style="display:flex;align-items:center;gap:1.5rem;">
-    <a href="library.html" class="nav-link">Library</a>
-    <a href="contribute.html" class="nav-link">Contribute</a>
-    <a href="index.html" class="nav-link">Home</a>
+    <a href="library.html" class="nav-link" id="nav-library-link">Library</a>
+    <a href="contribute.html" class="nav-link" id="nav-contribute-link">Contribute</a>
+    <a href="index.html" class="nav-link" id="nav-home-link">Home</a>
     <div style="display:flex;align-items:center;gap:4px;">
       <button type="button" class="lang-btn active" id="btn-en">EN</button>
       <span class="lang-divider">|</span>
@@ -99,77 +99,77 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
 <section class="hero">
   <div class="hero-glow"></div>
   <div class="seal"><div class="seal-inner"><div class="seal-dot"></div></div></div>
-  <p class="hero-eyebrow">INT.LIFE</p>
-  <h1 class="hero-title">INT.LIFE の<br><em>憲法</em></h1>
+  <p class="hero-eyebrow" id="hero-eyebrow">INT.LIFE</p>
+  <h1 class="hero-title" id="hero-title">The INT.LIFE<br><em>Constitution</em></h1>
   <div class="hero-rule"></div>
-  <p class="hero-sub">透徹した誠実さの上に構築</p>
+  <p class="hero-sub" id="hero-sub">Built on Absolute Integrity</p>
 </section>
 
 <section class="integrity-section">
-  <p class="sec-label">コア原則</p>
-  <p class="int-jp">透徹した誠実さ</p>
-  <h2 class="int-title">透徹した誠実さ</h2>
-  <p class="int-def">透徹した誠実さとは、完全なる透明性と深い誠意であり、他者からも、そして自分自身からも何も隠さない状態を意味します。</p>
+  <p class="sec-label" id="sec-label-int">Core Principle</p>
+  <p class="int-jp" id="int-jp">透徹した誠実さ</p>
+  <h2 class="int-title" id="int-title">Absolute Integrity</h2>
+  <p class="int-def" id="int-def">Absolute Integrity is complete transparency and deep sincerity — concealing nothing from others, or from yourself.</p>
 </section>
 
 <section class="values-section">
-  <p class="sec-label">創設の価値観</p>
-  <h2 class="values-title">妥協しない七つの原則。</h2>
+  <p class="sec-label" id="sec-label-val">Founding Values</p>
+  <h2 class="values-title" id="values-title">Seven principles. No compromise.</h2>
   <div class="values-list">
 
     <div class="value-item">
       <span class="value-num">01</span>
       <div class="value-body">
-        <p class="value-name">快適さより真実を</p>
-        <p class="value-desc">聞くのが難しいときでも、私たちは真実を語ります。不誠実を必要とする快適さは優しさではありません — それは先送りです。</p>
+        <p class="value-name">Truth Over Comfort</p>
+        <p class="value-desc">We tell the truth even when it is hard to hear. Comfort that requires dishonesty is not kindness — it is postponement.</p>
       </div>
     </div>
 
     <div class="value-item">
       <span class="value-num">02</span>
       <div class="value-body">
-        <p class="value-name">表面より深みを</p>
-        <p class="value-desc">私たちは明白なものの下へ、本当に大切なものへと向かいます。注意は貴重です。私たちはそれを無駄にしません。</p>
+        <p class="value-name">Depth Over Surface</p>
+        <p class="value-desc">We go beneath the obvious, toward what actually matters. Attention is precious. We do not waste it.</p>
       </div>
     </div>
 
     <div class="value-item">
       <span class="value-num">03</span>
       <div class="value-body">
-        <p class="value-name">利益より人間の豊かな生を</p>
-        <p class="value-desc">私たちの成功の尺度は、変容した人生であり、生み出された収益ではありません。この二つを混同してはなりません。</p>
+        <p class="value-name">Human Flourishing Over Profit</p>
+        <p class="value-desc">Our measure of success is lives transformed, not revenue generated. We will not confuse the two.</p>
       </div>
     </div>
 
     <div class="value-item">
       <span class="value-num">04</span>
       <div class="value-body">
-        <p class="value-name">すべての声が大切</p>
-        <p class="value-desc">知恵は予期せぬ場所から届きます。部屋で最も静かな声が、私たちが最も聞く必要のあるものを持っているかもしれません。</p>
+        <p class="value-name">Every Voice Matters</p>
+        <p class="value-desc">Wisdom arrives from unexpected places. The quietest voice in the room may carry what we most need to hear.</p>
       </div>
     </div>
 
     <div class="value-item">
       <span class="value-num">05</span>
       <div class="value-body">
-        <p class="value-name">エゴなし、貢献のみ</p>
-        <p class="value-desc">あなたが作るものは、あなたがどう見られるかより大切です。称賛は貢献に続きます。その逆ではありません。</p>
+        <p class="value-name">No Ego, Only Contribution</p>
+        <p class="value-desc">What you build matters more than how you appear. Recognition follows contribution. Not the other way around.</p>
       </div>
     </div>
 
     <div class="value-item">
       <span class="value-num">06</span>
       <div class="value-body">
-        <p class="value-name">すべての文化からの知恵</p>
-        <p class="value-desc">単一の文明が全ての真理を保持することはありません。私たちは、あらゆる伝統、あらゆる血統、人間の経験のあらゆる角落から引き出します。</p>
+        <p class="value-name">Wisdom From Every Culture</p>
+        <p class="value-desc">No single civilization holds all truths. We draw from every tradition, every lineage, every corner of human experience.</p>
       </div>
     </div>
 
     <div class="value-item">
       <span class="value-num">07</span>
       <div class="value-body">
-        <p class="value-name">創設者を超えて続くために</p>
-        <p class="value-desc">INT.LIFE は誰のものでもありません。それはすべての人のものです。私たちは、後に続く者たちが守る価値のある何かを受け継ぐように構築します。</p>
+        <p class="value-name">Built to Outlast Its Founders</p>
+        <p class="value-desc">INT.LIFE belongs to no one. It belongs to everyone. We build so that those who come after us inherit something worth keeping.</p>
       </div>
     </div>
 
@@ -177,33 +177,33 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
 </section>
 
 <section class="covenant-section">
-  <p class="sec-label">コミュニティの誓い</p>
-  <h2 class="cov-title">ここに居場所のないもの。</h2>
+  <p class="sec-label" id="sec-label-cov">Community Covenant</p>
+  <h2 class="cov-title" id="cov-title">What has no place here.</h2>
   <div class="cov-grid">
     <div class="cov-item">
       <p class="cov-mark">—</p>
-      <p class="cov-name">害をもたらすコンテンツ</p>
+      <p class="cov-name">Content That Harms</p>
     </div>
     <div class="cov-item">
       <p class="cov-mark">—</p>
-      <p class="cov-name">誤情報</p>
+      <p class="cov-name">Misinformation</p>
     </div>
     <div class="cov-item">
       <p class="cov-mark">—</p>
-      <p class="cov-name">貢献なき自己宣伝</p>
+      <p class="cov-name">Self-Promotion Without Contribution</p>
     </div>
     <div class="cov-item">
       <p class="cov-mark">—</p>
-      <p class="cov-name">いかなる人間への無礼</p>
+      <p class="cov-name">Disrespect Toward Any Human Being</p>
     </div>
   </div>
 </section>
 
 <section class="closing-section">
-  <p class="sec-label">私たちの誓い</p>
-  <h2 class="closing-quote">「これはルールブックではありません。<br>これは私たちが信じることの宣言であり、それを生きるという誓いです。」</h2>
-  <p class="closing-body">INT.LIFE は単なるプラットフォームとして作られたわけではありません。それは、何か異なることが可能であるという証として作られました — 誠実さが方針ではなく、実践であるような空間。私たちは自分たち自身をまずこの憲法に従わせます。</p>
-  <a href="index.html" class="btn-s">← ホームに戻る</a>
+  <p class="sec-label" id="sec-label-cls">Our Pledge</p>
+  <h2 class="closing-quote" id="closing-quote">"This is not a rulebook.<br>This is a declaration of what we believe, and a pledge to live it."</h2>
+  <p class="closing-body" id="closing-body">INT.LIFE was not built to be merely a platform. It was built as proof that something different is possible — a space where integrity is not policy, but practice. We hold ourselves to this constitution first.</p>
+  <a href="index.html" class="btn-s" id="btn-home">← Back to Home</a>
 </section>
 
 <footer>
@@ -212,29 +212,112 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
   </div>
   <div class="f-links">
     <a href="https://github.com/SakataMasahiro/intlife" target="_blank">GitHub</a>
-    <a href="index.html#declaration">宣言</a>
-    <a href="index.html#builder">ビルダーとして参加</a>
+    <a href="index.html#declaration" id="f-declaration">Declaration</a>
+    <a href="index.html#builder" id="f-builder">Join as Builder</a>
     <a href="mailto:contact@int.life">contact@int.life</a>
   </div>
-  <p class="f-copy">透徹した誠実さの上に構築 · 広告なし · 妥協なし · すべての人に開かれた</p>
+  <p class="f-copy" id="f-copy">Built on Absolute Integrity · No Ads · No Compromise · Open to Everyone</p>
 </footer>
 
 <script>
-(function() {
-  var lang = localStorage.getItem('intlife-lang') || 'en';
-  document.getElementById(lang === 'en' ? 'btn-en' : 'btn-ja').classList.add('active');
-  document.getElementById(lang === 'en' ? 'btn-ja' : 'btn-en').classList.remove('active');
-})();
-document.getElementById('btn-en').addEventListener('click', function() {
-  localStorage.setItem('intlife-lang', 'en');
-  document.getElementById('btn-en').classList.add('active');
-  document.getElementById('btn-ja').classList.remove('active');
-});
-document.getElementById('btn-ja').addEventListener('click', function() {
-  localStorage.setItem('intlife-lang', 'ja');
-  document.getElementById('btn-ja').classList.add('active');
-  document.getElementById('btn-en').classList.remove('active');
-});
+var L={
+  en:{
+    navLibrary:'Library',navContribute:'Contribute',navHome:'Home',
+    heroEyebrow:'INT.LIFE',
+    heroTitle:'The INT.LIFE<br><em>Constitution</em>',
+    heroSub:'Built on Absolute Integrity',
+    intLabel:'Core Principle',
+    intJp:'透徹した誠実さ',
+    intTitle:'Absolute Integrity',
+    intDef:'Absolute Integrity is complete transparency and deep sincerity — concealing nothing from others, or from yourself.',
+    valLabel:'Founding Values',
+    valTitle:'Seven principles. No compromise.',
+    values:[
+      {name:'Truth Over Comfort',desc:'We tell the truth even when it is hard to hear. Comfort that requires dishonesty is not kindness — it is postponement.'},
+      {name:'Depth Over Surface',desc:'We go beneath the obvious, toward what actually matters. Attention is precious. We do not waste it.'},
+      {name:'Human Flourishing Over Profit',desc:'Our measure of success is lives transformed, not revenue generated. We will not confuse the two.'},
+      {name:'Every Voice Matters',desc:'Wisdom arrives from unexpected places. The quietest voice in the room may carry what we most need to hear.'},
+      {name:'No Ego, Only Contribution',desc:'What you build matters more than how you appear. Recognition follows contribution. Not the other way around.'},
+      {name:'Wisdom From Every Culture',desc:'No single civilization holds all truths. We draw from every tradition, every lineage, every corner of human experience.'},
+      {name:'Built to Outlast Its Founders',desc:'INT.LIFE belongs to no one. It belongs to everyone. We build so that those who come after us inherit something worth keeping.'}
+    ],
+    covLabel:'Community Covenant',
+    covTitle:'What has no place here.',
+    covItems:['Content That Harms','Misinformation','Self-Promotion Without Contribution','Disrespect Toward Any Human Being'],
+    clsLabel:'Our Pledge',
+    clsQuote:'"This is not a rulebook.<br>This is a declaration of what we believe, and a pledge to live it."',
+    clsBody:'INT.LIFE was not built to be merely a platform. It was built as proof that something different is possible — a space where integrity is not policy, but practice. We hold ourselves to this constitution first.',
+    btnHome:'← Back to Home',
+    fDeclaration:'Declaration',fBuilder:'Join as Builder',
+    fCopy:'Built on Absolute Integrity · No Ads · No Compromise · Open to Everyone'
+  },
+  ja:{
+    navLibrary:'ライブラリ',navContribute:'貢献する',navHome:'ホーム',
+    heroEyebrow:'INT.LIFE',
+    heroTitle:'INT.LIFE の<br><em>憲法</em>',
+    heroSub:'透徹した誠実さの上に構築',
+    intLabel:'コア原則',
+    intJp:'透徹した誠実さ',
+    intTitle:'透徹した誠実さ',
+    intDef:'透徹した誠実さとは、完全なる透明性と深い誠意であり、他者からも、そして自分自身からも何も隠さない状態を意味します。',
+    valLabel:'創設の価値観',
+    valTitle:'妥協しない七つの原則。',
+    values:[
+      {name:'快適さより真実を',desc:'聞くのが難しいときでも、私たちは真実を語ります。不誠実を必要とする快適さは優しさではありません — それは先送りです。'},
+      {name:'表面より深みを',desc:'私たちは明白なものの下へ、本当に大切なものへと向かいます。注意は貴重です。私たちはそれを無駄にしません。'},
+      {name:'利益より人間の豊かな生を',desc:'私たちの成功の尺度は、変容した人生であり、生み出された収益ではありません。この二つを混同してはなりません。'},
+      {name:'すべての声が大切',desc:'知恵は予期せぬ場所から届きます。部屋で最も静かな声が、私たちが最も聞く必要のあるものを持っているかもしれません。'},
+      {name:'エゴなし、貢献のみ',desc:'あなたが作るものは、あなたがどう見られるかより大切です。称賛は貢献に続きます。その逆ではありません。'},
+      {name:'すべての文化からの知恵',desc:'単一の文明が全ての真理を保持することはありません。私たちは、あらゆる伝統、あらゆる血統、人間の経験のあらゆる角落から引き出します。'},
+      {name:'創設者を超えて続くために',desc:'INT.LIFEは誰のものでもありません。それはすべての人のものです。私たちは、後に続く者たちが守る価値のある何かを受け継ぐように構築します。'}
+    ],
+    covLabel:'コミュニティの誓い',
+    covTitle:'ここに居場所のないもの。',
+    covItems:['害をもたらすコンテンツ','誤情報','貢献なき自己宣伝','いかなる人間への無礼'],
+    clsLabel:'私たちの誓い',
+    clsQuote:'「これはルールブックではありません。<br>これは私たちが信じることの宣言であり、それを生きるという誓いです。」',
+    clsBody:'INT.LIFEは単なるプラットフォームとして作られたわけではありません。それは、何か異なることが可能であるという証として作られました — 誠実さが方針ではなく、実践であるような空間。私たちは自分たち自身をまずこの憲法に従わせます。',
+    btnHome:'← ホームに戻る',
+    fDeclaration:'宣言',fBuilder:'ビルダーとして参加',
+    fCopy:'透徹した誠実さの上に構築 · 広告なし · 妥協なし · すべての人に開かれた'
+  }
+};
+function setLang(lang){
+  localStorage.setItem('intlife-lang',lang);
+  document.documentElement.lang=lang;
+  document.getElementById('btn-en').classList.toggle('active',lang==='en');
+  document.getElementById('btn-ja').classList.toggle('active',lang==='ja');
+  var t=L[lang];
+  document.getElementById('nav-library-link').textContent=t.navLibrary;
+  document.getElementById('nav-contribute-link').textContent=t.navContribute;
+  document.getElementById('nav-home-link').textContent=t.navHome;
+  document.getElementById('hero-eyebrow').textContent=t.heroEyebrow;
+  document.getElementById('hero-title').innerHTML=t.heroTitle;
+  document.getElementById('hero-sub').textContent=t.heroSub;
+  document.getElementById('sec-label-int').textContent=t.intLabel;
+  document.getElementById('int-jp').textContent=t.intJp;
+  document.getElementById('int-title').textContent=t.intTitle;
+  document.getElementById('int-def').textContent=t.intDef;
+  document.getElementById('sec-label-val').textContent=t.valLabel;
+  document.getElementById('values-title').textContent=t.valTitle;
+  var vItems=document.querySelectorAll('.value-item');
+  t.values.forEach(function(v,i){vItems[i].querySelector('.value-name').textContent=v.name;vItems[i].querySelector('.value-desc').textContent=v.desc;});
+  document.getElementById('sec-label-cov').textContent=t.covLabel;
+  document.getElementById('cov-title').textContent=t.covTitle;
+  var cItems=document.querySelectorAll('.cov-name');
+  t.covItems.forEach(function(c,i){cItems[i].textContent=c;});
+  document.getElementById('sec-label-cls').textContent=t.clsLabel;
+  document.getElementById('closing-quote').innerHTML=t.clsQuote;
+  document.getElementById('closing-body').textContent=t.clsBody;
+  document.getElementById('btn-home').textContent=t.btnHome;
+  document.getElementById('f-declaration').textContent=t.fDeclaration;
+  document.getElementById('f-builder').textContent=t.fBuilder;
+  document.getElementById('f-copy').textContent=t.fCopy;
+}
+window.setLang=setLang;
+document.getElementById('btn-en').addEventListener('click',function(){setLang('en');});
+document.getElementById('btn-ja').addEventListener('click',function(){setLang('ja');});
+setLang(localStorage.getItem('intlife-lang')||'en');
 </script>
 </body>
 </html>
