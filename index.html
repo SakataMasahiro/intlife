@@ -45,6 +45,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.25rem 2rem;displa
 .btn-p:hover{background:#FF7555;transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,96,64,.35);}
 .btn-s{background:transparent;color:var(--lavender);border:1px solid rgba(175,169,236,.4);padding:13px 34px;border-radius:3px;font-family:'Jost',sans-serif;font-size:12px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block;}
 .btn-s:hover{border-color:var(--lavender);color:white;transform:translateY(-2px);}
+.hero-nav-links{display:flex;align-items:center;justify-content:center;margin-top:1.75rem;opacity:0;animation:fadeup 1.2s ease 1.2s forwards;}
+.hero-nav-link{font-family:'Jost',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,96,64,.6);text-decoration:none;transition:color .2s;padding:0 2px;}
+.hero-nav-link:hover{color:var(--coral);}
+.hero-nav-sep{font-size:10px;color:rgba(255,96,64,.25);padding:0 10px;user-select:none;}
 .scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeup 1s ease 1.5s forwards;}
 .scroll-hint span{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.3);}
 .scroll-line{width:1px;height:48px;background:linear-gradient(to bottom,rgba(175,169,236,.6),transparent);animation:sdrop 2s ease-in-out infinite;}
@@ -146,6 +150,17 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
     <div class="hero-cta">
       <a href="#builder" class="btn-p" id="btn-builder">Join as Builder</a>
       <a href="#declaration" class="btn-s" id="btn-declaration">Read the Declaration</a>
+    </div>
+    <div class="hero-nav-links">
+      <a href="library.html" class="hero-nav-link">Library</a>
+      <span class="hero-nav-sep">·</span>
+      <a href="contribute.html" class="hero-nav-link">Contribute</a>
+      <span class="hero-nav-sep">·</span>
+      <a href="constitution.html" class="hero-nav-link">Constitution</a>
+      <span class="hero-nav-sep">·</span>
+      <a href="#declaration" class="hero-nav-link">Declaration</a>
+      <span class="hero-nav-sep">·</span>
+      <a href="mailto:contact@int.life" class="hero-nav-link">Contact</a>
     </div>
   </div>
   <div class="scroll-hint"><span id="scroll-label">Discover</span><div class="scroll-line"></div></div>
