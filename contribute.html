@@ -154,16 +154,25 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
     </div>
   </div>
 
-  <!-- STATE 2: Logged in but not a builder -->
+  <!-- STATE 2: Logged in but not a builder — inline registration -->
   <div id="state-not-builder">
     <div class="notice-card">
       <h2 class="notice-card-title" id="not-builder-title">Builder Registration Required</h2>
       <div class="notice-card-body" id="not-builder-body">
-        <p>Your email is not registered as an INT.LIFE Builder yet.</p>
-        <p style="margin-top:.75rem;">Contributions are only open to Builders — volunteers who share the mission of helping every human being live their fullest life.</p>
+        <p>Your email is not yet registered as an INT.LIFE Builder.</p>
+        <p style="margin-top:.75rem;">Complete your Builder profile below to start contributing.</p>
       </div>
+      <div style="margin-bottom:1.25rem;">
+        <label class="field-label" id="nb-label-name">Your Name</label>
+        <input type="text" class="field-input" id="nb-name" placeholder="Your full name" style="margin-bottom:.75rem;">
+        <label class="field-label" id="nb-label-email" style="margin-top:.5rem;">Email (auto-filled)</label>
+        <input type="email" class="field-input" id="nb-email" readonly style="opacity:.6;cursor:default;">
+        <label class="field-label" id="nb-label-message" style="margin-top:.75rem;">Why do you want to contribute?</label>
+        <textarea class="field-input" id="nb-message" rows="3" placeholder="A few words about your motivation..." style="resize:vertical;min-height:72px;"></textarea>
+      </div>
+      <div id="nb-msg" style="display:none;margin-bottom:1rem;"></div>
       <div style="display:flex;gap:1rem;flex-wrap:wrap;">
-        <a href="index.html#builder" class="btn-primary" style="text-decoration:none;text-align:center;" id="not-builder-btn">Register as Builder</a>
+        <button class="btn-primary" id="not-builder-btn" onclick="handleInlineBuilderRegister()" style="width:auto;">Register as Builder</button>
         <button class="btn-secondary" onclick="handleSignOut()" id="not-builder-signout-btn">Sign Out</button>
       </div>
     </div>
@@ -290,7 +299,7 @@ const T = {
     loginEmailLabel:'Email address', loginBtn:'Send Magic Link',
     magicSent:'Check your email — the magic link is on its way.',
     notBuilderTitle:'Builder Registration Required',
-    notBuilderBody:'<p>Your email is not registered as an INT.LIFE Builder yet.</p><p style="margin-top:.75rem;">Contributions are only open to Builders — volunteers who share the mission of helping every human being live their fullest life.</p>',
+    notBuilderBody:'Your email is not yet registered as an INT.LIFE Builder. Complete your profile below to start contributing.',
     notBuilderBtn:'Register as Builder', notBuilderSignout:'Sign Out',
     signout:'Sign Out',
     formSectionContent:'Content',
@@ -313,7 +322,7 @@ const T = {
     loginEmailLabel:'メールアドレス', loginBtn:'マジックリンクを送る',
     magicSent:'メールを確認してください——マジックリンクが届いています。',
     notBuilderTitle:'ビルダー登録が必要です',
-    notBuilderBody:'<p>このメールアドレスはINT.LIFEビルダーとしてまだ登録されていません。</p><p style="margin-top:.75rem;">寄稿はビルダーのみが行えます——すべての人間が最も豊かな人生を生きることを支援するミッションを共有するボランティアです。</p>',
+    notBuilderBody:'このメールアドレスはINT.LIFEビルダーとしてまだ登録されていません。以下のプロフィールを入力して、寄稿を開始してください。',
     notBuilderBtn:'ビルダーとして登録する', notBuilderSignout:'サインアウト',
     signout:'サインアウト',
     formSectionContent:'コンテンツ',
@@ -351,7 +360,7 @@ function setLang(lang) {
   document.getElementById('login-email-label').textContent = t.loginEmailLabel;
   document.getElementById('login-btn').textContent = t.loginBtn;
   document.getElementById('not-builder-title').textContent = t.notBuilderTitle;
-  document.getElementById('not-builder-body').innerHTML = t.notBuilderBody;
+  document.getElementById('not-builder-body').textContent = t.notBuilderBody;
   document.getElementById('not-builder-btn').textContent = t.notBuilderBtn;
   document.getElementById('not-builder-signout-btn').textContent = t.notBuilderSignout;
   document.getElementById('signout-btn').textContent = t.signout;
@@ -445,10 +454,11 @@ async function handleSignOut() {
 }
 
 async function checkBuilderStatus(email) {
+  // Use ilike for case-insensitive email matching
   const { data, error } = await sb
     .from('builders')
     .select('id, name, email')
-    .eq('email', email)
+    .ilike('email', email.toLowerCase())
     .maybeSingle();
   if (error) return null;
   return data;
@@ -477,6 +487,8 @@ async function init() {
 async function handleAuthedUser(user) {
   const builder = await checkBuilderStatus(user.email);
   if (!builder) {
+    // Pre-fill email in the inline registration form
+    document.getElementById('nb-email').value = user.email;
     showState('state-not-builder');
     return;
   }
@@ -484,6 +496,53 @@ async function handleAuthedUser(user) {
   document.getElementById('user-email-display').textContent = user.email;
   showState('state-form');
   await loadMyContributions();
+}
+
+async function handleInlineBuilderRegister() {
+  const name = document.getElementById('nb-name').value.trim();
+  const email = document.getElementById('nb-email').value.trim();
+  const message = document.getElementById('nb-message').value.trim();
+  const msgEl = document.getElementById('nb-msg');
+
+  if (!name || !message) {
+    msgEl.textContent = currentLang === 'ja' ? '名前とメッセージを入力してください。' : 'Please fill in your name and message.';
+    msgEl.className = 'auth-msg error';
+    msgEl.style.display = 'block';
+    return;
+  }
+
+  const btn = document.getElementById('not-builder-btn');
+  btn.disabled = true;
+  btn.textContent = '...';
+  msgEl.style.display = 'none';
+
+  const SUPA_URL2 = 'https://lzlxqxalwtkneclpgexh.supabase.co';
+  const SUPA_KEY2 = 'sb_publishable_a1Q20LH5Y40jfZbq6CY4vw_uc-gooc_';
+
+  const res = await fetch(`${SUPA_URL2}/rest/v1/builders`, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPA_KEY2,
+      'Authorization': `Bearer ${SUPA_KEY2}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=minimal'
+    },
+    body: JSON.stringify({ name, email, message })
+  });
+
+  if (res.ok || res.status === 201) {
+    msgEl.textContent = currentLang === 'ja' ? '登録完了！ページを更新しています...' : 'Registered! Refreshing...';
+    msgEl.className = 'auth-msg success';
+    msgEl.style.display = 'block';
+    setTimeout(() => window.location.reload(), 1200);
+  } else {
+    const errText = await res.text();
+    msgEl.textContent = (currentLang === 'ja' ? '登録に失敗しました: ' : 'Registration failed: ') + errText;
+    msgEl.className = 'auth-msg error';
+    msgEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = T[currentLang].notBuilderBtn;
+  }
 }
 
 // File handling
