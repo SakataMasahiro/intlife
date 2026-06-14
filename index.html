@@ -374,6 +374,7 @@ const T={
 let currentLang='en';
 
 function setLang(lang){
+  localStorage.setItem('intlife-lang', lang);
   currentLang=lang;
   const t=T[lang];
   document.getElementById('btn-en').classList.toggle('active',lang==='en');
@@ -437,7 +438,7 @@ const rc=['#7F77DD','#5BB4FF','#2DD4AA','#FF6040','#FFB830','#80D830','#C4B4FF']
 const re=document.getElementById('rays');
 rc.forEach((c,i)=>{const r=document.createElement('div');r.className='ray';const o=-100/2+(i/6)*100;const a=Math.atan2(o,900)*180/Math.PI;r.style.cssText=`top:calc(50% + ${o}px);width:100%;height:${i===3?'4px':'2.5px'};background:linear-gradient(to right,${c},${c}00);transform:rotate(${a}deg);opacity:${i===3?'1':'0.85'};animation-delay:${i*.1}s;`;re.appendChild(r);});
 
-setLang('ja');
+setLang(localStorage.getItem('intlife-lang') || 'en');
 
 const SUPABASE_URL='https://lzlxqxalwtkneclpgexh.supabase.co';
 const SUPABASE_KEY='sb_publishable_a1Q20LH5Y40jfZbq6CY4vw_uc-gooc_';

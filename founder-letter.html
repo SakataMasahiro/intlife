@@ -231,6 +231,7 @@ var L = {
 };
 
 function setLang(lang) {
+  localStorage.setItem('intlife-lang', lang);
   currentLang = lang;
   var t = L[lang];
 
@@ -308,7 +309,7 @@ window.practiceMarkSkip = function() {
   if (d.todayDate === TODAY) showPracticeStatus(d.todayStatus);
 })();
 
-setLang('ja');
+setLang(localStorage.getItem('intlife-lang') || 'en');
 </script>
 </body>
 </html>

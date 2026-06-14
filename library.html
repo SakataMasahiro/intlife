@@ -201,6 +201,7 @@ let activeDim = 'all';
 })();
 
 function setLang(lang) {
+  localStorage.setItem('intlife-lang', lang);
   currentLang = lang;
   const t = T[lang];
   document.getElementById('btn-en').classList.toggle('active', lang === 'en');
@@ -320,7 +321,7 @@ async function load() {
 }
 
 load();
-setLang('ja');
+setLang(localStorage.getItem('intlife-lang') || 'en');
 </script>
 </body>
 </html>

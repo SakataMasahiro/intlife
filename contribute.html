@@ -338,6 +338,7 @@ let selectedFile = null;
 let selectedDim = null;
 
 function setLang(lang) {
+  localStorage.setItem('intlife-lang', lang);
   currentLang = lang;
   const t = T[lang];
   document.getElementById('btn-en').classList.toggle('active', lang === 'en');
@@ -689,7 +690,7 @@ function escHtml(s) {
 }
 
 init();
-setLang('ja');
+setLang(localStorage.getItem('intlife-lang') || 'en');
 </script>
 </body>
 </html>

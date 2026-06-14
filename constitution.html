@@ -219,5 +219,22 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
   <p class="f-copy">透徹した誠実さの上に構築 · 広告なし · 妥協なし · すべての人に開かれた</p>
 </footer>
 
+<script>
+(function() {
+  var lang = localStorage.getItem('intlife-lang') || 'en';
+  document.getElementById(lang === 'en' ? 'btn-en' : 'btn-ja').classList.add('active');
+  document.getElementById(lang === 'en' ? 'btn-ja' : 'btn-en').classList.remove('active');
+})();
+document.getElementById('btn-en').addEventListener('click', function() {
+  localStorage.setItem('intlife-lang', 'en');
+  document.getElementById('btn-en').classList.add('active');
+  document.getElementById('btn-ja').classList.remove('active');
+});
+document.getElementById('btn-ja').addEventListener('click', function() {
+  localStorage.setItem('intlife-lang', 'ja');
+  document.getElementById('btn-ja').classList.add('active');
+  document.getElementById('btn-en').classList.remove('active');
+});
+</script>
 </body>
 </html>

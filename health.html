@@ -445,6 +445,7 @@ var L={
   }
 };
 function setLang(lang){
+  localStorage.setItem('intlife-lang', lang);
   currentLang=lang;
   document.getElementById('btn-en').classList.toggle('active',lang==='en');
   document.getElementById('btn-ja').classList.toggle('active',lang==='ja');
@@ -528,7 +529,7 @@ window.timerToggle=function(){
     },1000);
   }
 };
-setLang('ja');
+setLang(localStorage.getItem('intlife-lang') || 'en');
 </script>
 </body>
 </html>
