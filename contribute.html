@@ -191,7 +191,7 @@ footer{background:var(--deep);border-top:1px solid rgba(255,255,255,.07);padding
       <div class="field-row-half">
         <div class="field-row">
           <label class="field-label" id="label-title-en">Title (English) *</label>
-          <input type="text" class="field-input" id="f-title" placeholder="e.g. Morning Clarity Framework" required>
+          <input type="text" class="field-input" id="f-title" placeholder="e.g. Morning Clarity Framework">
         </div>
         <div class="field-row">
           <label class="field-label" id="label-title-ja">Title (日本語・任意)</label>
@@ -303,7 +303,7 @@ const T = {
     notBuilderBtn:'Register as Builder', notBuilderSignout:'Sign Out',
     signout:'Sign Out',
     formSectionContent:'Content',
-    labelTitleEn:'Title (English) *', labelTitleJa:'Title (日本語 · optional)',
+    labelTitleEn:'Title (English)', labelTitleJa:'Title (日本語 · optional)',
     labelDescEn:'Description (EN)', labelDescJa:'Description (日本語)',
     labelDimension:'Dimension *', labelFile:'File *',
     dropLabel:'Drop a file here, or click to browse',
@@ -326,7 +326,7 @@ const T = {
     notBuilderBtn:'ビルダーとして登録する', notBuilderSignout:'サインアウト',
     signout:'サインアウト',
     formSectionContent:'コンテンツ',
-    labelTitleEn:'タイトル（英語・必須）', labelTitleJa:'タイトル（日本語・任意）',
+    labelTitleEn:'タイトル（英語）', labelTitleJa:'タイトル（日本語・任意）',
     labelDescEn:'説明（英語）', labelDescJa:'説明（日本語）',
     labelDimension:'次元 *', labelFile:'ファイル *',
     dropLabel:'ここにファイルをドロップ、またはクリックして選択',
@@ -593,7 +593,9 @@ function clearFile() {
 }
 
 function updateSubmitBtn() {
-  const ok = selectedFile && selectedDim && document.getElementById('f-title').value.trim();
+  const titleEn = document.getElementById('f-title').value.trim();
+  const titleJaVal = document.getElementById('f-title-ja').value.trim();
+  const ok = selectedFile && selectedDim && (titleEn || titleJaVal);
   document.getElementById('submit-btn').disabled = !ok;
 }
 document.getElementById('f-title').addEventListener('input', updateSubmitBtn);
@@ -616,8 +618,8 @@ async function handleSubmit(e) {
   e.preventDefault();
   if (!selectedFile || !selectedDim || !currentBuilder) return;
 
-  const title = document.getElementById('f-title').value.trim();
   const titleJa = document.getElementById('f-title-ja').value.trim();
+  const title = document.getElementById('f-title').value.trim() || titleJa;
   const desc = document.getElementById('f-desc').value.trim();
   const descJa = document.getElementById('f-desc-ja').value.trim();
 
