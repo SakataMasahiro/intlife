@@ -432,10 +432,10 @@ async function handleMagicLink() {
   const btn = document.getElementById('login-btn');
   btn.disabled = true;
   btn.textContent = '...';
-  const redirectUrl = window.location.href.split('?')[0].split('#')[0];
+  
   const { error } = await sb.auth.signInWithOtp({
     email,
-    options: { emailRedirectTo: redirectUrl }
+    options: { emailRedirectTo: 'https://www.int.life/contribute.html' }
   });
   if (error) {
     showMsg('login-msg', error.message, 'error');
@@ -485,9 +485,20 @@ async function init() {
 }
 
 async function handleAuthedUser(user) {
-  const builder = await checkBuilderStatus(user.email);
+  let builder = await checkBuilderStatus(user.email);
   if (!builder) {
-    // Pre-fill email in the inline registration form
+    // Auto-register using authenticated session
+    const { error } = await sb.from('builders').insert({
+      name: user.email.split('@')[0],
+      email: user.email,
+      role: 'Builder',
+      message: 'Auto-registered'
+    });
+    if (!error) {
+      builder = await checkBuilderStatus(user.email);
+    }
+  }
+  if (!builder) {
     document.getElementById('nb-email').value = user.email;
     showState('state-not-builder');
     return;
@@ -527,7 +538,7 @@ async function handleInlineBuilderRegister() {
       'Content-Type': 'application/json',
       'Prefer': 'return=minimal'
     },
-    body: JSON.stringify({ name, email, message })
+    body: JSON.stringify({ name, email, message, role: 'Builder' })
   });
 
   if (res.ok || res.status === 201) {
