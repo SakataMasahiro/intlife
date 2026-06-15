@@ -454,14 +454,13 @@ async function handleSignOut() {
 }
 
 async function checkBuilderStatus(email) {
-  // Use ilike for case-insensitive email matching
   const { data, error } = await sb
     .from('builders')
     .select('id, name, email')
     .ilike('email', email.toLowerCase())
-    .maybeSingle();
-  if (error) return null;
-  return data;
+    .limit(1);
+  if (error || !data || data.length === 0) return null;
+  return data[0];
 }
 
 async function init() {
@@ -486,18 +485,7 @@ async function init() {
 
 async function handleAuthedUser(user) {
   let builder = await checkBuilderStatus(user.email);
-  if (!builder) {
-    // Auto-register using authenticated session
-    const { error } = await sb.from('builders').insert({
-      name: user.email.split('@')[0],
-      email: user.email,
-      role: 'Builder',
-      message: 'Auto-registered'
-    });
-    if (!error) {
-      builder = await checkBuilderStatus(user.email);
-    }
-  }
+  // Auto-register removed — no longer needed
   if (!builder) {
     document.getElementById('nb-email').value = user.email;
     showState('state-not-builder');
